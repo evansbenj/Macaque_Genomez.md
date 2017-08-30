@@ -49,7 +49,7 @@ foreach(@files){
 
 One of the findings from this analysis is that M. nemestrina individual PM1206 has far fewer reads than the other individuals.  This is a concern that I may address with more sequencing.
 
-# Trimming
+# Trimming 3' ends with Scythe
 
 I plan to use three appreachws to trim the data: scythe, which trims of 3' adapter sequences, trimmomatic, which trims 5' and 3' sequences, and quake, which is a kmer based approach designed to get rid of rare reads that are mostly sequencing errors.
 

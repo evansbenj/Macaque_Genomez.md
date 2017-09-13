@@ -77,3 +77,7 @@ foreach(@files){
     $status = system($commandline);
 }
 ```
+
+After scythe, I trimmed with trimmomatic and then with quake eliminating for all reads that had a kmer with a frequency of 1.
+
+Then I used paired reads from the scythe/trimmomatic/quake corrections only.  The argument for discarding single end reads is here (https://gatkforums.broadinstitute.org/gatk/discussion/2493/mixing-paired-end-and-single-end-reads); basically single end reads mess up the map qualities.

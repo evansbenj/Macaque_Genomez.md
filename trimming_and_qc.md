@@ -80,4 +80,23 @@ foreach(@files){
 
 After scythe, I trimmed with trimmomatic and then with quake eliminating for all reads that had a kmer with a frequency of 1.
 
+Trimmomatic like this:
+
+```
+#!/usr/bin/perl
+# This script will use trimmomatic to trim all of the fastq reads  
+
+my $status;
+my @files;
+   
+@files = glob("../SEAsian_macaques_rawdata/*/*.fastq.gz");
+
+foreach(@files){
+    my $commandline = "java -jar ../bin/Trimmomatic-0.36/trimmomatic-0.36.jar SE -phred33 ".$_."fq.gz ".$_."_trimmed.fq.gz -trimlog ".$_."_log.txt ILLUMINACLIP:../bin/Trimmomatic-0.36/adapters/TruSeq3-PE-2.fa:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36";
+    print $commandline,"\n";
+    #$status = system($commandline);
+}
+
+```
+
 Then I used paired reads from the scythe/trimmomatic/quake corrections only.  The argument for discarding single end reads is here (https://gatkforums.broadinstitute.org/gatk/discussion/2493/mixing-paired-end-and-single-end-reads); basically single end reads mess up the map qualities.

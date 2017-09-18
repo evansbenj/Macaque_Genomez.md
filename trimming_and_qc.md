@@ -112,5 +112,14 @@ $commandline = $commandline."ILLUMINACLIP:../bin/Trimmomatic-0.36/adapters/TruSe
 
 print $commandline,"\n";
 #$status = system($commandline);                                                                                                         ```
+Two were truncated so I redid them like this:
+```java -jar ../bin/Trimmomatic-0.36/trimmomatic-0.36.jar PE -phred33 -trimlog _log.txt /mnt/scratch/ben_evans/rhesus_macaque_genomez_original_raw_data/scythe_only/SRR1952145_1scythe.fastq.gz /mnt/scratch/ben_evans/rhesus_macaque_genomez_original_raw_data/scythe_only/SRR1952145_2scythe.fastq.gz /mnt/expressions/ben_evans/rhesus_macaque_genomez/SRR1952145_1scythe_and_trimm_paired.fastq.gz /mnt/expressions/ben_evans/rhesus_macaque_genomez/SRR1952145_1scythe_and_trimm_single.fastq.gz /mnt/expressions/ben_evans/rhesus_macaque_genomez/SRR1952145_2scythe_and_trimm_paired.fastq.gz /mnt/expressions/ben_evans/rhesus_macaque_genomez/SRR1952145_2scythe_and_trimm_single.fastq.gz ILLUMINACLIP:../bin/Trimmomatic-0.36/adapters/TruSeq3-PE-2.fa:2:30:10 SLIDINGWINDOW:4:15 MINLEN:36
+
+
+java -jar ../bin/Trimmomatic-0.36/trimmomatic-0.36.jar PE -phred33 -trimlog _log.txt /mnt/scratch/ben_evans/rhesus_macaque_genomez_original_raw_data/scythe_only/SRR1929379_1scythe.fastq.gz /mnt/scratch/ben_evans/rhesus_macaque_genomez_original_raw_data/scythe_only/SRR1929379_2scythe.fastq.gz /mnt/expressions/ben_evans/rhesus_macaque_genomez/SAMN03264624/SRR1929379_1scythe_and_trimm_paired.fastq.gz /mnt/expressions/ben_evans/rhesus_macaque_genomez/SAMN03264624/SRR1929379_1scythe_and_trimm_single.fastq.gz /mnt/expressions/ben_evans/rhesus_macaque_genomez/SAMN03264624/SRR1929379_1scythe_and_trimm_paired.fastq.gz /mnt/expressions/ben_evans/rhesus_macaque_genomez/SAMN03264624/SRR1929379_1scythe_and_trimm_single.fastq.gz ILLUMINACLIP:../bin/Trimmomatic-0.36/adapters/TruSeq3-PE-2.fa:2:30:10 SLIDINGWINDOW:4:15 MINLEN:36
+```
+
+
+
 
 Then I used paired reads from the scythe/trimmomatic/quake corrections only.  The argument for discarding single end reads is here (https://gatkforums.broadinstitute.org/gatk/discussion/2493/mixing-paired-end-and-single-end-reads); basically single end reads mess up the map qualities.

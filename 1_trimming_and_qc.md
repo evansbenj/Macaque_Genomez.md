@@ -1,3 +1,7 @@
+# Workflow
+
+I am going to trim with scythe, then trimmomatic, and then quake, assuming a cutoff kmer of 1 for all genomes.  This should generate some very nice high quality data.  Only paired reads will be used for mapping because I read somewhere that using single end reads can alter the map qualities in an undesirable way.
+
 # Initial QC
 
 FastQC gives us an initial glimpse at data quality:

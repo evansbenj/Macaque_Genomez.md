@@ -18,3 +18,9 @@ problems with misnamed reads fixed with bbmap like this (from within each direct
 ```
 bbmap/bbmap/repair.sh in1=toyR1.fastq in2=toyR2.fastq out1=toy1fixed1.fq out2=toy2fixed2.fq outsingle=toysingle.fq
 ```
+
+# Running Java 8 on sharcnet (no problem on bionc)
+
+```
+/usr/lib/jvm/java-1.8.0-openjdk.x86_64/bin/java -version
+```

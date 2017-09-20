@@ -29,7 +29,7 @@ bbmap/bbmap/repair.sh in1=toyR1.fastq in2=toyR2.fastq out1=toy1fixed1.fq out2=to
 
 on iqaluk
 ```
-/usr/lib/jvm/java-1.8.0-openjdk.x86_64/bin/java -jar /project0/ben/bin/picard/picard.jar MarkDuplicates REMOVE_DUPLICATES=true I=maura_PM613sorted.bam O=maura_PM613sorted_dedup.bam  M=PM613marked_dup_metrics.txt
+/usr/lib/jvm/java-1.8.0-openjdk.x86_64/bin/java -jar /project0/ben/bin/picard/picard.jar MarkDuplicates REMOVE_DUPLICATES=true I=maura_PM613sorted.bam O=maura_PM613sorted_dedup.bam  M=PM613marked_dup_metrics.txt TMP_DIR=`pwd`/TMP
 ```
 on bionc03, from within '/mnt/scratch/ben_evans/SEAsian_bam_files'
 ```

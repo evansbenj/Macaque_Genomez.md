@@ -127,3 +127,16 @@ java -jar ../bin/Trimmomatic-0.36/trimmomatic-0.36.jar PE -phred33 -trimlog _log
 
 
 Then I used paired reads from the scythe/trimmomatic/quake corrections only.  The argument for discarding single end reads is here (https://gatkforums.broadinstitute.org/gatk/discussion/2493/mixing-paired-end-and-single-end-reads); basically single end reads mess up the map qualities.
+
+# Quake
+
+I'm using quake to reduce the number of sequencing errors, fixing for all genomes a kmer of 1.
+
+Here's an example of the commandline on info:
+```
+/usr/local/quake/src/correct -f filenamez.txt -z -k 19 -c 1 -m jelly_dump_all_19mers -p 4 -q 33
+```
+Important to remember is that the file 'filename' needs to include the paired reads on the same line separated by whitespace.  This is important in order to preserve the paired reads.  If this is forgotten, they can be repaired with bbmap.
+
+
+

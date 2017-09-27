@@ -8,6 +8,12 @@ Filtering should be agressive and potentially include (1) repetitive regions, (2
 
 Additionally I would like to use a HMM to identify and screen out heterozygous positions on the male chrX.
 
+# Repair with bbmap
+On iqaluk, needed to repair unpaired reads from quake because I did not include the paired fastq files on the same line with a whitespace separator.
+
+```
+/project0/ben/bin/bbmap/bbmap/repair.sh -Xmx30g in1=/project0/ben/SEAsian_scy_trim_quake/nem_PM1206/nem_PM1206_all_R1scythe_and_trimm_paired.cor.fastq.gz in2=/project0/ben/SEAsian_scy_trim_quake/nem_PM1206/nem_PM1206_all_R2scythe_and_trimm_paired.cor.fastq.gz out1=/project0/ben/SEAsian_scy_trim_quake/nem_PM1206/nem_PM1206_all_R1scythe_and_trimm_paired.corfixed.fastq.gz out2=/project0/ben/SEAsian_scy_trim_quake/nem_PM1206/nem_PM1206_all_R2scythe_and_trimm_paired.corfixed.fastq.gz outsingle=/project0/ben/SEAsian_scy_trim_quake/nem_PM1206/nem_PM1206_all_R1scythe_and_trimm_pairsingletons.fq.gz 
+```
 
 # Mapping with bwa
 

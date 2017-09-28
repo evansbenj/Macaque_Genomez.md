@@ -47,6 +47,7 @@ This should have been done with bwa mem, but I can do it now with Picard AddOrRe
 
 '@RG\tID:foo\tSM:bar\tLB:library1'
 
+```
 java -jar picard.jar AddOrReplaceReadGroups \
       I=input.bam \
       O=output.bam \
@@ -55,8 +56,50 @@ java -jar picard.jar AddOrReplaceReadGroups \
       RGPL=illumina \
       RGPU=unit1 \
       RGSM=SAMPLE_NAME
+```
 
-# Indel realigner
+# Indel realigner with GATK
 
 (this pipeline is adapted from here http://www.htslib.org/workflow/)
 
+```
+java -Xmx2g -jar GenomeAnalysisTK.jar -T RealignerTargetCreator -R <ref.fa> -I <lane.bam> -o <lane.intervals> --known <bundle/b38/Mills1000G.b38.vcf>
+```
+```
+java -Xmx4g -jar GenomeAnalysisTK.jar -T IndelRealigner -R <ref.fa> -I <lane.bam> -targetIntervals <lane.intervals> --known <bundle/b38/Mills1000G.b38.vcf> -o <lane_realigned.bam>
+```
+
+# index the realigned bams
+
+```
+samtools index <sample.bam>
+```
+
+# BSQR (not sure if I want to do this?)
+
+If I do it I will need to generate a list of known sites first.  I could do this for rhesus using all the data and sepately for SEAsian macaques using all of the data.
+
+this could be done like this:
+```
+samtools mpileup -ugf <ref.fa> <sample1.bam> <sample2.bam> <sample3.bam> | bcftools call -vmO z -o <study.vcf.gz>
+```
+
+the problem with this method is that the indels for each sample haven't been realigned across all samples.  But according to this post https://gatkforums.broadinstitute.org/gatk/discussion/comment/21219 this is not such a big deal.  And doing the indel realignment concurrently across all samples is computationally expensive.  
+
+```
+java -Xmx4g -jar GenomeAnalysisTK.jar -T BaseRecalibrator -R <ref.fa> -knownSites >bundle/b38/dbsnp_142.b38.vcf> -I <lane.bam> -o <lane_recal.table>
+java -Xmx2g -jar GenomeAnalysisTK.jar -T PrintReads -R <ref.fa> -I <lane.bam> --BSQR <lane_recal.table> -o <lane_recal.bam>
+```
+
+# Call variants
+
+```
+samtools mpileup -ugf <ref.fa> <sample1.bam> <sample2.bam> <sample3.bam> | bcftools call -vmO z -o <study.vcf.gz>
+```
+
+# Make some graphs of variants
+```
+bcftools stats -F <ref.fa> -s - <study.vcf.gz> > <study.vcf.gz.stats>
+mkdir plots
+plot-vcfstats -p plots/ <study.vcf.gz.stats>
+```

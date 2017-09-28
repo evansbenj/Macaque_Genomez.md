@@ -24,8 +24,6 @@ For male genomes the reference will be MacaM_mt_y.fa, which includes the chrY.  
 ```
 
 
-
-
 # Running Java 8 on sharcnet (no problem on bionc)
 
 ```
@@ -43,5 +41,22 @@ on bionc03, from within '/mnt/scratch/ben_evans/SEAsian_bam_files'
 qsub -l h_vmem=120g -cwd -b y -N PM613sorted bash -c "java -jar /mnt/expressions/ben_evans/bin/picard/picard.jar MarkDuplicates REMOVE_DUPLICATES=true I=maura_PM613sorted.bam O=maura_PM613sorted_dedup.bam M=PM613marked_dup_metrics.txt"
 ```
 
+# Add readgroups
 
-```
+This should have been done with bwa mem, but I can do it now with Picard AddOrReplaceReadGroups (http://broadinstitute.github.io/picard/command-line-overview.html#AddOrReplaceReadGroups) 
+
+'@RG\tID:foo\tSM:bar\tLB:library1'
+
+java -jar picard.jar AddOrReplaceReadGroups \
+      I=input.bam \
+      O=output.bam \
+      RGID=1 \
+      RGLB=lib1 \
+      RGPL=illumina \
+      RGPU=unit1 \
+      RGSM=SAMPLE_NAME
+
+# Indel realigner
+
+(this pipeline is adapted from here http://www.htslib.org/workflow/)
+

@@ -93,6 +93,8 @@ java -Xmx2g -jar GenomeAnalysisTK.jar -T PrintReads -R <ref.fa> -I <lane.bam> --
 
 # Call variants
 
+Need to figure out how to make samtools output nonvariant calls as well.
+
 ```
 samtools mpileup -ugf <ref.fa> <sample1.bam> <sample2.bam> <sample3.bam> | bcftools call -vmO z -o <study.vcf.gz>
 ```
@@ -103,3 +105,11 @@ bcftools stats -F <ref.fa> -s - <study.vcf.gz> > <study.vcf.gz.stats>
 mkdir plots
 plot-vcfstats -p plots/ <study.vcf.gz.stats>
 ```
+
+# Filter
+
+```
+bcftools filter -O z -o <study_filtered..vcf.gz> -s LOWQUAL -i'%QUAL>10' <study.vcf.gz>
+```
+
+

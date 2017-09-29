@@ -58,6 +58,13 @@ java -jar picard.jar AddOrReplaceReadGroups \
       RGSM=SAMPLE_NAME
 ```
 
+# Checking bam files
+
+on bionc
+```
+/mnt/expressions/ben_evans/bin/samtools/bin/samtools quickcheck tonk_PF511.bam  && echo 'all ok' || echo 'fail!'
+```
+
 # Indel realigner with GATK
 
 (this pipeline is adapted from here http://www.htslib.org/workflow/)

@@ -58,6 +58,11 @@ java -jar picard.jar AddOrReplaceReadGroups \
       RGSM=SAMPLE_NAME
 ```
 
+on iqaluk
+```
+/usr/lib/jvm/java-1.8.0-openjdk.x86_64/bin/java -jar /project0/ben/bin/picard/picard.jar AddOrReplaceReadGroups I=hecki_PF505sorted_dedup.bam O=hecki_PF505sorted_dedup_rg.bam RGID=hecki_PF505 RGLB=hecki_PF505 RGPL=illumina RGPU=hecki_PF505 RGSM=hecki_PF505
+```
+
 # Checking bam files
 
 on bionc

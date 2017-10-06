@@ -8,6 +8,14 @@ Filtering should be agressive and potentially include (1) repetitive regions, (2
 
 Additionally I would like to use a HMM to identify and screen out heterozygous positions on the male chrX.
 
+# If problems, validate fastq files with fastQValidator:
+
+on Bionc
+
+```
+/mnt/expressions/ben_evans/bin/fastQValidator/bin/fastQValidator --file SRR1951019_1scythe_and_trimm_paired.fastq.gz
+```
+
 # Repair with bbmap
 On iqaluk, needed to repair unpaired reads from quake because I did not include the paired fastq files on the same line with a whitespace separator.
 

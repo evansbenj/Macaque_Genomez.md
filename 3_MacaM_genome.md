@@ -5,10 +5,10 @@ I decided to go with the MacaM genome because it fixes lots of errors with the r
 # Index
 
 ```
-/mnt/expressions/ben_evans/bin/samtools/bin/samtools/samtools faidx /project0/ben/MacaM/MacaM_mt_female.fa
+/project0/ben/bin/samtools-1.5/samtools faidx /project0/ben/MacaM/MacaM_mt_female.fa
 ```
 ```
-/mnt/expressions/ben_evans/bin/samtools/bin/samtools/samtools faidx /project0/ben/MacaM/MacaM_mt_y.fa
+/project0/ben/bin/samtools-1.5/samtools faidx /project0/ben/MacaM/MacaM_mt_y.fa
 ```
 
 

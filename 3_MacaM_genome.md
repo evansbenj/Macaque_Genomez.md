@@ -11,6 +11,14 @@ I decided to go with the MacaM genome because it fixes lots of errors with the r
 /project0/ben/bin/samtools-1.5/samtools faidx /project0/ben/MacaM/MacaM_mt_y.fa
 ```
 
+# Create .dict file
+
+```
+/usr/lib/jvm/java-1.8.0-openjdk.x86_64/bin/java -jar /project0/ben/bin/picard/picard.jar CreateSequenceDictionary REFERENCE=/project0/ben/MacaM/MacaM_mt_female.fa OUTPUT=/project0/ben/MacaM/MacaM_mt_female.dict
+```
+```
+/usr/lib/jvm/java-1.8.0-openjdk.x86_64/bin/java -jar /project0/ben/bin/picard/picard.jar CreateSequenceDictionary REFERENCE=/project0/ben/MacaM/MacaM_mt_y.fa OUTPUT=/project0/ben/MacaM/MacaM_mt_y.dict
+```
 
 # Repeat masker
 

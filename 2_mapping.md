@@ -78,6 +78,12 @@ on bionc
 /mnt/expressions/ben_evans/bin/samtools/bin/samtools quickcheck tonk_PF511.bam  && echo 'all ok' || echo 'fail!'
 ```
 
+# Index bamfiles
+on iqaluk
+```
+/project0/ben/bin/samtools-1.5/samtools index hecki_PF505sorted_dedup_rg.bam
+```
+
 # Indel realigner with GATK
 
 (this pipeline is adapted from here http://www.htslib.org/workflow/)

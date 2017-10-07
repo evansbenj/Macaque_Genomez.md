@@ -95,6 +95,14 @@ java -Xmx2g -jar GenomeAnalysisTK.jar -T RealignerTargetCreator -R <ref.fa> -I <
 java -Xmx4g -jar GenomeAnalysisTK.jar -T IndelRealigner -R <ref.fa> -I <lane.bam> -targetIntervals <lane.intervals> --known <bundle/b38/Mills1000G.b38.vcf> -o <lane_realigned.bam>
 ```
 
+on iqaluk
+```
+/usr/lib/jvm/java-1.8.0-openjdk.x86_64/bin/java -Xmx8g -jar /project0/ben/bin/GenomeAnalysisTK-nightly-2017-10-07-g1994025/GenomeAnalysisTK.jar -T RealignerTargetCreator -R /project0/ben/MacaM/MacaM_mt_female.fa -I hecki_PF648sorted_dedup_rg.bam -o forIndelRealigner_hecki_PF648.intervals
+```
+```
+/usr/lib/jvm/java-1.8.0-openjdk.x86_64/bin/java -Xmx8g -jar GenomeAnalysisTK.jar -T IndelRealigner -R /project0/ben/MacaM/MacaM_mt_female.fa -I hecki_PF648sorted_dedup_rg.bam -targetIntervals forIndelRealigner_hecki_PF648.intervals -o hecki_PF648sorted_dedup_rg_realigned.bam
+```
+
 # index the realigned bams
 
 ```

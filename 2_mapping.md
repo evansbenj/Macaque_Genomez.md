@@ -108,14 +108,20 @@ on iqaluk (need to change to different ref for males)
 ```
 samtools index <sample.bam>
 ```
+Actually this is not needed because GATK does this on the fly
 
 # BSQR (not sure if I want to do this?)
 
-If I do it I will need to generate a list of known sites first.  I could do this for rhesus using all the data and sepately for SEAsian macaques using all of the data.
+If I do it I will need to generate a list of known sites first for each sample.  
 
 this could be done like this:
 ```
 samtools mpileup -ugf <ref.fa> <sample1.bam> <sample2.bam> <sample3.bam> | bcftools call -vmO z -o <study.vcf.gz>
+```
+
+Or do it with haplotype caller:
+```
+java -Xmx32G -jar GenomeAnalysisTK.jar -T GenotypeGVCFs -R ref.fa --variant XXX.g.vcf -o sample_noBSQR.vcf
 ```
 
 the problem with this method is that the indels for each sample haven't been realigned across all samples.  But according to this post https://gatkforums.broadinstitute.org/gatk/discussion/comment/21219 this is not such a big deal.  And doing the indel realignment concurrently across all samples is computationally expensive.  
@@ -132,6 +138,14 @@ Need to figure out how to make samtools output nonvariant calls as well.
 ```
 samtools mpileup -ugf <ref.fa> <sample1.bam> <sample2.bam> <sample3.bam> | bcftools call -vmO z -o <study.vcf.gz>
 ```
+
+or use GATK:
+```
+java -Xmx32G -jar GenomeAnalysisTK.jar -T GenotypeGVCFs -R XXX.fa --variant XXX.g.vcf --variant YYY.vcf --variant ZZZ.g.vcf --includeNonVariantSites -o all_combined.vcf
+```
+
+Probably should break this up into chromosomes.
+
 
 # Make some graphs of variants
 ```

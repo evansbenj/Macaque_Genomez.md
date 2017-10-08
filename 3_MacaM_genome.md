@@ -30,8 +30,14 @@ I installed RepeatMasker version open-4.0.7 on bionc and am running it now.  Rep
 
 The `-qq` flag tells it to do a quick search, `-gff` tells it to output a gff annotation file, and `species macaque` is a recognized species in the taxonomy and this will limit searches to repeats shared with humans and other OWMs.
 
-Results are on bionc in this directory:
+Repeatmasker is on bionc in this directory:
 ```
 /mnt/expressions/ben_evans/bin/RepeatMasker
 ```
+
+gff file is on bionc here:
+```
+/mnt/expressions/ben_evans/MacaM/MacaM_mt_y.fa.out.gff
+```
+
 

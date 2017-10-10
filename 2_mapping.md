@@ -38,16 +38,6 @@ For male genomes the reference will be MacaM_mt_y.fa, which includes the chrY.  
 /usr/lib/jvm/java-1.8.0-openjdk.x86_64/bin/java -version
 ```
 
-# Dedup with picard
-
-on iqaluk
-```
-/usr/lib/jvm/java-1.8.0-openjdk.x86_64/bin/java -jar /project0/ben/bin/picard/picard.jar MarkDuplicates REMOVE_DUPLICATES=true I=maura_PM613sorted.bam O=maura_PM613sorted_dedup.bam  M=PM613marked_dup_metrics.txt TMP_DIR=`pwd`/TMP
-```
-on bionc03, from within '/mnt/scratch/ben_evans/SEAsian_bam_files'
-```
-qsub -l h_vmem=120g -cwd -b y -N PM613sorted bash -c "java -jar /mnt/expressions/ben_evans/bin/picard/picard.jar MarkDuplicates REMOVE_DUPLICATES=true I=maura_PM613sorted.bam O=maura_PM613sorted_dedup.bam M=PM613marked_dup_metrics.txt"
-```
 
 # Add readgroups
 
@@ -109,6 +99,18 @@ on iqaluk (need to change to different ref for males)
 samtools index <sample.bam>
 ```
 Actually this is not needed because GATK does this on the fly
+
+# Dedup with picard 
+
+on iqaluk
+```
+/usr/lib/jvm/java-1.8.0-openjdk.x86_64/bin/java -jar /project0/ben/bin/picard/picard.jar MarkDuplicates REMOVE_DUPLICATES=true I=hecki_PF505sorted_dedup_rg_realigned.bam O=hecki_PF505sorted_ddedup_rg_realigned.bam  M=PM613marked_ddup_metrics.txt TMP_DIR=`pwd`/TMP
+```
+on bionc03, from within '/mnt/scratch/ben_evans/SEAsian_bam_files'
+```
+qsub -l h_vmem=120g -cwd -b y -N PM613sorted bash -c "java -jar /mnt/expressions/ben_evans/bin/picard/picard.jar MarkDuplicates REMOVE_DUPLICATES=true I=hecki_PF505sorted_dedup_rg_realigned.bam O=hecki_PF505sorted_ddedup_rg_realigned.bam M=PM613marked_ddup_metrics.txt"
+```
+
 
 # BSQR (not sure if I want to do this?)
 

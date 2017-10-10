@@ -112,7 +112,7 @@ qsub -l h_vmem=120g -cwd -b y -N PM613sorted bash -c "java -jar /mnt/expressions
 ```
 on orca in directory `/work/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/males`:
 ```
-sqsub -r 1d -o maura_PM613_dedup /usr/lib/jvm/java-1.8.0-openjdk.x86_64/bin/java -Xmx512m -jar /work/ben/2017_SEAsian_macaques/bin/picard/picard.jar MarkDuplicates REMOVE_DUPLICATES=true I=maura_PM613sorted_dedup_rg_realigned.bam O=maura_PM613sorted_ddedup_rg_realigned.bam M=maura_PM613marked_ddup_metrics.txt
+sqsub -r 1d --mpp 6G -o maura_PM613_dedup /usr/lib/jvm/java-1.8.0-openjdk.x86_64/bin/java -Xmx2g -jar /work/ben/2017_SEAsian_macaques/bin/picard/picard.jar MarkDuplicates REMOVE_DUPLICATES=true I=maura_PM613sorted_dedup_rg_realigned.bam O=maura_PM613sorted_ddedup_rg_realigned.bam M=maura_PM613marked_ddup_metrics.txt
 
 ```
 

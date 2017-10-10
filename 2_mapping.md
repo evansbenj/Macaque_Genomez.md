@@ -104,7 +104,7 @@ Actually this is not needed because GATK does this on the fly
 
 on iqaluk
 ```
-/usr/lib/jvm/java-1.8.0-openjdk.x86_64/bin/java -jar /project0/ben/bin/picard/picard.jar MarkDuplicates REMOVE_DUPLICATES=true I=hecki_PF505sorted_dedup_rg_realigned.bam O=hecki_PF505sorted_ddedup_rg_realigned.bam  M=PM613marked_ddup_metrics.txt TMP_DIR=`pwd`/TMP
+/usr/lib/jvm/java-1.8.0-openjdk.x86_64/bin/java -jar /project0/ben/bin/picard/picard.jar MarkDuplicates REMOVE_DUPLICATES=true I=hecki_PF505sorted_dedup_rg_realigned.bam O=hecki_PF505sorted_ddedup_rg_realigned.bam  M=hecki_PF505marked_ddup_metrics.txt TMP_DIR=`pwd`/TMP
 ```
 on bionc03, from within '/mnt/scratch/ben_evans/SEAsian_bam_files'
 ```

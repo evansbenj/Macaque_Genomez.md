@@ -117,34 +117,108 @@ sqsub -r 1d --mpp 6G -o maura_PM613_dedup /usr/lib/jvm/java-1.8.0-openjdk.x86_64
 ```
 
 
-# BSQR (not sure if I want to do this?)
-
-If I do it I will need to generate a list of known sites first for each sample.  
-
-this could be done like this:
-```
-samtools mpileup -ugf <ref.fa> <sample1.bam> <sample2.bam> <sample3.bam> | bcftools call -vmO z -o <study.vcf.gz>
-```
-
-Or do it with haplotype caller:
-```
-java -Xmx32G -jar GenomeAnalysisTK.jar -T GenotypeGVCFs -R ref.fa --variant XXX.g.vcf -o sample_noBSQR.vcf
-```
-
-the problem with this method is that the indels for each sample haven't been realigned across all samples.  But according to this post https://gatkforums.broadinstitute.org/gatk/discussion/comment/21219 this is not such a big deal.  And doing the indel realignment concurrently across all samples is computationally expensive.  
+# BSQR 
+## Call Variants
+First I generated a list of known sites first for each sample for each chromosome. (4_gatk_haplotypecaller_sqsub_females.pl).  I did one for males using a reference genome with the Y chromosome.
 
 ```
-java -Xmx4g -jar GenomeAnalysisTK.jar -T BaseRecalibrator -R <ref.fa> -knownSites >bundle/b38/dbsnp_142.b38.vcf> -I <lane.bam> -o <lane_recal.table>
-java -Xmx2g -jar GenomeAnalysisTK.jar -T PrintReads -R <ref.fa> -I <lane.bam> --BSQR <lane_recal.table> -o <lane_recal.bam>
+#!/usr/bin/perl
+# This script will run quake on trimmed fq files
+
+my $gatkpath = "/work/ben/2017_SEAsian_macaques/bin/GenomeAnalysisTK-nightly-2017-10-07-g1994025/";
+#my $referencegenome="/scratch/ben/MacaM/MacaM_mt_y.fa";
+my $referencegenome="/work/ben/2017_SEAsian_macaques/MacaM/MacaM_mt_female.fa";
+my $majorpath = "/work/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/females/";
+my @chromosomes =("chr01","chr02a","chr02b","chr03","chr04","chr05","chr06","chr07","chr08","chr09","chr10","chr11","chr12","chr13","chr14","chr15","chr16","chr17","chr18","chr19","chrX","chrM");
+
+@files = glob($majorpath."*ddedup_rg_realigned.bam");
+
+foreach my $file (@files){
+    if($file =~ /hecki_PF505/){
+    foreach my $chromosome (@chromosomes){
+	my $commandline = "sqsub -r 4d --mpp 16G -o ".$file."\.log ";
+	$commandline = $commandline."/usr/lib/jvm/java-1.8.0-openjdk.x86_64/bin/java -Xmx8G -jar ".$gatkpath."GenomeAnalysisTK.jar -T HaplotypeCaller -R ".$referencegenome." -I ".$file." -L ".$chromosome." --emitRefConfidence GVCF -o ".$file."_".$chromosome."_noBSQR.g.vcf.gz";
+# -out_mode EMIT_ALL_CONFIDENT_SITES
+	print $commandline,"\n";
+    $status = system($commandline);
+    }
+    }
+}
+```
+## Cat Variants
+
+Then I concatenated these variants for each individual to generate one SNP file for use in BQSR (4.5_gatk_catvariants_sqsub_females.pl):
+```
+#!/usr/bin/perl
+# This script will run quake on trimmed fq files
+
+my $gatkpath = "/work/ben/2017_SEAsian_macaques/bin/GenomeAnalysisTK-nightly-2017-10-07-g1994025/";
+#my $referencegenome="/scratch/ben/MacaM/MacaM_mt_y.fa";
+my $referencegenome="/work/ben/2017_SEAsian_macaques/MacaM/MacaM_mt_female.fa";
+my $majorpath = "/work/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/females/";
+my @chromosomes =("chr01","chr02a","chr02b","chr03","chr04","chr05","chr06","chr07","chr08","chr09","chr10","chr11","chr12","chr13","chr14","chr15","chr16","chr17","chr18","chr19","chrX","chrM");
+
+@files = glob($majorpath."*ddedup_rg_realigned.bam");
+
+foreach my $file (@files){
+    my $commandline = "sqsub -r 2d --mpp 16G -o ".$file."\.log ";
+    $commandline = $commandline."/usr/lib/jvm/java-1.8.0-openjdk.x86_64/bin/java -Xmx8G -cp ".$gatkpath."GenomeAnalysisTK.jar org.broadinstitute.gatk.tools.CatVariants -R ".$referencegenome;
+    foreach my $chromosome (@chromosomes){
+	$commandline = $commandline." -V ".$file."_".$chromosome."_noBSQR.g.vcf.gz";
+    }
+    $commandline = $commandline." -out ".$file."_allchrs_noBSQR.g.vcf.gz";
+    print $commandline,"\n";
+#    $status = system($commandline);
+}
 ```
 
-# Call variants
+## BQSR
 
-Need to figure out how to make samtools output nonvariant calls as well.
+Then I generated the BQSR table (5_gatk_BSQR_sqsub_females.pl) and used this table to print a new BQSR bam file (6_gatk_BSQR_printreads_sqsub_females.pl):
+```
+#!/usr/bin/perl
+# This script will run quake on trimmed fq files
+
+my $gatkpath = "/work/ben/2017_SEAsian_macaques/bin/GenomeAnalysisTK-nightly-2017-10-07-g1994025/";
+#my $referencegenome="/scratch/ben/MacaM/MacaM_mt_y.fa";
+my $referencegenome="/work/ben/2017_SEAsian_macaques/MacaM/MacaM_mt_female.fa";
+my $majorpath = "/work/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/females/";
+#my @chromosomes =("chr01","chr02a","chr02b","chr03","chr04","chr05","chr06","chr07","chr08","chr09","chr10","chr11","chr12","chr13","chr14","chr15","chr16","chr17","chr18","chr19","chrX","chrM");
+
+@files = glob($majorpath."*ddedup_rg_realigned.bam");
+
+foreach my $file (@files){
+    if($file =~ /643/){
+			my $commandline = "sqsub -r 4d --mpp 32G -o ".$file."_baserecalibrator\.log ";
+			$commandline = $commandline."/usr/lib/jvm/java-1.8.0-openjdk.x86_64/bin/java -Xmx8G -jar ".$gatkpath."GenomeAnalysisTK.jar -T BaseRecalibrator -R ".$referencegenome." -knownSites ".$file."_allchrs_noBSQR.g.vcf.gz"." -I ".$file." -o ".$file."_lane_recal.table";
+		    print $commandline,"\n";
+#		    $status = system($commandline);
+    }
+}
 
 ```
-samtools mpileup -ugf <ref.fa> <sample1.bam> <sample2.bam> <sample3.bam> | bcftools call -vmO z -o <study.vcf.gz>
 ```
+#!/usr/bin/perl
+# This script will print a new bam file with BSQR for females
+
+my $gatkpath = "/work/ben/2017_SEAsian_macaques/bin/GenomeAnalysisTK-nightly-2017-10-07-g1994025/";
+#my $referencegenome="/scratch/ben/MacaM/MacaM_mt_y.fa";
+my $referencegenome="/work/ben/2017_SEAsian_macaques/MacaM/MacaM_mt_female.fa";
+my $majorpath = "/work/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/females/";
+my @chromosomes =("chr01","chr02a","chr02b","chr03","chr04","chr05","chr06","chr07","chr08","chr09","chr10","chr11","chr12","chr13","chr14","chr15","chr16","chr17","chr18","chr19","chrX","chrM");
+
+@files = glob($majorpath."*ddedup_rg_realigned.bam");
+
+foreach my $file (@files){
+			my $commandline = "sqsub -r 5d --mpp 32G -o ".$file."_".$chromosome."\.log ";
+			$commandline = $commandline."/usr/lib/jvm/java-1.8.0-openjdk.x86_64/bin/java -Xmx8G -jar ".$gatkpath."GenomeAnalysisTK.jar -T PrintReads -R ".$referencegenome." -I ".$file." -BQSR ".$file."_lane_recal.table -o ".$file."BSQR.bam";
+		    print $commandline,"\n";
+		    $status = system($commandline);
+}
+
+```
+
+
 
 or use GATK:
 ```

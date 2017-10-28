@@ -241,4 +241,43 @@ plot-vcfstats -p plots/ <study.vcf.gz.stats>
 bcftools filter -O z -o <study_filtered..vcf.gz> -s LOWQUAL -i'%QUAL>10' <study.vcf.gz>
 ```
 
+# Notes about filtering
+
+Have to use Hard filtering because VQSR is not possible for small sample size (<30 individuals) and especially with non-model organisms with no known SNPs.
+
+Here's the recommendation from theBroad Institute:
+```
+java -jar GenomeAnalysisTK.jar \ 
+    -T VariantFiltration \ 
+    -R reference.fa \ 
+    -V raw_snps.vcf \ 
+    --filterExpression "QD < 2.0 || FS > 60.0 || MQ < 40.0 || MQRankSum < -12.5 || ReadPosRankSum < -8.0" \ 
+    --filterName "lowqual" \ 
+    --genotypeFilterExpression "DP < 10" \
+    --genotypeFilterName "genotypefilter" \
+    --setFilteredGtToNocall
+    -o filtered_snps.vcf 
+ ```
+ 
+```
+$java -jar $gatk \
+   -T SelectVariants \
+   -R reference.fa \
+   -V filtered_snps.vcf  \
+   -o filtered_snps_removed.vcf \
+   --setFilteredGtToNocall
+```
+ 
+ 
+ But I inspected the chrM vcf fine after CombiningGVCFs and then GenotypingGVCFs and outputing all sites in VCF format.  The map quality of many sites is less than 40, probably because of divergence, or because of numts. So this may be to strict a setting to filter on.
+ 
+ Also genotype specific filters are possible.
+ 
+ This site has information on filtering indels: https://software.broadinstitute.org/gatk/documentation/article.php?id=2806
+ 
+ https://software.broadinstitute.org/gatk/documentation/tooldocs/current/org_broadinstitute_gatk_tools_walkers_filters_VariantFiltration.php#--genotypeFilterExpression
+ 
+ I think I should filter all sites based on some of the recommendations and also possibly filter individual genotypes using genotype filters.  VariantFiltration has a `--setFilteredGtToNocall` option that should replace flagged genotypes with missing. This tool also allows one to flag individual genotypes using `--genotypeFilterExpression`
+ 
+
 

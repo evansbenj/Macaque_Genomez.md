@@ -314,7 +314,7 @@ close OUTFILE;
 
 # Convert tab to nexus
 
-This script should be able to handle tab files that have haploid genotypes.  I modified it from (21_tab_to_interleave_nexus.pl) to take as input tab files with a variable number of reference genomes (11_tab_to_interleave_nexus.pl).
+This script should be able to handle tab files that have haploid genotypes.  I modified it from (21_tab_to_interleave_nexus.pl) to take as input tab files with a variable number of reference genomes (11_tab_to_interleave_nexus.pl). Note that this script removes indels that are present in the ref relative to the ingroup or vice versa.  This is done because it is coded to enforce only one REF base for each ingroup genotype and then when longer genotypes are encountered in an ingroup taxa, a gap/missing site is used. This way the alignmnet in the nexus file is preserved.
 
 commandline:
 ``` bash
@@ -358,6 +358,7 @@ my $x;
 my $watisitnow;
 my $count=0;
 my $interleave=0;
+my $ref_length_check=0;
 
 # Read in datainput file
 
@@ -395,7 +396,13 @@ while ( my $line = <DATAINPUT>) {
 				$datahash{$names[$y]}='';
 			}	
 		}
-		if((length($temp[2]) == 1)&&(length($temp[3]) == 1)&&(length($temp[4]) == 1)){ # all the outgroup seqs are single bp
+		$ref_length_check=0;
+		for ($y = 2 ; $y < 2+$number_of_reference_genomez; $y++ ) {
+		    if(length($temp[$y]) != 1){
+			$ref_length_check=1;
+		       }
+		}
+	        if($ref_length_check == 0){ # all references have length of 1, so process the site as usual
 			$count=$count+1; # this is the count of all positions
 			$interleave=$interleave+1; # this is the count of the interleave length
 			
@@ -463,6 +470,7 @@ print "The number of sites is $count\n";
 
 my $status;
 $status = system("perl -p -i -e 's/XXXX/$count/g' $outputfile");
+
 ```
 
 

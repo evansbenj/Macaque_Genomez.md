@@ -1,0 +1,313 @@
+# MtDNA and yDNA
+
+On redfin, goblin, etc, I am working in this directory: `/work/ben/2017_SEAsian_macaques/ben_scripts`
+
+Because these loci are haploid, we need to treat them differently from autosomal DNA (and maybe xDNA). One option is to just call bases based on the highest depth of coverage.  I have a script to do this that starts from a combined vcf file.  First I generate a combined vcf file like this, on redfin (9_gatk_GenotypeGVCFs_bychr_sqsub_females_and_males.pl):
+
+``` perl
+#!/usr/bin/perl
+# This script will run quake on trimmed fq files
+
+my $gatkpath = "/work/ben/2017_SEAsian_macaques/bin/GenomeAnalysisTK-nightly-2017-10-07-g1994025/";
+#my $referencegenome="/scratch/ben/MacaM/MacaM_mt_y.fa";
+my $referencegenome="/work/ben/2017_SEAsian_macaques/MacaM/MacaM_mt_female.fa";
+my $majorpathfemales = "/work/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/females/";
+my $majorpathmales = "/work/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/males/";
+my @chromosomes =("chr01","chr02a","chr02b","chr03","chr04","chr05","chr06","chr07","chr08","chr09","chr10","chr11","chr12","chr13","chr14","chr15","chr16","chr17","chr18","ch
+r19","chrX","chrM","chrY");
+
+    foreach my $chromosome (@chromosomes){
+	if($chromosome =~ /chrM/){
+	    my $commandline = "sqsub -r 2d --mpp 16G -o catvar_".$chromosome."\.log ";
+	    $commandline = $commandline."/usr/lib/jvm/java-1.8.0-openjdk.x86_64/bin/java -Xmx8G -jar ".$gatkpath."GenomeAnalysisTK.jar -T GenotypeGVCFs -R ".$referencegenome;
+		# the combined g.vcf files are in the female directory
+		@files = glob($majorpathfemales."all_".$chromosome."_noBSQR.g.vcf.gz");
+		foreach $file (@files){
+		    $commandline = $commandline." -V ".$file;
+		}
+		$commandline = $commandline." --includeNonVariantSites -o ".$majorpathfemales."all_".$chromosome."_noBSQR_allsites.vcf.gz";
+	    print $commandline,"\n";
+#    $status = system($commandline);
+	 }
+ }
+
+```
+
+# Genotype by depth
+
+I genotyped mtDNA by depth by setting all individuals as zero (males) using the script below.
+
+10_Genotypes_only_male_chrX_based_on_allelic_depth.pl:
+
+```
+#!/usr/bin/env perl
+use strict;
+use warnings;
+use List::Util 'max';
+use List::Util qw(shuffle);
+
+
+# This program reads in a vcf file then genotypes chrX sequences
+# based on the AD (allelic depth) annotation for males
+# Females are left as is
+
+# To run type this:
+# Genotypes_only_male_chrX_based_on_allelic_depth copy input.vcf 0101010 output.tab
+
+# where 0101010 indicates for each ingroup 
+# sample whether the individual is not (0) or is (1)
+# a female
+
+# It takes as input a vcf file and outputs a tab delimited file
+
+
+my $inputfile = $ARGV[0];
+my $outputfile = $ARGV[2];
+
+unless (open(OUTFILE, ">$outputfile"))  {
+	print "I can\'t write to $outputfile   $!\n\n";
+	exit;
+}
+print "Creating output file: $outputfile\n";
+
+if($inputfile =~ /.gz/){
+    print "opening compressed file\n";
+#    unless (open DATAINPUT, '/work/ben/2017_SEAsian_macaques/bin/htslib-1.6/bin/bgzip -c $inputfile | ') {
+#    open DATAINPUT, '<:gzip' $inputfile or die "Can not find the input file, jackass.\n";
+    open DATAINPUT, '-|','gunzip','-c',$inputfile;
+}
+else{
+    unless (open DATAINPUT, $inputfile) {
+	print "Can not find the input file, jackass.\n";
+	exit;
+    }
+}
+
+my @sexes = split("",$ARGV[1]);
+
+my $y;
+my $x;
+my @columns=();
+my @fields;
+my $AD;
+my $GT;
+my $counter=0;
+my @genotypes;
+my $genotypez;
+my @alleledepth;
+my $max;
+my @maxcounter=();
+my $counter2=0;
+my @altalleles=();
+my @allelieos;
+
+while ( my $line = <DATAINPUT>) {
+	chomp($line);
+	@columns=split("\t",$line);
+		if(substr($columns[0],0,1) ne '#'){ # this is not a comment
+		    @fields=split(":",$columns[8]);
+			$counter=0;
+			$AD=0;
+			$GT=0;
+			@altalleles=split(",",$columns[4]);
+			# first find out where the AD and GT columns are
+			foreach(@fields){
+				if($_ eq 'AD'){
+					$AD=$counter;
+				}
+				elsif($_ eq 'GT'){
+					$GT=$counter;
+				}
+				$counter+=1;
+			}
+			# now print out genotypes
+			# first check if we have no data for all individuals
+			$genotypez=();
+			for ($y = 9 ; $y <= $#columns; $y++ ) {
+				@genotypes=split(":",$columns[$y]);
+				$genotypez=$genotypez.$genotypes[$GT];
+			}
+			#print "genotypez ",$genotypez,"\n";
+			if(
+				(index($genotypez,'0') != -1)||
+				(index($genotypez,'1') != -1)||
+				(index($genotypez,'2') != -1)){
+				# there is at least one genotype in the ingroup
+				# if $AD==0 then all individuals are ref
+				if($AD==0){ # this probably never happens
+					print OUTFILE $columns[0],"\t",$columns[1],"\t",$columns[3];
+					for ($y = 9 ; $y <= $#columns; $y++ ) {
+						@genotypes=split(":",$columns[$y]);
+						if($genotypes[$GT] eq '.\/.'){
+							# check if this is a male or female
+							if($sexes[$y-9] == 0){ # it is a male
+								print OUTFILE "\t\.\/";
+							}
+							else{ # this is a female
+								print OUTFILE "\t\.\/.";
+							}	
+						}
+						elsif($genotypes[$GT] eq '0/0'){
+							if($sexes[$y-9] == 0){ # it is a male
+								print OUTFILE "\t".$columns[3]."\/";
+							}
+							else{ # this is a female
+								print OUTFILE "\t$columns[3]\/$columns[3]";
+							}	
+								
+						}
+						else{
+							print "Something is weird with the invariant genotypes\n";
+						}
+					}	
+					print OUTFILE "\n";
+				}
+				else{ # This is probably what happens all the time
+					#print "AD $AD\n";
+					print OUTFILE $columns[0],"\t",$columns[1],"\t",$columns[3];
+					for ($y = 9 ; $y <= $#columns; $y++ ) {
+						if($sexes[$y-9] == 0){ # this is a male
+							@alleledepth=();
+							@genotypes=();
+							@genotypes=split(":",$columns[$y]);
+							@alleledepth=split(",",$genotypes[$AD]);
+							@allelieos = split("/",$genotypes[$GT]); # these are the alleles with numbers 0, 1, 2, etc
+							@maxcounter=();
+							$counter2=0;
+							$max=0;
+							$max=max @alleledepth;
+							# now cycle through each allele depth to find highest and see if there is a tie
+							foreach my $alleledepth (@alleledepth){
+								if($alleledepth == $max){
+									push(@maxcounter,$counter2);
+								}
+								$counter2+=1;
+							}	
+							@maxcounter = shuffle @maxcounter;
+							if($genotypes[$GT] eq './.'){
+								print OUTFILE "\t\.\/";
+							}
+							elsif($maxcounter[0] == 0){ # the highest depth is the REF allele
+								if($columns[3] ne '*'){
+									print OUTFILE "\t".$columns[3]."\/";
+								}
+								else{
+									print OUTFILE "\t\.\/";
+								}	
+							}
+							elsif($maxcounter[0] == 1){ # the highest depth is the first alt allele
+								if($altalleles[0] ne '*'){
+									print OUTFILE "\t".$altalleles[0]."\/";
+								}
+								else{
+									print OUTFILE "\t\.\/";
+								}	
+							}
+							elsif($maxcounter[0] == 2){ # the highest depth is the second alt allele
+								if($altalleles[1] ne '*'){
+									print OUTFILE "\t".$altalleles[1]."\/";
+								}
+								else{
+									print OUTFILE "\t\.\/";
+								}	
+							}
+							elsif($maxcounter[0] == 3){ # the highest depth is the third alt allele
+								if($altalleles[2] ne '*'){
+									print OUTFILE "\t".$altalleles[2]."\/";
+								}
+								else{
+									print OUTFILE "\t\.\/";
+								}	
+							}
+							elsif($maxcounter[0] == 4){ # the highest depth is the fourth alt allele
+								if($altalleles[3] ne '*'){
+									print OUTFILE "\t".$altalleles[3]."\/";
+								}
+								else{
+									print OUTFILE "\t\.\/";
+								}	
+							}
+							elsif($maxcounter[0] == 5){ # the highest depth is the fifth alt allele
+								if($altalleles[4] ne '*'){
+									print OUTFILE "\t".$altalleles[4]."\/";
+								}
+								else{
+									print OUTFILE "\t\.\/";
+								}	
+							}
+							elsif($maxcounter[0] == 6){ # the highest depth is the fifth alt allele
+								if($altalleles[5] ne '*'){
+									print OUTFILE "\t".$altalleles[5]."\/";
+								}
+								else{
+									print OUTFILE "\t\.\/";
+								}	
+							}
+							elsif($maxcounter[0] == 7){ # the highest depth is the fifth alt allele
+								if($altalleles[6] ne '*'){
+									print OUTFILE "\t".$altalleles[6]."\/";
+								}
+								else{
+									print OUTFILE "\t\.\/";
+								}	
+							}
+							else{
+								print OUTFILE "\t\.\/";
+							}
+						}
+						else{ # this is a female
+							@genotypes=();
+							@genotypes=split(":",$columns[$y]);
+							if($genotypes[$GT] eq './.'){
+								print OUTFILE "\t\.\/\.";
+							}
+							elsif($genotypes[$GT] eq '0/0'){
+								print OUTFILE "\t".$columns[3]."\/".$columns[3];
+							}
+							else{ # this female is heterozygous
+								@altalleles = split(",",$columns[4]);
+								@allelieos = split("/",$genotypes[$GT]);
+								# first print first allele for this female
+								if($altalleles[$allelieos[0]-1] ne '*'){
+									if($allelieos[0] eq '0'){
+										print OUTFILE "\t".$columns[3]."\/";
+									}
+									else{
+										print OUTFILE "\t".$altalleles[$allelieos[0]-1]."\/";
+									}
+								}
+								else{
+									print OUTFILE "\t\.\/";
+								}
+								# now print the second allele	
+								if($altalleles[$allelieos[1]-1] ne '*'){
+									if($allelieos[1] eq '0'){
+										print OUTFILE $columns[3];
+									}
+									else{
+										print OUTFILE $altalleles[$allelieos[1]-1];
+									}
+								}
+								else{
+									print OUTFILE "\.";
+								}
+							}
+
+						}	
+					}
+					print OUTFILE "\n";	
+				}
+			}
+		}# endif
+		elsif(substr($columns[0],0,6) eq '#CHROM'){ # print the first line
+			print OUTFILE "#CHROM	POS	REF";
+				for ($y = 9 ; $y <= $#columns; $y++ ) {
+					print OUTFILE "\t",$columns[$y];
+				}
+				print OUTFILE "\n";			
+		}
+}# end while
+close DATAINPUT;
+close OUTFILE;
+
+```

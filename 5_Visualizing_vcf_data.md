@@ -23,6 +23,17 @@ module load python/intel/2.7.8
 
 # Density plots
 
+Begin by making a file with information from the vcf that can be fed into R for plotting:
+
+```
+java -jar GenomeAnalysisTK.jar \
+     -R reference.fasta
+     -T VariantsToTable \
+     -V ../SEAsian_macaques_bam/females/all_chrM_noBSQR_allsites.vcf.gz \
+     -F CHROM -F POS -F ID -F QUAL -F MQ -F MQRankSum -F DP -F ReadPosRankSum -F SOR \
+     -o results.table
+```
+
 Based on this site:
 http://mbontrager.org/blog/2016/08/17/Variant-Exploration
 

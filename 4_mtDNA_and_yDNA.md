@@ -473,4 +473,167 @@ $status = system("perl -p -i -e 's/XXXX/$count/g' $outputfile");
 
 ```
 
+# Another tab to nexus script
+
+This one assumes haploid genotypes and includes indels in the ref and the ingroup:
+```perl
+#!/usr/bin/env perl
+use strict;
+use warnings;
+use List::MoreUtils qw/ uniq /;
+use List::Util qw( min max );
+
+
+#  This program reads in a tab delimited genotype file generated
+#  by the perl program '17_adds_outgroup_to_lots_of_tab_files.pl'
+#  and generates an interleaved nexus file that includes degenerate bases and gaps
+
+# it can accommodate any number of haploid reference (rhesus) genomes before the ingroup
+
+# it will include haploid indels in the ref or ingroup
+
+# so this should be used for mtDNA or yDNA generated either by gatk calling haploid genotypes
+# or by my genotype_by_depth script where all individuals are called as haploid
+
+# I am restricting it to haploids (at least for now). 
+
+# probably a good idea to check alignments manually (or convert to fasta and do it with a program)
+# because the indels will not be properly aligned
+
+# run it like this
+# 21_tab_to_interleave_nexus.pl input.tab output_interleave.nxs 1
+
+
+my $inputfile = $ARGV[0];
+my $outputfile = $ARGV[1];
+my $number_of_reference_genomez = $ARGV[2]; # this indicates how many reference genomes preceed the data
+
+unless (open DATAINPUT, $inputfile) {
+	print 'Can not find the input file.\n';
+	exit;
+}
+
+
+my @temp;
+my @temp1;
+my @names;
+my %datahash;
+my $z;
+my $y;
+my $x;
+my $watisitnow;
+my $count=0;
+my $interleave=0;
+my @largest_length=1;
+my $max;
+
+# Read in datainput file
+
+while ( my $line = <DATAINPUT>) {
+	chomp($line);
+	@temp=split('\t',$line);
+	if($temp[0] eq '#CHROM'){
+		@names=@temp;
+		for ($y = 2; $y <= $#names; $y++ ) {
+			$names[$y] =~ s/-//gi; # get rid of dashes in names
+			$datahash{$names[$y]}=''; # initialize the hash
+		}	
+		# print preamble to output file
+		unless (open(OUTFILE, ">$outputfile"))  {
+			print "I can\'t write to $outputfile\n";
+			exit;
+		}
+		print "Creating output file: $outputfile\n";
+		print OUTFILE "#NEXUS\n\n";
+		print OUTFILE "BEGIN DATA\;\nDIMENSIONS NTAX=",$#names-1," NCHAR= XXXX\;\n";
+		print OUTFILE "FORMAT DATATYPE=DNA  MISSING=? INTERLEAVE GAP=- \;\n";
+		print OUTFILE "MATRIX\n";
+		print OUTFILE "\n";
+	}
+	else{	
+		if($interleave>=80){  # print this section of the data
+			# print out the first 80bp, trim this out of the hash, and move on
+			# we assume here that indels never are longer than 80 bp
+			# if they were, I think the last interleave will be longer than the others
+			for ($y = 2; $y <= $#names; $y++ ) {
+				print OUTFILE $names[$y],"\t\t\t",substr($datahash{$names[$y]},0,79),"\n";
+			}
+			print OUTFILE "\n";
+			$interleave=0;
+			# clear the hash
+			for ($y = 2 ; $y <= $#names; $y++ ) {
+				#$datahash{$names[$y]}='';
+				substr($datahash{$names[$y]},0,79,"")
+			}
+			$interleave=length($datahash{$names[2]});
+		}
+		@largest_length=();
+		# store length each genotype in ref
+		for ($y = 2 ; $y < 2+$number_of_reference_genomez; $y++ ) {
+			$largest_length[$y-2] = length($temp[$y]);
+		}
+		# and in the ingrpup
+		for ($y = (2+$number_of_reference_genomez) ; $y <= $#temp; $y++ ) {
+			@temp1=split('\/',$temp[$y]);
+			$largest_length[$y-2] = length($temp1[0]);
+		}	
+		# now add data to the hash
+		for ($y = 2 ; $y < 2+$number_of_reference_genomez; $y++ ) {	# first the three outgroups which are haploid
+			if($temp[$y] ne '*'){
+				$datahash{$names[$y]} = $datahash{$names[$y]}.uc($temp[$y]);
+			}
+			else{
+				$datahash{$names[$y]} = $datahash{$names[$y]}.'-';
+			}	
+		}
+		for ($y = (2+$number_of_reference_genomez) ; $y <= $#temp; $y++ ) { 
+			# now the ingroups, which are haploid
+			@temp1=split('\/',$temp[$y]);
+			if(($temp1[0] ne '*')&&($temp1[0] ne '.')&&($temp1[0] !~ /NON_REF/)){
+				$datahash{$names[$y]} = $datahash{$names[$y]}.$temp1[0];
+			}	
+			else{ # this is a microsat, so substitute missing data
+				$datahash{$names[$y]} = $datahash{$names[$y]}.'-';
+			}
+		}	
+		# add gaps if necessary
+		$max = max @largest_length;
+		if($max >1){
+			print $max,"\n";
+		}
+		for ($y = 2 ; $y <= $#temp; $y++ ) {
+			for ($z = $largest_length[$y-2]; $z < $max; $z++ ) {
+				#add gaps to hash
+				$datahash{$names[$y]}=$datahash{$names[$y]}.'-';
+			}
+		}
+		$count=$count+$max; # this is the count of all positions
+		$interleave=$interleave+$max; # this is the count of the interleave length
+
+	}
+}		
+
+# print the last line
+for ($y = 2; $y <= $#names; $y++ ) {
+	print OUTFILE $names[$y],"\t\t",$datahash{$names[$y]},"\n";
+}
+#print OUTFILE "\n";
+
+
+
+print OUTFILE "\;\nEND\;";
+print OUTFILE "\n";
+print OUTFILE "\n";
+
+
+close OUTFILE;
+print "The number of sites is $count\n";
+
+# now update the number of bases
+
+my $status;
+$status = system("perl -p -i -e 's/XXXX/$count/g' $outputfile");
+```
+
+
 

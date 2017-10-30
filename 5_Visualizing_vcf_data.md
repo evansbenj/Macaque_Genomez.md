@@ -21,7 +21,10 @@ module load python/intel/2.7.8
 ../bin/bcftools-1.6/bin/plot-vcfstats -p plots/ ../SEAsian_macaques_bam/females/all_chrM_noBSQR_allsites.vcf.gz.stats
 ```
 
+# Density plots
 
-
-or, check out this site:
+Based on this site:
 http://mbontrager.org/blog/2016/08/17/Variant-Exploration
+
+
+zcat  ../SEAsian_macaques_bam/females/all_chrM_noBSQR_allsites.vcf | egrep -v "^#" | cut -f 8 | sed 's/^.*;DP=\([0-9]*\)*$/\1/' > ../SEAsian_macaques_bam/females/all_chrM_noBSQR_allsites.vcf_depth.txt

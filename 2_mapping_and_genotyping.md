@@ -235,6 +235,16 @@ mkdir plots
 plot-vcfstats -p plots/ <study.vcf.gz.stats>
 ```
 
+example:
+
+```
+../bin/bcftools-1.6/bin/bcftools stats -F ../MacaM/MacaM_mt_female.fa -s - ../SEAsian_macaques_bam/females/all_chrM_noBSQR_allsites.vcf.gz > ../SEAsian_macaques_bam/females/all_chrM_noBSQR_allsites.vcf.gz.stats
+```
+```
+../bin/bcftools-1.6/bin/plot-vcfstats -p plots/ ../SEAsian_macaques_bam/females/all_chrM_noBSQR_allsites.vcf.gz.stats
+```
+
+
 # Filter
 
 ```

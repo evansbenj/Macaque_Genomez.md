@@ -38,3 +38,13 @@ example:
 ```bash
 sqsub -r 1d --mpp 6G -o temp.log /usr/lib/jvm/java-1.8.0-openjdk.x86_64/bin/java  -Xmx2g -jar ../bin/GenomeAnalysisTK-nightly-2017-10-07-g1994025/GenomeAnalysisTK.jar -R ../MacaM/MacaM_mt_y.fa -T VariantsToTable -V ../SEAsian_macaques_bam/females/all_chrM_noBSQR_allsites.vcf.gz -F CHROM -F POS -F ID -F QUAL -F MQ -F MQRankSum -F DP -F ReadPosRankSum -F SOR -o results.table
 ```
+
+then plot with ggplot:
+```R
+library(ggplot2)
+pdf("depth_density.pdf",w=6, h=2, version="1.4", bg="transparent")
+dat<-read.table("results.table", header=TRUE)
+d<-ggplot(dat, aes(x=MQ)) + geom_density()
+d
+dev.off()
+```

@@ -26,5 +26,8 @@ module load python/intel/2.7.8
 Based on this site:
 http://mbontrager.org/blog/2016/08/17/Variant-Exploration
 
+but modified slightly because of problems with sed command to make this corrected pipe:
 
+```bash
 zcat  ../SEAsian_macaques_bam/females/all_chrM_noBSQR_allsites.vcf | egrep -v "^#" | cut -f 8 | sed 's/^.*;DP=\([0-9]*\)*$/\1/' > ../SEAsian_macaques_bam/females/all_chrM_noBSQR_allsites.vcf_depth.txt
+```

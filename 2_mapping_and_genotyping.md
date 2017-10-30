@@ -269,7 +269,7 @@ $java -jar $gatk \
 ```
  
  
- But I inspected the chrM vcf fine after CombiningGVCFs and then GenotypingGVCFs and outputing all sites in VCF format.  The map quality of many sites is less than 40, probably because of divergence, or because of numts. So this may be to strict a setting to filter on.
+ But I inspected the chrM vcf file after CombiningGVCFs and then GenotypingGVCFs and outputing all sites in VCF format.  The map quality of many sites is less than 40, probably because of divergence, or because of numts. So this may be to strict a setting to filter on.
  
  Also genotype specific filters are possible.
  

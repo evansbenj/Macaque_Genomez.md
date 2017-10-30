@@ -33,12 +33,8 @@ java -jar GenomeAnalysisTK.jar \
      -F CHROM -F POS -F ID -F QUAL -F MQ -F MQRankSum -F DP -F ReadPosRankSum -F SOR \
      -o results.table
 ```
-
-Based on this site:
-http://mbontrager.org/blog/2016/08/17/Variant-Exploration
-
-but modified slightly because of problems with sed command to make this corrected pipe:
+example:
 
 ```bash
-zcat  ../SEAsian_macaques_bam/females/all_chrM_noBSQR_allsites.vcf | egrep -v "^#" | cut -f 8 | sed 's/^.*;DP=\([0-9]*\)*$/\1/' > ../SEAsian_macaques_bam/females/all_chrM_noBSQR_allsites.vcf_depth.txt
+sqsub -r 1d --mpp 6G -o temp.log /usr/lib/jvm/java-1.8.0-openjdk.x86_64/bin/java  -Xmx2g -jar ../bin/GenomeAnalysisTK-nightly-2017-10-07-g1994025/GenomeAnalysisTK.jar -R ../MacaM/MacaM_mt_y.fa -T VariantsToTable -V ../SEAsian_macaques_bam/females/all_chrM_noBSQR_allsites.vcf.gz -F CHROM -F POS -F ID -F QUAL -F MQ -F MQRankSum -F DP -F ReadPosRankSum -F SOR -o results.table
 ```

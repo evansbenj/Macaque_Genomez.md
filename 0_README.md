@@ -10,4 +10,4 @@ Is there evidence of gene flow across Wallace's line?  Does it differ between th
 * Recombination questions
 How correlated are rates of recombination across species? And to rhesus?  Is there a correlation between fstatistics and recombination rates (prediction is a positive correlation if DM incompatibilities exist).
 
-Is there a skew of recombination rates along the chromosome? Does correspond with divergence and polymorphism?
+** Is there a skew of recombination rates along the chromosome? Does correspond with divergence and polymorphism?

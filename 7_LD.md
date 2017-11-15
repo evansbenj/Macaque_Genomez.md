@@ -47,3 +47,8 @@ This should generate two output files with suffixes  `.ldhat.sites` and `.ldhat.
 # Lookup files
 
 LDhat needs lookupfiles that specify the number of sequences in the sample, theta per site, and a 'grid size' which is the maximum value of 4Ner and has a suggested value of 100. In the manual it says "It is worth noting that minor changes in the value of theta per site do not seem to have a large influence on the estimated recombination rate".  So I plan to use lkgen to make these files using the existing file (lk_n50_t0.001) for theta per site equal to 0.001 (which is pretty close to the estimate for M. tonkeana of 0.002 and probably simialr to the esimates for the other species.
+
+This file is here:
+```
+/work/ben/2017_SEAsian_macaques/bin/LDhat/LDhat_lookup/lk_n50_t0.001
+```

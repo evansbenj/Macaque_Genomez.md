@@ -8,8 +8,9 @@ Vcftools can generate input files for LDHat.  I am going to try this out using t
 ```
 ../SEAsian_macaques_bam/females_and_males/FandM_chr12_BSQR_jointgeno_allsites_filtered_SNPsonly.vcf.gz
 ```
+on iqaluk
 ```
-vcftools --vcf ../SEAsian_macaques_bam/females_and_males/FandM_chr12_BSQR_jointgeno_allsites_filtered_SNPsonly.vcf.gz --out --ldhat-geno 
+../bin/vcftools/bin/vcftools --vcf ../SEAsian_macaques_bam/females_and_males/FandM_chr12_BSQR_jointgeno_allsites_filtered_SNPsonly.vcf.gz --out --ldhat-geno 
 ```
 
 This should generate two output files with suffixes  ".ldhat.sites" and ".ldhat.locs",

@@ -12,10 +12,10 @@ on iqaluk
 
 * first filter out the species that will be analyzed (will have to do this for each chr
 ```
-../bin/vcftools/bin/vcftools --gzvcf ../SEAsian_macaques_bam/females_and_males/FandM_chr12_BSQR_jointgeno_allsites_filtered_SNPsonly.vcf.gz --keep tonk_individuals.txt --chr chr12 --out ../SEAsian_macaques_bam/females_and_males/FandM_chr12_BSQR_jointgeno_allsites_filtered_SNPsonly_tonk.vcf.gz
+../bin/vcftools/bin/vcftools --gzvcf ../SEAsian_macaques_bam/females_and_males/FandM_chr12_BSQR_jointgeno_allsites_filtered_SNPsonly.vcf.gz --keep tonk_individuals.txt --chr chr12 --recode --out ../SEAsian_macaques_bam/females_and_males/FandM_chr12_BSQR_jointgeno_allsites_filtered_SNPsonly_tonk.vcf.gz
 ```
 
-This did not write...
+The `--recode ` option is needed to make it output the file.
 
 * then thin the vcf file to include only one variable position within a 15 bp window. I modified a script that Laurie wrote ('thinVCF.pl')  take gz files as input.
 

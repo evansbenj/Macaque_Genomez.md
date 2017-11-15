@@ -15,7 +15,7 @@ on iqaluk
 ../bin/vcftools/bin/vcftools --gzvcf ../SEAsian_macaques_bam/females_and_males/FandM_chr12_BSQR_jointgeno_allsites_filtered_SNPsonly.vcf.gz --keep tonk_individuals.txt --chr chr12 --out ../SEAsian_macaques_bam/females_and_males/FandM_chr12_BSQR_jointgeno_allsites_filtered_SNPsonly_tonk.vcf.gz
 ```
 
-Need to check if this is really zipped.
+This did not write...
 
 * then thin the vcf file to include only one variable position within a 15 bp window. I modified a script that Laurie wrote ('thinVCF.pl')  take gz files as input.
 

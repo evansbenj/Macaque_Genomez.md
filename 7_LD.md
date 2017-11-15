@@ -52,3 +52,8 @@ This file is here:
 ```
 /work/ben/2017_SEAsian_macaques/bin/LDhat/LDhat_lookup/lk_n50_t0.001
 ```
+
+```
+/work/ben/2017_SEAsian_macaques/bin/LDhat/lkgen -lk /work/ben/2017_SEAsian_macaques/bin/LDhat/LDhat_lookup/lk_n50_t0.001 -nseq 12
+```
+This generates a lookup file `new_lk.txt` that should be renamed to `/work/ben/2017_SEAsian_macaques/bin/LDhat/LDhat_lookup/lk_n12_t0.001`

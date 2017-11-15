@@ -12,18 +12,18 @@ on iqaluk
 
 * first filter out the species that will be analyzed (will have to do this for each chr
 ```
-../bin/vcftools/bin/vcftools --gzvcf ../SEAsian_macaques_bam/females_and_males/FandM_chr12_BSQR_jointgeno_allsites_filtered_SNPsonly.vcf.gz --keep tonk_individuals.txt --chr chr12 --recode --out ../SEAsian_macaques_bam/females_and_males/FandM_chr12_BSQR_jointgeno_allsites_filtered_SNPsonly_tonk.vcf.gz
+../bin/vcftools/bin/vcftools --gzvcf ../SEAsian_macaques_bam/females_and_males/FandM_chr12_BSQR_jointgeno_allsites_filtered_SNPsonly.vcf.gz --keep tonk_individuals.txt --chr chr12 --recode --out ../SEAsian_macaques_bam/females_and_males/Fa
 ```
 
-The `--recode ` option is needed to make it output the file.
+The `--recode ` option is needed to make it output the file. The `--out` option specifies a directory and the output file is written to this directory with the prefix of the input file followed by 'recode.vcf'
 
-* then thin the vcf file to include only one variable position within a 15 bp window. I modified a script that Laurie wrote ('thinVCF.pl')  take gz files as input.
+* then thin the vcf file to include only one variable position within a 15 bp window. I modified a script that Laurie wrote ('thinVCF.pl')  take gz files as input. But I don't need this because vcftools writes a vcf file (which I should later delete).
 
 ```
-./thinVCF.pl ../SEAsian_macaques_bam/females_and_males/FandM_chr12_BSQR_jointgeno_allsites_filtered_SNPsonly_tonk.gz ../SEAsian_macaques_bam/females_and_males/FandM_chr12_BSQR_jointgeno_allsites_filtered_SNPsonly_tonk_thinned.vcf
+./thinVCF.pl ../SEAsian_macaques_bam/females_and_males/FandM_chr12_BSQR_jointgeno_allsites_filtered_SNPsonly_tonk.vcf.gz.recode.vcf ../SEAsian_macaques_bam/females_and_males/FandM_chr12_BSQR_jointgeno_allsites_filtered_SNPsonly_tonk.vcf.gz_thinned.vcf
 ```
 
-Then this needs to be compressed and indexed.
+Then this needs to be compressed and indexed and intermediate files should be deleted.
 
 ```
 ../bin/htslib-1.6/bin/bgzip ../SEAsian_macaques_bam/females_and_males/FandM_chr12_BSQR_jointgeno_allsites_filtered_SNPsonly_tonk_thinned.vcf

@@ -22,20 +22,26 @@ The `--recode ` option is needed to make it output the file. The `--out` option 
 ```
 ./thinVCF.pl ../SEAsian_macaques_bam/females_and_males/FandM_chr12_BSQR_jointgeno_allsites_filtered_SNPsonly_tonk.vcf.gz.recode.vcf ../SEAsian_macaques_bam/females_and_males/FandM_chr12_BSQR_jointgeno_allsites_filtered_SNPsonly_tonk.vcf.gz_thinned.vcf
 ```
+The intermediate file should be deleted.
+```
+rm -f ../SEAsian_macaques_bam/females_and_males/FandM_chr12_BSQR_jointgeno_allsites_filtered_SNPsonly_tonk.vcf.gz.recode.vcf 
+```
 
-Then this needs to be compressed and indexed and intermediate files should be deleted.
+The thinned file should be compressed:
 
 ```
-../bin/htslib-1.6/bin/bgzip ../SEAsian_macaques_bam/females_and_males/FandM_chr12_BSQR_jointgeno_allsites_filtered_SNPsonly_tonk_thinned.vcf
+../bin/htslib-1.6/bin/bgzip ../SEAsian_macaques_bam/females_and_males/FandM_chr12_BSQR_jointgeno_allsites_filtered_SNPsonly_tonk.vcf.gz_thinned.vcf
 ```
+No indexing needed, but if it was I would do it like this:
+
 ```
-../bin/htslib-1.6/bin/tabix -p vcf ../SEAsian_macaques_bam/females_and_males/FandM_chr12_BSQR_jointgeno_allsites_filtered_SNPsonly_tonk_thinned.vcf.gz
+../bin/htslib-1.6/bin/tabix -p vcf ../SEAsian_macaques_bam/females_and_males/FandM_chr12_BSQR_jointgeno_allsites_filtered_SNPsonly_tonk.vcf.gz_thinned.vcf.gz
 ```
 
 * Now make the LDHat input files
 
 ```
-../bin/vcftools/bin/vcftools --gzvcf ../SEAsian_macaques_bam/females_and_males/FandM_chr12_BSQR_jointgeno_allsites_filtered_SNPsonly_tonk_thinned.vcf.gz --chr chr12 --ldhat-geno --out ../SEAsian_macaques_bam/females_and_males/FandM_chr12_BSQR_jointgeno_allsites_filtered_SNPsonly_tonk_thinned 
+../bin/vcftools/bin/vcftools --gzvcf ../SEAsian_macaques_bam/females_and_males/FandM_chr12_BSQR_jointgeno_allsites_filtered_SNPsonly_tonk.vcf.gz_thinned.vcf.gz --chr chr12 --ldhat-geno --out ../SEAsian_macaques_bam/females_and_males/
 ```
 (no longer need --keep tonk_individuals.txt  because these were selected earlier)
 

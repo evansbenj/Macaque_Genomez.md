@@ -42,3 +42,8 @@ Then this needs to be compressed and indexed.
 This should generate two output files with suffixes  `.ldhat.sites` and `.ldhat.locs`. The `--keep` command refers to a file with a list of the individuals to include. The `--chr` option is needed because each chr is in a different linkage group and make sure to use the entire name of the chr or the output file will have no sites. The `--out` option provides a prefix for the output files.
 
   I'm trying now to pipe the output to bgzip to keep it small prior to inputting into vcftools.  One concern is that I probably should divide up the vcf files by taxon before thinning; that way I don't remove thin based on sites that are divergent between species in the multisample vcf.
+  
+  
+# Lookup files
+
+LDhat needs lookupfiles that specify the number of sequences in the sample, theta per site, and a 'grid size' which is the maximum value of 4Ner and has a suggested value of 100. In the manual it says "It is worth noting that minor changes in the value of theta per site do not seem to have a large influence on the estimated recombination rate".  So I plan to use lkgen to make these files using the existing file (lk_n50_t0.001) for theta per site equal to 0.001 (which is pretty close to the estimate for M. tonkeana of 0.002 and probably simialr to the esimates for the other species.

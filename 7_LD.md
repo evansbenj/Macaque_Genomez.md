@@ -70,3 +70,8 @@ Now I have the input files:
 ../SEAsian_macaques_bam/females_and_males/FandM_chr12_BSQR_jointgeno_allsites_filtered_SNPsonly_tonk.vcf.gz_thinned.ldhat.sites
 /work/ben/2017_SEAsian_macaques/bin/LDhat/LDhat_lookup/lk_n12_t0.001
 ```
+So I can run LDhat interval
+```
+/work/ben/2017_SEAsian_macaques/bin/LDhat/interval -seq <file_name> -loc <file_name> -lk <file_name>
+```
+

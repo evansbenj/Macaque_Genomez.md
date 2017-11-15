@@ -24,3 +24,8 @@ foreach my $file (@files){
 }
 
 ```
+
+On iqaluk using screen:
+```
+../bin/samtools-1.6/samtools depth ../SEAsian_macaques_bam/males/tonk_PM592sorted_ddedup_rg_realigned.bamBSQR.bam |  awk '{sum+=$3} END { print "Depth = ",sum/NR}' >> ../SEAsian_macaques_bam/males/tonk_PM592sorted_ddedup_rg_realigned.bamBSQR.bam.depth.txt
+```

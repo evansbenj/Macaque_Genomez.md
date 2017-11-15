@@ -14,3 +14,5 @@ on iqaluk
 ```
 
 This should generate two output files with suffixes  `.ldhat.sites` and `.ldhat.locs`. The `--keep` command refers to a file with a list of the individuals to include. The `--chr` option is needed because each chr is in a different linkage group and make sure to use the entire name of the chr or the output file will have no sites. The `--out` option provides a prefix for the output files.
+
+I modified a script that Laurie wrote ('thinVCF.pl') to thin vcf files and also take as inout gz files.  I'm trying now to pipe the output to bgzip to keep it small prior to inputting into vcftools.  One concern is that I probably should divide up the vcf files by taxon before thinning; that way I don't remove thin based on sites that are divergent between species in the multisample vcf.

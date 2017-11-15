@@ -45,9 +45,7 @@ No indexing needed, but if it was I would do it like this:
 ```
 (no longer need --keep tonk_individuals.txt  because these were selected earlier)
 
-This should generate two output files with suffixes  `.ldhat.sites` and `.ldhat.locs`. The `--keep` command refers to a file with a list of the individuals to include. The `--chr` option is needed because each chr is in a different linkage group and make sure to use the entire name of the chr or the output file will have no sites. The `--out` option provides a prefix for the output files.
-
-  I'm trying now to pipe the output to bgzip to keep it small prior to inputting into vcftools.  One concern is that I probably should divide up the vcf files by taxon before thinning; that way I don't remove thin based on sites that are divergent between species in the multisample vcf.
+This should generate two output files with suffixes  `.ldhat.sites` and `.ldhat.locs`. The `--keep` command refers to a file with a list of the individuals to include but this is not needed because we already selected them in an earlier step. The `--chr` option is required, I think, even though we are only inputting one chr anyhow. The `--out` option provides a prefix for the output files.
   
   
 # Lookup files

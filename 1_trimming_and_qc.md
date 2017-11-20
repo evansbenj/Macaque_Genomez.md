@@ -141,9 +141,11 @@ Important to remember is that the file 'filename' needs to include the paired re
 Here's the step by step (all were done with a kmer size of 19):
 zcat PF549_S7_L007_R*_001scythe_and_trimm_paired.fq.gz | jellyfish count /dev/fd/0 -m 19 -s 100M -t 16 -C
 
-jellyfish dump mer_counts.jf > dump_mer_counts.jf
+jellyfish dump mer_counts.jf > jelly_dump_all_19mers
 
 zcat blah*_trim_paired.fastq.gz | /home/evanslab/tetra_project/jellyfish-2.2.4/bin/jellyfish count /dev/fd/0 -m 19 -s 100M -t 16 -C -o jelly_count_all_19mers
+
+/usr/local/quake/bin/correct -f filenames.txt -z -k 19 -c 1 -m jelly_dump_all_19mers -p 4
 
 
 

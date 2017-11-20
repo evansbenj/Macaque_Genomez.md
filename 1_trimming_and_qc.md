@@ -145,8 +145,10 @@ jellyfish dump mer_counts.jf > jelly_dump_all_19mers
 
 zcat blah*_trim_paired.fastq.gz | /home/evanslab/tetra_project/jellyfish-2.2.4/bin/jellyfish count /dev/fd/0 -m 19 -s 100M -t 16 -C -o jelly_count_all_19mers
 
-/usr/local/quake/bin/correct -f filenames.txt -z -k 19 -c 1 -m jelly_dump_all_19mers -p 4
+/usr/local/quake/bin/correct -f filenames.txt -z -k 19 -c 1 -m jelly_dump_all_19mers -p 4 -q 33
 
+or on cedar: 
+/home/ben/project/ben/bin/Quake/src/correct -f filenamez.txt -z -k 19 -c 1 -m jelly_dump_all_19mers -p 4 -q 33
 
 
 

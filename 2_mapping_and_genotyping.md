@@ -31,6 +31,17 @@ For male genomes the reference will be MacaM_mt_y.fa, which includes the chrY.  
 /project0/ben/bin/bwa/bwa mem /project0/ben/MacaM/MacaM_mt_female.fa /project0/ben/SEAsian_scy_trim_quake/hecki_PF644/PF644_all_R1scythe_and_trimm_paired.corfixed.fq.gz /project0/ben/SEAsian_scy_trim_quake/hecki_PF644/PF644_all_R2scythe_and_trimm_paired.corfixed.fq.gz -t 4 | /project0/ben/bin/samtools-1.5/samtools view -Shu - | /project0/ben/bin/samtools-1.5/samtools sort - -o /project0/ben/SEAsian_macaques_bam/hecki_PF644sorted.bam
 ```
 
+For the rerun of PM665 and PM1206, I need to merge the forward and reverse reads before mapping like this:
+```
+cat nem_PM1206_all_R1scythe_and_trimm_paired.cor.fq.gz Library_PM1206_nemestrina_S7_L007_R1_001scythe_and_trimm_paired.cor.fq.gz > num_PM1206_R1catscythe_and_trimm_paired.cor.fq.gz
+```
+and
+
+```
+cat nem_PM1206_all_R2scythe_and_trimm_paired.cor.fq.gz Library_PM1206_nemestrina_S7_L007_R2_001scythe_and_trimm_paired.cor.fq.gz > num_PM1206_R2catscythe_and_trimm_paired.cor.fq.gz
+
+```
+
 
 # Running Java 8 on sharcnet (no problem on bionc)
 

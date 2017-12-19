@@ -39,6 +39,14 @@ zcat /mnt/scratch/ben_evans/SEAsian_macaques_original_rawdata/nem_PM1206/Library
 zcat /mnt/scratch/ben_evans/SEAsian_macaques_original_rawdata/nem_PM1206/Library_PM1206_nemestrina_S7_L007_R2_001scythe_and_trimm_paired.cor.fq.gz /mnt/scratch/ben_evans/SEAsian_macaques_original_rawdata/nem_PM1206/nem_PM1206_all_R2scythe_and_trimm_paired.cor.fq.gz | gzip -c > /mnt/scratch/ben_evans/SEAsian_macaques_original_rawdata/nem_PM1206/nem_PM1206_all_R2.fastq.gz 
 ```
 
+and for PM665:
+```
+zcat /mnt/scratch/ben_evans/SEAsian_macaques_original_rawdata/nem_PM665/Library_PM665_nemestrina_S8_L008_R1_001scythe_and_trimm_paired.cor_new.fq.gz /mnt/scratch/ben_evans/SEAsian_macaques_original_rawdata/nem_PM665/nem_PM665_all_R1scythe_and_trimm_paired.cor_new.fq.gz | gzip -c > /mnt/scratch/ben_evans/SEAsian_macaques_original_rawdata/nem_PM665/nem_PM665_all_R1.fastq.gz 
+```
+```
+zcat /mnt/scratch/ben_evans/SEAsian_macaques_original_rawdata/nem_PM665/Library_PM665_nemestrina_S8_L008_R2_001scythe_and_trimm_paired.cor_new.fq.gz /mnt/scratch/ben_evans/SEAsian_macaques_original_rawdata/nem_PM665/nem_PM665_all_R2scythe_and_trimm_paired.cor_new.fq.gz | gzip -c > /mnt/scratch/ben_evans/SEAsian_macaques_original_rawdata/nem_PM665/nem_PM665_all_R2.fastq.gz
+```
+
 # Mapping with bwa
 
 For male genomes the reference will be MacaM_mt_y.fa, which includes the chrY.  For females the reference will be MacaM_mt_female.fa, which does not include chrY. Both have mtDNA.  Here is an example with a female, with a pipe to samtools for sorting the bam.

@@ -23,6 +23,20 @@ On iqaluk, needed to repair unpaired reads from quake because I did not include 
 /project0/ben/bin/bbmap/bbmap/repair.sh -Xmx30g in1=/project0/ben/SEAsian_scy_trim_quake/nem_PM1206/nem_PM1206_all_R1scythe_and_trimm_paired.cor.fastq.gz in2=/project0/ben/SEAsian_scy_trim_quake/nem_PM1206/nem_PM1206_all_R2scythe_and_trimm_paired.cor.fastq.gz out1=/project0/ben/SEAsian_scy_trim_quake/nem_PM1206/nem_PM1206_all_R1scythe_and_trimm_paired.corfixed.fastq.gz out2=/project0/ben/SEAsian_scy_trim_quake/nem_PM1206/nem_PM1206_all_R2scythe_and_trimm_paired.corfixed.fastq.gz outsingle=/project0/ben/SEAsian_scy_trim_quake/nem_PM1206/nem_PM1206_all_R1scythe_and_trimm_pairsingletons.fq.gz 
 ```
 
+# Reruns of PM665 and PM1206
+
+I had problems with reads that I tried to map using `cat *_R1.fq.gz > all_R1.fq.gz`, so I am trying this:
+```
+zcat *.fastq.gz | gzip > output.fastq.gz
+```
+Here are the commands for PM1206:
+```
+zcat /mnt/scratch/ben_evans/SEAsian_macaques_original_rawdata/nem_PM1206/Library_PM1206_nemestrina_S7_L007_R1_001scythe_and_trimm_paired.cor.fq.gz /mnt/scratch/ben_evans/SEAsian_macaques_original_rawdata/nem_PM1206/nem_PM1206_all_R1scythe_and_trimm_paired.cor.fq.gz > /mnt/scratch/ben_evans/SEAsian_macaques_original_rawdata/nem_PM1206/nem_PM1206_all_R1.fastq.gz 
+```
+```
+zcat /mnt/scratch/ben_evans/SEAsian_macaques_original_rawdata/nem_PM1206/Library_PM1206_nemestrina_S7_L007_R2_001scythe_and_trimm_paired.cor.fq.gz /mnt/scratch/ben_evans/SEAsian_macaques_original_rawdata/nem_PM1206/nem_PM1206_all_R1scythe_and_trimm_paired.cor.fq.gz > /mnt/scratch/ben_evans/SEAsian_macaques_original_rawdata/nem_PM1206/nem_PM1206_all_R2.fastq.gz 
+```
+
 # Mapping with bwa
 
 For male genomes the reference will be MacaM_mt_y.fa, which includes the chrY.  For females the reference will be MacaM_mt_female.fa, which does not include chrY. Both have mtDNA.  Here is an example with a female, with a pipe to samtools for sorting the bam.

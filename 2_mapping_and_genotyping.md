@@ -34,7 +34,7 @@ Here are the commands for PM1206:
 zcat /mnt/scratch/ben_evans/SEAsian_macaques_original_rawdata/nem_PM1206/Library_PM1206_nemestrina_S7_L007_R1_001scythe_and_trimm_paired.cor.fq.gz /mnt/scratch/ben_evans/SEAsian_macaques_original_rawdata/nem_PM1206/nem_PM1206_all_R1scythe_and_trimm_paired.cor.fq.gz > /mnt/scratch/ben_evans/SEAsian_macaques_original_rawdata/nem_PM1206/nem_PM1206_all_R1.fastq.gz 
 ```
 ```
-zcat /mnt/scratch/ben_evans/SEAsian_macaques_original_rawdata/nem_PM1206/Library_PM1206_nemestrina_S7_L007_R2_001scythe_and_trimm_paired.cor.fq.gz /mnt/scratch/ben_evans/SEAsian_macaques_original_rawdata/nem_PM1206/nem_PM1206_all_R1scythe_and_trimm_paired.cor.fq.gz > /mnt/scratch/ben_evans/SEAsian_macaques_original_rawdata/nem_PM1206/nem_PM1206_all_R2.fastq.gz 
+zcat /mnt/scratch/ben_evans/SEAsian_macaques_original_rawdata/nem_PM1206/Library_PM1206_nemestrina_S7_L007_R2_001scythe_and_trimm_paired.cor.fq.gz /mnt/scratch/ben_evans/SEAsian_macaques_original_rawdata/nem_PM1206/nem_PM1206_all_R2scythe_and_trimm_paired.cor.fq.gz > /mnt/scratch/ben_evans/SEAsian_macaques_original_rawdata/nem_PM1206/nem_PM1206_all_R2.fastq.gz 
 ```
 
 # Mapping with bwa

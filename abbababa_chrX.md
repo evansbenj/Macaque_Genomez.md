@@ -27,10 +27,6 @@ H3tonk_H1nigra_H2hecki
 ```
 sqsub -r 2d --mpp 16G -o abba_H3_tonk_H1_nigra_H2_hecki_allhaploid_chrX.log bash -c "perl Performs_ABBA_BABA_on_populations_onlychrX_haploid_alleles_haploid_outgroup.pl  /work/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/females_and_males/FandM_chrX_BSQR_jointgeno_allsites_filtered_allhaploid.vcf.gz.tab 00000000000000000000000 3_4_18-19-20-21-22-23_17_1-2-3-4-5 /work/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/females_and_males/H3_tonk_H1_nigra_H2_hecki_allhaploid_chrX.abbababa /work/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/females_and_males/H3_tonk_H1_nigra_H2_hecki_allhaploid_chrX.stats"
 ```
-H3_borneo_no665_no1206_H1_nigra_H2_heck
-```
-sqsub -r 2d --mpp 16G -o abba_H3_borneo_no665_no1206_H1_nigra_H2_heck_allhaploid_chrX.log bash -c "perl Performs_ABBA_BABA_on_populations_onlychrX_haploid_alleles_haploid_outgroup.pl  /work/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/females_and_males/FandM_chrX_BSQR_jointgeno_allsites_filtered_allhaploid.vcf.gz.tab 00000000000000000000000 3_4_11-14-16_17_1-2-3-4-5 /work/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/females_and_males/H3_borneo_no665_no1206_H1_nigra_H2_heck_allhaploid_chrX.abbababa /work/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/females_and_males/H3_borneo_no665_no1206_H1_nigra_H2_heck_allhaploid_chrX.stats"
-```
 
 H3_borneo_no665_no1206_H1_nigra_H2_heck
 ```

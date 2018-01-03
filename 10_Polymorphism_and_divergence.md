@@ -12,13 +12,13 @@ Boot_from_tab_diverge_poly_2015.pl /work/ben/2017_rhesus_genomez/F_and_M/FandM_c
 ```
 
 ```
-#!/usr/bin/env perl
+#!/usr/bin/env perl                                                                                                                                                         
 use strict;
 use warnings;
 
-# this program will read in all tab delimited files in a folder and
-# calculate popgen stats plus boostraps for all species for each
-# file
+# this program will read in all tab delimited files in a folder and                                                                                                         
+# calculate popgen stats plus boostraps for all species for each                                                                                                            
+# file                                                                                                                                                                      
 
 my $status;
 my @tabfiles = glob("/work/ben/2017_rhesus_genomez/F_and_M/FandM_chr*_BSQR_jointgeno_allsites_filtered.vcf.gz.tab");
@@ -30,10 +30,13 @@ my @numberz = ("1_2_3_4_5_6_7_8_9_10_11_12_13_14_15_16_17_18_19_20_21_22_23_24_2
 my $y;
 
 foreach(@tabfiles){
-	@what_what = split(".vcf.gz.",$_);
-	for ($y = 0 ; $y <= $#species ; $y++ ) {
-		$commandline = "Boot_from_tab_diverge_poly_2015.pl ".$_." ".$bin_sex." 3_4_".$numberz[$y]." ".$species[$y]."_".$what_what[0]."_boot.poly";
-		$status = system($commandline);
-	}
+    @what_what = split(".vcf.gz.",$_);
+    for ($y = 0 ; $y <= $#species ; $y++ ) {
+        $commandline = "sqsub -r 2d --mpp 16G -o ".$what_what[0].".log bash -c \"perl Boot_from_tab_diverge_poly_2015.pl ".$_." ".$bin_sex." 3_4_".$numberz[$y]." ".$what_w\
+hat[0]."_".$species[$y]."_boot.poly\"";
+        print $commandline,"\n";
+        $status = system($commandline);
+    }
 }
+
 ```

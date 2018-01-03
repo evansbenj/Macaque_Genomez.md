@@ -11,6 +11,7 @@ For autosomes in this format: #CHROM	POS	REF	SAMN03083651	SAMN03264597	SAMN03264
 Boot_from_tab_diverge_poly_2015.pl /work/ben/2017_rhesus_genomez/F_and_M/FandM_chr01_BSQR_jointgeno_allsites_filtered.vcf.gz.tab 1100000100011010101001111110110101001011 3_4_1_2_3_4_5_6_7_8_9_10_11_12_13_14_15_16_17_18_19_20_21_22_23_24_25_26_27_28_29_30_31_32_33_34_35_36_37_38_39_40 rhesus_chr01_poly_and_diverge.txt
 ```
 
+```
 #!/usr/bin/env perl
 use strict;
 use warnings;
@@ -35,3 +36,4 @@ foreach(@tabfiles){
 		$status = system($commandline);
 	}
 }
+```

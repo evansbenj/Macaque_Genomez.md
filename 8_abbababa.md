@@ -18,7 +18,7 @@ sqsub -r 2d --mpp 16G -o chrX_geno_dept.log bash -c "perl 10_Genotypes_only_male
 ```
 ./Wrapper_for_Performs_ABBA_BABA_populations_H3_hecki_H1_maura_H2_tonk.pl
 ```
-script "Performs_ABBA_BABA_on_populations_withH3pi_50kbwindowz.pl":
+script "Performs_ABBA_BABA_on_populations_withH3pi.pl":
 
 ```
 #!/usr/bin/env perl
@@ -259,6 +259,7 @@ my %H1_H3_pairwise_divergence_per_window;
 my %H1_H2_pairwise_divergence_per_window;
 my %number_of_sites_per_window;
 my %number_of_sites_per_windowH1H3;
+my %number_of_sites_per_windowH1H2;
 my $ABBA_peak_hashH1H3;
 my $BABA_peak_hashH1H3;
 my %H1_pairwise_nucleotide_diversity_per_window;
@@ -1100,6 +1101,5 @@ if($#out == -1){
 }
 
 close OUTFILE2;
-
 
 ```

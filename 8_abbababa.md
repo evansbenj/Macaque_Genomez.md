@@ -1097,7 +1097,7 @@ foreach (@out) {
 	}
 }
 if($#out == -1){
-	print OUTFILE2 "chr0\t1\t500000\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\n";
+	print OUTFILE2 "chr0\t1\t500000\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\n";
 }
 
 close OUTFILE2;

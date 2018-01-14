@@ -323,10 +323,22 @@ while ( my $line = <DATAINPUT>) {
 			$current_chromosome = $temp[0];
 			$current_window = 0;
 			$window_counter+=1;
+			$H1_number_of_sites_for_pairwise_nucleotide_diversity_per_window{$window_counter."_".$current_chromosome."_".$current_window}=0;
+			$H2_number_of_sites_for_pairwise_nucleotide_diversity_per_window{$window_counter."_".$current_chromosome."_".$current_window}=0;
+			$H3_number_of_sites_for_pairwise_nucleotide_diversity_per_window{$window_counter."_".$current_chromosome."_".$current_window}=0;
+			$number_of_sites_per_window{$window_counter."_".$current_chromosome."_".$current_window}=0;
+			$number_of_sites_per_windowH1H3{$window_counter."_".$current_chromosome."_".$current_window}=0;
+			$number_of_sites_per_windowH1H2{$window_counter."_".$current_chromosome."_".$current_window}=0;
 		}
 		until($temp[1] < ($current_window+$sliding_window)){
 			$current_window = $current_window+$sliding_window;
 			$window_counter+=1;
+			$H1_number_of_sites_for_pairwise_nucleotide_diversity_per_window{$window_counter."_".$current_chromosome."_".$current_window}=0;
+			$H2_number_of_sites_for_pairwise_nucleotide_diversity_per_window{$window_counter."_".$current_chromosome."_".$current_window}=0;
+			$H3_number_of_sites_for_pairwise_nucleotide_diversity_per_window{$window_counter."_".$current_chromosome."_".$current_window}=0;
+			$number_of_sites_per_window{$window_counter."_".$current_chromosome."_".$current_window}=0;
+			$number_of_sites_per_windowH1H3{$window_counter."_".$current_chromosome."_".$current_window}=0;
+			$number_of_sites_per_windowH1H2{$window_counter."_".$current_chromosome."_".$current_window}=0;
 		}
 		if(($temp[0] ne "chrX")&&($temp[0] ne "chrY")&&($temp[0] ne "chrM")){
 			$string=();

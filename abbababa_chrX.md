@@ -393,12 +393,20 @@ while ( my $line = <DATAINPUT>) {
 			$window_counter+=1;
 			$H1_number_of_sites_for_pairwise_nucleotide_diversity_per_window{$window_counter."_".$current_chromosome."_".$current_window}=0;
 			$H2_number_of_sites_for_pairwise_nucleotide_diversity_per_window{$window_counter."_".$current_chromosome."_".$current_window}=0;
+			$H3_number_of_sites_for_pairwise_nucleotide_diversity_per_window{$window_counter."_".$current_chromosome."_".$current_window}=0;
+			$number_of_sites_per_window{$window_counter."_".$current_chromosome."_".$current_window}=0;
+			$number_of_sites_per_windowH1H3{$window_counter."_".$current_chromosome."_".$current_window}=0;
+			$number_of_sites_per_windowH1H2{$window_counter."_".$current_chromosome."_".$current_window}=0;
 		}
 		until($temp[1] < ($current_window+$sliding_window)){
 			$current_window = $current_window+$sliding_window;
 			$window_counter+=1;
 			$H1_number_of_sites_for_pairwise_nucleotide_diversity_per_window{$window_counter."_".$current_chromosome."_".$current_window}=0;
 			$H2_number_of_sites_for_pairwise_nucleotide_diversity_per_window{$window_counter."_".$current_chromosome."_".$current_window}=0;
+			$H3_number_of_sites_for_pairwise_nucleotide_diversity_per_window{$window_counter."_".$current_chromosome."_".$current_window}=0;
+			$number_of_sites_per_window{$window_counter."_".$current_chromosome."_".$current_window}=0;
+			$number_of_sites_per_windowH1H3{$window_counter."_".$current_chromosome."_".$current_window}=0;
+			$number_of_sites_per_windowH1H2{$window_counter."_".$current_chromosome."_".$current_window}=0;
 		}
 		if($temp[0] eq "chrX"){
 			$string=();
@@ -426,7 +434,7 @@ while ( my $line = <DATAINPUT>) {
 						&&($temp[$H3[$y]+$whotoinclude[1]-2] ne '*/.')
 						&&($temp[$H3[$y]+$whotoinclude[1]-2] ne '*/')
 						&&($temp[$H3[$y]+$whotoinclude[1]-2] ne './')
-						&&(length($temp[$H3[$y]+$whotoinclude[1]-2]) <= 2)){	
+						&&(length($temp[$H3[$y]+$whotoinclude[1]-2]) <= 2)){ # this allows a haploid (e.g. A/) or a diploid allele (e.g. A/T) 	
 						@allelez=split('/',$temp[$H3[$y]+$whotoinclude[1]-2]);
 						if($allelez[0] eq $A){
 							$ancestral+=1;
@@ -654,38 +662,45 @@ while ( my $line = <DATAINPUT>) {
 					for ($y = 0 ; $y <= $#H2; $y++ ) {
 						if(($temp[$H2[$y]+$whotoinclude[1]-2] ne './.')
 							&&($temp[$H2[$y]+$whotoinclude[1]-2] ne 'N/N')
-							&&($temp[$H2[$y]+$whotoinclude[1]-2] ne 'N/.')
 							&&($temp[$H2[$y]+$whotoinclude[1]-2] ne 'N/*')
+							&&($temp[$H2[$y]+$whotoinclude[1]-2] ne 'N/.')
+							&&($temp[$H2[$y]+$whotoinclude[1]-2] ne 'N/')
 							&&($temp[$H2[$y]+$whotoinclude[1]-2] ne '*/*')
 							&&($temp[$H2[$y]+$whotoinclude[1]-2] ne '*/.')
-							&&($temp[$H2[$y]+$whotoinclude[1]-2] ne 'A/*')
-							&&($temp[$H2[$y]+$whotoinclude[1]-2] ne 'T/*')
-							&&($temp[$H2[$y]+$whotoinclude[1]-2] ne 'G/*')
-							&&($temp[$H2[$y]+$whotoinclude[1]-2] ne 'C/*')
-							&&(length($temp[$H2[$y]+$whotoinclude[1]-2]) == 3)){
+							&&($temp[$H2[$y]+$whotoinclude[1]-2] ne '*/')
+							&&($temp[$H2[$y]+$whotoinclude[1]-2] ne './')
+							&&(length($temp[$H2[$y]+$whotoinclude[1]-2]) <= 2)){
 							for ($w = 0 ; $w <= $#H1; $w++ ) {
 								if(($temp[$H1[$w]+$whotoinclude[1]-2] ne './.')
 									&&($temp[$H1[$w]+$whotoinclude[1]-2] ne 'N/N')
 									&&($temp[$H1[$w]+$whotoinclude[1]-2] ne 'N/*')
 									&&($temp[$H1[$w]+$whotoinclude[1]-2] ne 'N/.')
+									&&($temp[$H1[$w]+$whotoinclude[1]-2] ne 'N/')
 									&&($temp[$H1[$w]+$whotoinclude[1]-2] ne '*/*')
 									&&($temp[$H1[$w]+$whotoinclude[1]-2] ne '*/.')
-									&&($temp[$H1[$w]+$whotoinclude[1]-2] ne 'A/*')
-									&&($temp[$H1[$w]+$whotoinclude[1]-2] ne 'T/*')
-									&&($temp[$H1[$w]+$whotoinclude[1]-2] ne 'G/*')
-									&&($temp[$H1[$w]+$whotoinclude[1]-2] ne 'C/*')
-									&&(length($temp[$H1[$w]+$whotoinclude[1]-2]) == 3)){
+									&&($temp[$H1[$w]+$whotoinclude[1]-2] ne '*/')
+									&&($temp[$H1[$w]+$whotoinclude[1]-2] ne './')
+									&&(length($temp[$H1[$w]+$whotoinclude[1]-2]) <= 2)){
 									# there are data for H1 and H2
 									@H2allelez=split('/',$temp[$H2[$y]+$whotoinclude[1]-2]);
 									@H1allelez=split('/',$temp[$H1[$w]+$whotoinclude[1]-2]);
+									# if H2 is a male, only consider first base so delete the others
+									if($sexes[$H2[$y]-1] == 0){
+										@H2allelez = splice @H2allelez, 0, 1;
+									}	
+
 									foreach(@H2allelez){
 										if($_ ne $H1allelez[0]){
 											$diffH1H2+=1; 
 										}
-										if($_ ne $H1allelez[1]){
-											$diffH1H2+=1;
-										}
-										$num_comparisonsH1H2+=2;	
+										$num_comparisonsH1H2+=1;
+										# check if this individual is a female before considering the second X allele
+										if($sexes[$H1[$w]-1] == 1){
+											if($_ ne $H1allelez[1]){
+												$diffH1H2+=1;
+											}
+											$num_comparisonsH1H2+=1;
+										}		
 									}
 								}
 							}
@@ -811,6 +826,7 @@ while ( my $line = <DATAINPUT>) {
 					@H1_first_allelez=();
 					@H1_second_allelez=();
 					for ($y = 0 ; $y < $#H1; $y++ ) {
+						#print $temp[$H1[$y]+$whotoinclude[1]-2],"\n";
 						for ($w = ($y+1) ; $w <= $#H1; $w++ ) {
 							if(($temp[$H1[$y]+$whotoinclude[1]-2] ne './.')
 								&&($temp[$H1[$y]+$whotoinclude[1]-2] ne 'N/N')
@@ -904,7 +920,10 @@ while ( my $line = <DATAINPUT>) {
 								&&($temp[$H3[$y]+$whotoinclude[1]-2] ne 'T/*')
 								&&($temp[$H3[$y]+$whotoinclude[1]-2] ne 'G/*')
 								&&($temp[$H3[$y]+$whotoinclude[1]-2] ne 'A/*')
-								&&(length($temp[$H3[$y]+$whotoinclude[1]-2]) == 3) 
+								&&($temp[$H3[$y]+$whotoinclude[1]-2] ne './')
+								&&($temp[$H3[$y]+$whotoinclude[1]-2] ne 'N/')
+								&&($temp[$H3[$y]+$whotoinclude[1]-2] ne '*/')
+								&&(length($temp[$H3[$y]+$whotoinclude[1]-2]) <= 2) 
 								&&($temp[$H3[$w]+$whotoinclude[1]-2] ne './.')
 								&&($temp[$H3[$w]+$whotoinclude[1]-2] ne 'N/N')
 								&&($temp[$H3[$w]+$whotoinclude[1]-2] ne 'N/*')
@@ -915,15 +934,21 @@ while ( my $line = <DATAINPUT>) {
 								&&($temp[$H3[$w]+$whotoinclude[1]-2] ne 'T/*')
 								&&($temp[$H3[$w]+$whotoinclude[1]-2] ne 'G/*')
 								&&($temp[$H3[$w]+$whotoinclude[1]-2] ne 'C/*')
-								&&(length($temp[$H3[$w]+$whotoinclude[1]-2]) == 3)){
+								&&($temp[$H3[$w]+$whotoinclude[1]-2] ne './')
+								&&($temp[$H3[$w]+$whotoinclude[1]-2] ne 'N/')
+								&&($temp[$H3[$w]+$whotoinclude[1]-2] ne '*/')
+								&&(length($temp[$H3[$w]+$whotoinclude[1]-2]) <= 2)){
 								# there are data for both H3 alleles
 								@H3_first_allelez=split('/',$temp[$H3[$y]+$whotoinclude[1]-2]);
 								@H3_second_allelez=split('/',$temp[$H3[$w]+$whotoinclude[1]-2]);
 								# combine the alleles into one array
 								@H3_first_allelez = (@H3_first_allelez, @H3_second_allelez);
-								# check that the array has 4 elements
-								if($#H3_first_allelez != 3){
-									print "Problem with number of alleles @H3_first_allelez @H3_second_allelez\n";
+								# check that the array has between 2 and 4 elements 
+								# (2 if only two males are compared)
+								# (3 if a male and female genotype is compared)
+								# (4 if two female genotypes are compared)
+								if(($#H3_first_allelez > 3)||($#H3_first_allelez < 1)){	
+									print "Problem 1$#H3_first_allelez with number of alleles @H3_first_allelez @H3_second_allelez\n";
 								}
 								else{
 									for ($bb = 0 ; $bb < $#H3_first_allelez; $bb++) {
@@ -938,25 +963,26 @@ while ( my $line = <DATAINPUT>) {
 							}
 						}					
 					}
-					# for some sites, there may be only one individual with a genotype
+					# for some sites, there may be only one male individual, so no pi calculation is possible 
 					if($num_comparisonsH3==0){
 						for ($y = 0 ; $y <= $#H3; $y++ ) {
 							if(($temp[$H3[$y]+$whotoinclude[1]-2] ne './.')
 								&&($temp[$H3[$y]+$whotoinclude[1]-2] ne 'N/N')
 								&&($temp[$H3[$y]+$whotoinclude[1]-2] ne 'N/*')
 								&&($temp[$H3[$y]+$whotoinclude[1]-2] ne 'N/.')
+								&&($temp[$H3[$y]+$whotoinclude[1]-2] ne 'N/')
 								&&($temp[$H3[$y]+$whotoinclude[1]-2] ne '*/*')
 								&&($temp[$H3[$y]+$whotoinclude[1]-2] ne '*/.')
-								&&($temp[$H3[$y]+$whotoinclude[1]-2] ne 'A/*')
-								&&($temp[$H3[$y]+$whotoinclude[1]-2] ne 'T/*')
-								&&($temp[$H3[$y]+$whotoinclude[1]-2] ne 'C/*')
-								&&($temp[$H3[$y]+$whotoinclude[1]-2] ne 'G/*')
-								&&(length($temp[$H3[$y]+$whotoinclude[1]-2]) == 3)){
+								&&($temp[$H3[$y]+$whotoinclude[1]-2] ne '*/')
+								&&($temp[$H3[$y]+$whotoinclude[1]-2] ne './')
+								&&(length($temp[$H3[$y]+$whotoinclude[1]-2]) <= 2)){
+								if($sexes[$H3[$y]-1] == 1){
 								@H3_first_allelez=split('/',$temp[$H3[$y]+$whotoinclude[1]-2]);
-								if($H3_first_allelez[0] ne $H3_first_allelez[1]){
-									$diffH3+=1;
+									if($H3_first_allelez[0] ne $H3_first_allelez[1]){
+										$diffH3+=1;
+									}
+									$num_comparisonsH3+=1;	
 								}
-								$num_comparisonsH3+=1;	
 							}
 						}	
 					}	
@@ -977,7 +1003,7 @@ while ( my $line = <DATAINPUT>) {
 							#if($current_window ==10000000 ){
 							#	print $H1_derived_freq,"\t",$H2_derived_freq,"\t",$H3_derived_freq,"\n";
 							#}
-						    print $line,"\n";
+						    # print $line,"\n";
 
 							$ABBA_hash{$window_counter."_".$current_chromosome."_".$current_window}+=((1-$H1_derived_freq)*$H2_derived_freq*$H3_derived_freq);
 							$BABA_hash{$window_counter."_".$current_chromosome."_".$current_window}+=($H1_derived_freq*(1-$H2_derived_freq)*$H3_derived_freq);
@@ -1217,7 +1243,6 @@ if($#out == -1){
 }
 
 close OUTFILE2;
-
 
 ```
 

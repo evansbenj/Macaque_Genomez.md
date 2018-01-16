@@ -912,11 +912,17 @@ while ( my $line = <DATAINPUT>) {
 							}
 							if(($H2_derived_freq >= $H1_derived_freq)&&(($ABBA_peak_hash - $BABA_peak_hash)!=0)){
 								$f_dm{$window_counter."_".$current_chromosome."_".$current_window} += ((((1-$H1_derived_freq)*$H2_derived_freq*$H3_derived_freq))-(($H1_derived_freq*(1-$H2_derived_freq)*$H3_derived_freq)))/ ($ABBA_peak_hash - $BABA_peak_hash);
-								$f_dm_counter{$window_counter."_".$current_chromosome."_".$current_window} += 1;
+								# only count the sites that contribute to f_dm
+								if(((((1-$H1_derived_freq)*$H2_derived_freq*$H3_derived_freq))-(($H1_derived_freq*(1-$H2_derived_freq)*$H3_derived_freq)))!=0){
+									$f_dm_counter{$window_counter."_".$current_chromosome."_".$current_window} += 1;
+								}															
 							}
 							elsif(($ABBA_peak_hashH1H3 - $BABA_peak_hashH1H3)!=0){
 								$f_dm{$window_counter."_".$current_chromosome."_".$current_window} += ((((1-$H1_derived_freq)*$H2_derived_freq*$H3_derived_freq))-(($H1_derived_freq*(1-$H2_derived_freq)*$H3_derived_freq)))/ -($ABBA_peak_hashH1H3 - $BABA_peak_hashH1H3);	
-								$f_dm_counter{$window_counter."_".$current_chromosome."_".$current_window} += 1;
+								# only count the sites that contribute to f_dm
+								if ( ((((1-$H1_derived_freq)*$H2_derived_freq*$H3_derived_freq))-(($H1_derived_freq*(1-$H2_derived_freq)*$H3_derived_freq)))/ -($ABBA_peak_hashH1H3 - $BABA_peak_hashH1H3) != 0){
+									$f_dm_counter{$window_counter."_".$current_chromosome."_".$current_window} += 1;
+								}
 							}
 	
 						}
@@ -984,7 +990,7 @@ if($#out == -1){
 close OUTFILE;
 
 
-print OUTFILE2 "chromosome\tbegin\tend\tABBA\tBABA\tBBAA\tD\tfd_H2H3\tfd_H1H3\tf_dm\tdH2H3\tnum_sites_per_windowH2H3\tdH1H3\tnum_sites_per_windowH1H3\tdH1H2\tnum_sites_per_windowH1H2\tH3pi\tnumsitesH3pi\tH2pi\tnumsitesH2pi\tH1pi\tnumsitesH1pi\n";
+print OUTFILE2 "chromosome\tbegin\tend\tABBA\tBABA\tBBAA\tD\tfd_H2H3\tfd_H1H3\tf_dm\tnumsites_f_dm\tdH2H3\tnum_sites_per_windowH2H3\tdH1H3\tnum_sites_per_windowH1H3\tdH1H2\tnum_sites_per_windowH1H2\tH3pi\tnumsitesH3pi\tH2pi\tnumsitesH2pi\tH1pi\tnumsitesH1pi\n";
 foreach (@out) {
 	@temp1=split('_',$_);
 	print OUTFILE2 $temp1[1],"\t",$temp1[2]+1,"\t",$temp1[2]+$sliding_window,"\t";
@@ -1030,7 +1036,7 @@ foreach (@out) {
 	}	
 	#print f_dm for this window
 	if(defined($f_dm{$_})){
-		print OUTFILE2 $f_dm{$_}/$f_dm_counter{$_},"\t";
+		print OUTFILE2 $f_dm{$_}/$f_dm_counter{$_},"\t",$f_dm_counter{$_},"\t";
 	}
 	else{
 		print OUTFILE2 "NAN\t";
@@ -1109,7 +1115,7 @@ foreach (@out) {
 	}
 }
 if($#out == -1){
-	print OUTFILE2 "chr0\t1\t500000\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\n";
+	print OUTFILE2 "chr0\t1\t500000\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\n";
 }
 
 close OUTFILE2;

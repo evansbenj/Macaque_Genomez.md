@@ -7,12 +7,12 @@ SNP files are here:
 
 Use plink like this:
 ```
-plink --file data --indep 50 5 2
+plink --file data --indep 50 5 2 --out prefix
 ```
 
 for a zipped vcf file, use this:
 ```
-plink --vcf /mnt/scratch/ben_evans/F_and_M/FandM_chr19_BSQR_jointgeno_allsites_filtered_SNPsonly.vcf.gz --indep 50 5 2
+plink --vcf /mnt/scratch/ben_evans/F_and_M/FandM_chr19_BSQR_jointgeno_allsites_filtered_SNPsonly.vcf.gz --indep 50 5 2 --out /mnt/scratch/ben_evans/F_and_M/FandM_chr19_BSQR_jointgeno_allsites_filtered_SNPsonly_LDprune
 ```
 
 

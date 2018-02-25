@@ -10,6 +10,12 @@ Use plink like this:
 plink --file data --indep 50 5 2
 ```
 
+for a zipped vcf file, use this:
+```
+plink --vcf /mnt/scratch/ben_evans/F_and_M/FandM_chr19_BSQR_jointgeno_allsites_filtered_SNPsonly.vcf.gz --indep 50 5 2
+```
+
+
 
 according to : http://zzz.bwh.harvard.edu/plink/summary.shtml#prune
 

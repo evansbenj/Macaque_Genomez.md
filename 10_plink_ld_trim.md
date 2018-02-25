@@ -34,3 +34,9 @@ Then save the plink.prune.in SNPs:
 ```
 plink --file data --extract plink.prune.in --make-bed --out pruneddata
 ```
+or, like this:
+
+```
+plink --file FandM_chr19_BSQR_jointgeno_allsites_filtered_SNPsonly.vcf.gz_in_plink --extract FandM_chr19_BSQR_jointgeno_allsites_filtered_SNPsonly_LDprune.prune.in --make-bed --out FandM_chr19_BSQR_jointgeno_allsites_filtered_SNPsonly_LDprunneddata.out
+```
+

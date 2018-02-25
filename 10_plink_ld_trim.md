@@ -5,6 +5,11 @@ SNP files are here:
 /mnt/scratch/ben_evans/F_and_M/FandM_chr*_BSQR_jointgeno_allsites_filtered_SNPsonly.vcf.gz*
 ```
 
+May need to convert to plink format like this:
+```
+./vcftools --vcf input_data.vcf --plink --chr 1 --out output_in_plink
+```
+
 Use plink like this:
 ```
 plink --file data --indep 50 5 2 --out prefix --double-id

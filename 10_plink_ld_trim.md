@@ -7,7 +7,7 @@ SNP files are here:
 
 May need to convert to plink format like this:
 ```
-./vcftools --vcf input_data.vcf --plink --chr 1 --out output_in_plink
+vcftools --gzvcf /mnt/scratch/ben_evans/F_and_M/FandM_chr19_BSQR_jointgeno_allsites_filtered_SNPsonly.vcf.gz --plink --out /mnt/scratch/ben_evans/F_and_M/FandM_chr19_BSQR_jointgeno_allsites_filtered_SNPsonly.vcf.gz_in_plink
 ```
 
 Use plink like this:

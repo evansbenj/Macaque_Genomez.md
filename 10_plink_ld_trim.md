@@ -7,15 +7,15 @@ SNP files are here:
 
 Use plink like this:
 ```
-plink --file data --indep 50 5 2 --out prefix
+plink --file data --indep 50 5 2 --out prefix --double-id
 ```
 
 for a zipped vcf file, use this:
 ```
-plink --vcf /mnt/scratch/ben_evans/F_and_M/FandM_chr19_BSQR_jointgeno_allsites_filtered_SNPsonly.vcf.gz --indep 50 5 2 --out /mnt/scratch/ben_evans/F_and_M/FandM_chr19_BSQR_jointgeno_allsites_filtered_SNPsonly_LDprune
+plink --vcf /mnt/scratch/ben_evans/F_and_M/FandM_chr19_BSQR_jointgeno_allsites_filtered_SNPsonly.vcf.gz --indep 50 5 2 --out /mnt/scratch/ben_evans/F_and_M/FandM_chr19_BSQR_jointgeno_allsites_filtered_SNPsonly_LDprune --double-id
 ```
 
-
+The `--double-id` is needed to make plink ignore underscores in the sample IDs
 
 according to : http://zzz.bwh.harvard.edu/plink/summary.shtml#prune
 

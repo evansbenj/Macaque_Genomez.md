@@ -36,4 +36,10 @@ or for these data like this:
 ```
 plink --file FandM_chr19_BSQR_jointgeno_allsites_filtered_SNPsonly.vcf.gz_in_plink --extract FandM_chr19_BSQR_jointgeno_allsites_filtered_SNPsonly_LDprune.prune.in --make-bed --out FandM_chr19_BSQR_jointgeno_allsites_filtered_SNPsonly_LDprunneddata.out
 ```
-
+now make a new vcf file that contains only SNPs not in LD:
+```
+plink --file your_ped_map_input --recode vcf
+```
+```
+plink --file FandM_chr19_BSQR_jointgeno_allsites_filtered_SNPsonly_LDprunneddata.out --recode vcf
+```

@@ -13,3 +13,17 @@ based on `.iqtree` output from iqtree, HKY+I+G4 is the favored model.  Now do ul
 ```
 /work/ben/2017_SEAsian_macaques/bin/iqtree-1.5.0a-Linux/bin/iqtree -s ../SEAsian_macaques_bam/females_and_males/FandM_chrM_BSQR_jointgeno_allsites_filtered.vcf.gz_bydepth.nxs -m HKY+I+G4 -bb 1000
 ```
+
+* now yDNA
+
+on iqaluk, first generate tab by depth file
+
+```
+./10_Genotypes_only_male_chrX_based_on_allelic_depth.pl ../SEAsian_macaques_bam/females_and_males/FandM_chrY_BSQR_jointgeno_allsites_filtered.vcf.gz 00000000000 ../SEAsian_macaques_bam/females_and_males/FandM_chrY_BSQR_jointgeno_allsites_filtered.vcf.gz_bydepth.tab
+```
+
+then convert this to nexus file:
+```
+blah blah
+```
+then do the two iqtree steps.

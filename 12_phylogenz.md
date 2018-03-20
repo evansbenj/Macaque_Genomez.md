@@ -24,6 +24,15 @@ on iqaluk, first generate tab by depth file
 
 then convert this to nexus file:
 ```
-blah blah
+11_tab_to_interleave_nexus_haploiddata_include_all_indels.pl ../SEAsian_macaques_bam/females_and_males/FandM_chrY_BSQR_jointgeno_allsites_filtered.vcf.gz_bydepth.tab ../SEAsian_macaques_bam/females_and_males/FandM_chrY_BSQR_jointgeno_allsites_filtered.vcf.gz_bydepth.tab.nxs 1
+
 ```
 then do the two iqtree steps.
+
+```
+/work/ben/2017_SEAsian_macaques/bin/iqtree-1.5.0a-Linux/bin/iqtree -s ../SEAsian_macaques_bam/females_and_males/FandM_chrY_BSQR_jointgeno_allsites_filtered.vcf.gz_bydepth.tab.nxs -m TEST -nt 1 -pre ../SEAsian_macaques_bam/females_and_males/FandM_chrY_BSQR_jointgeno_allsites_filtered.vcf.gz_bydepth.tab.nxs_
+```
+```
+/work/ben/2017_SEAsian_macaques/bin/iqtree-1.5.0a-Linux/bin/iqtree -s ../SEAsian_macaques_bam/females_and_males/FandM_chrY_BSQR_jointgeno_allsites_filtered.vcf.gz_bydepth.tab.nxs -m K3Pu+G4 -bb 1000
+
+```

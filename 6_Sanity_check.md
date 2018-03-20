@@ -2,7 +2,7 @@
 
 I'd like to make a PCA of all the data and also check the coverage of each sample. I plan to do a PCA using SNPRelate, maybe on individual chromosomes?
 
-# Depth
+# Depth by bam files (less accurate because includes mtDNA)
 ```
 #!/usr/bin/perl                                                                                                                             # This script will check depth of multiple files                                                                                           
 
@@ -31,5 +31,9 @@ On iqaluk using screen:
 ```
 
 
-# Depth Results
-Unfortunately two samples have very low coverage (PM665, 4X and PM1206, 3X). 
+# Depth by chr (better)
+
+vcftools:
+```
+../bin/vcftools/bin/vcftools --gzvcf ../SEAsian_macaques_bam/females_and_males/FandM_chr19_BSQR_jointgeno_allsites_filtered.vcf.gz --depth --out ../SEAsian_macaques_bam/females_and_males/FandM_chr19_BSQR_jointgeno_allsites_filtered_depth
+```

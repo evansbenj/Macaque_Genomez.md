@@ -224,12 +224,15 @@ I looked at three conparisons on sulawesi:
 *H3_hecki_H1_nigra_H2_nigrescens.concat
 *H3_hecki_H1_bru_H2_tonk.concat
 and asked whether geneflow (ABBA windows with posterior probability > 0.8) were shared between any pair or all three.  I found two that were shared and both had relatively low divergence. Here they are:
+
 window 1
+
 chr09_62650001
 chr09_62700001
 chr09_62750001
 
 window 2
+
 chr11_37200001
 chr11_37250001
 chr11_37300001

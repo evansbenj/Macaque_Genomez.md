@@ -136,16 +136,20 @@ reshaped_dat <- melt(newdf, id.vars=c("dat.chromosome", "dat.begin"))
 reshaped_dat$color <- "red"
 # update the ones that have a substantial value for D
 reshaped_dat$color[which(reshaped_dat$variable == 'dat.posteriorABBA')] <- "blue"
-reshaped_dat$color[which(reshaped_dat$variable == 'dat.posteriorBBAA')] <- "white"
+reshaped_dat$color[which(reshaped_dat$variable == 'dat.posteriorBBAA')] <- "gray90"
 
 
 library(ggplot2)
 pdf("./H3_maura_H1_tog_H2_tonk_HMM.pdf",w=8, h=8, version="1.4", bg="transparent")
-c <- ggplot(reshaped_dat, aes(x = dat.begin, y = value, fill = color, color=color)) +
+c <- ggplot(reshaped_dat, aes(x = dat.begin, y = value, fill = color)) +
   geom_bar(position="stack", stat = "identity") +
+  theme_bw() + theme(panel.grid.minor=element_blank(),panel.grid.major=element_blank()) +
+  scale_fill_manual(values=c("blue"="blue", "gray90"="gray90", "red"="red"), 
+                      name="Posterior Probability",
+                      breaks=c("blue", "gray90", "red"),
+                      labels=c("ABBA", "BBAA", "BABA")) +
   facet_grid(dat.chromosome ~ ., scales = "free_x", space = "free_x", 
                margins = FALSE, drop = TRUE, switch = "y")+
-  theme_bw() + theme(panel.grid.minor=element_blank(),panel.grid.major=element_blank())+
   scale_y_continuous(name="Posterior probability", breaks=c(0,1.0))+
   scale_x_continuous(name="Position (Mbp)", 
                       breaks=c(0,50000000,100000000,150000000,200000000),labels=c("0","50","100","150","200"))+
@@ -219,6 +223,8 @@ end(gr0)
 names(gr0)
 levels(gr0)
 ```
+
+
 I looked at three conparisons on sulawesi:
 *H3_maura_H1_tog_H2_tonk.concat
 *H3_hecki_H1_nigra_H2_nigrescens.concat

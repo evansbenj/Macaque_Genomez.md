@@ -36,3 +36,14 @@ then do the two iqtree steps.
 /work/ben/2017_SEAsian_macaques/bin/iqtree-1.5.0a-Linux/bin/iqtree -s ../SEAsian_macaques_bam/females_and_males/FandM_chrY_BSQR_jointgeno_allsites_filtered.vcf.gz_bydepth.tab.nxs -m K3Pu+G4 -bb 1000
 
 ```
+
+* now each aDNA chr:
+
+first make nxs file from snps only tab:
+```
+./11_tab_to_interleave_nexus.pl /work/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/females_and_males/FandM_chr01_BSQR_jointgeno_allsites_filtered_SNPsonly.vcf.gz.tab /work/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/females_and_males/FandM_chr01_BSQR_jointgeno_allsites_filtered_SNPsonly.vcf.gz.nxs 1
+```
+now iqtree
+```
+/work/ben/2017_SEAsian_macaques/bin/iqtree-1.5.0a-Linux/bin/iqtree -s /work/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/females_and_males/FandM_chr01_BSQR_jointgeno_allsites_filtered_SNPsonly.vcf.gz.nxs -m TEST -nt 1 -pre /work/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/females_and_males/FandM_chr01_BSQR_jointgeno_allsites_filtered_SNPsonly.vcf.gz.nxs_
+```

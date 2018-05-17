@@ -316,6 +316,11 @@ close OUTFILE;
 
 This script should be able to handle tab files that have haploid genotypes.  I modified it from (21_tab_to_interleave_nexus.pl) to take as input tab files with a variable number of reference genomes (11_tab_to_interleave_nexus.pl). Note that this script removes indels that are present in the ref relative to the ingroup or vice versa.  This is done because it is coded to enforce only one REF base for each ingroup genotype and then when longer genotypes are encountered in an ingroup taxa, a gap/missing site is used. This way the alignmnet in the nexus file is preserved.
 
+These files are here on goblin:
+```
+/work/ben/2017_SEAsian_macaques/SEAsian_macaques_bam
+```
+
 commandline:
 ``` bash
 ./11_tab_to_interleave_nexus.pl ../SEAsian_macaques_bam/females/all_chrM_noBSQR_allsites.vcf.gz.bydepth.tab ../SEAsian_macaques_bam/females/all_chrM_noBSQR_allsites.vcf.gz.bydepth.nxs 1

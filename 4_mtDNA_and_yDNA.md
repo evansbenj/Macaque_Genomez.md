@@ -2,6 +2,11 @@
 
 On redfin, goblin, etc, I am working in this directory: `/work/ben/2017_SEAsian_macaques/ben_scripts`
 
+AN unfiltered mtDNA file is here:
+```
+/work/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/females_and_males/FandM_chrM_BSQR_jointgeno_allsites.vcf.gz
+```
+
 Because these loci are haploid, we need to treat them differently from autosomal DNA (and maybe xDNA). One option is to just call bases based on the highest depth of coverage.  I have a script to do this that starts from a combined vcf file.  First I generate a combined vcf file like this, on redfin (9_gatk_GenotypeGVCFs_bychr_sqsub_females_and_males.pl):
 
 ``` perl

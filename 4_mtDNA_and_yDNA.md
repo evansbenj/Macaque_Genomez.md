@@ -14,7 +14,7 @@ But this one actually has some sites that are missing because it was generated b
 ```
 Actually not - this file has not been genotyped yet (of course) and this has no genotype calls!  Instead I need to tweak the GenotypeVCF parameters to call genotypes liberally.
 
-Which I just generated and has all of the reference positions.  I'll beed to mess around with how the script below handles microsatellites, because it is pretty complicated when there is a series of microsats.  One possibility is to just output non-aligned sequences and align them afterwards...
+Which I just generated and has all of the reference positions.  I'll need to mess around with how the script below handles microsatellites, because it is pretty complicated when there is a series of microsats.  One possibility is to just output non-aligned sequences and align them afterwards...
 
 Because these loci are haploid, we need to treat them differently from autosomal DNA (and maybe xDNA). One option is to just call bases based on the highest depth of coverage.  I have a script to do this that starts from a combined vcf file.  First I generate a combined vcf file like this, on redfin (9_gatk_GenotypeGVCFs_bychr_sqsub_females_and_males.pl):
 
@@ -700,3 +700,104 @@ ben/2017_SEAsian_macaques/SEAsian_macaques_bam/females_and_males/FandM_chrM_BSQR
 }
 ```
 
+# NEW STRATEGY
+
+I've decided to use GATK to generate mtDNA fasta files for each individual.  I havd to first recall individual mtDNA using haplotype caller and ploidy = 1 because genotypeGVCFs uses the ploidy level of the precursor haplotypecaller files (which defaulted to diploid).  On goblin: 7.2_gatk_haplotypecaller_mtDNAonly_haploid_onBSQRbams_sqsub_males.pl
+
+```
+#!/usr/bin/perl
+# This script will run quake on trimmed fq files
+
+my $gatkpath = "/work/ben/2017_SEAsian_macaques/bin/GenomeAnalysisTK-nightly-2017-10-07-g1994025/";
+#my $referencegenome="/scratch/ben/MacaM/MacaM_mt_y.fa";
+my $referencegenome="/work/ben/2017_SEAsian_macaques/MacaM/MacaM_mt_y.fa";
+#my $majorpath = "/work/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/males/";
+my $majorpath = "/work/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/*/";
+#my @chromosomes =("chr01","chr02a","chr02b","chr03","chr04","chr05","chr06","chr07","chr08","chr09","chr10","chr11","chr12","chr13","chr14","chr15","chr16","chr17","chr18","c
+hr19","chrX","chrM","chrY");
+my @chromosomes =("chrM");
+#@files = glob($majorpath."*ddedup_rg_realigned.bamBSQR.bam");
+
+@files = glob($majorpath."*sorted_ddedup_rg_realigned.bamBSQR.bam");
+
+foreach my $file (@files){
+    foreach my $chromosome (@chromosomes){
+	my $commandline = "sqsub -r 7d --mpp 16G -o ".$file."_".$chromosome."\.log ";
+	$commandline = $commandline."/usr/lib/jvm/java-1.8.0-openjdk.x86_64/bin/java -Xmx8G -jar ".$gatkpath."GenomeAnalysisTK.jar -T HaplotypeCaller -R ".$referencegenome." -
+I ".$file." -L ".$chromosome." -ploidy 1 --emitRefConfidence GVCF -o ".$file."_".$chromosome."_mtDNAonly_haploid_BSQR.g.vcf.gz";
+# -out_mode EMIT_ALL_CONFIDENT_SITES
+       print $commandline,"\n";
+     $status = system($commandline);
+    }
+}
+```
+
+Then select SNPs only and get rid of alt alleles (40_make_individual_chrM_SNP_files.pl):
+```
+#!/usr/bin/perl
+# This script will run quake on trimmed fq files
+
+my $gatkpath = "/work/ben/2017_SEAsian_macaques/bin/GenomeAnalysisTK-nightly-2017-10-07-g1994025/";
+#my $referencegenome="/scratch/ben/MacaM/MacaM_mt_y.fa";
+my $referencegenome="/work/ben/2017_SEAsian_macaques/MacaM/MacaM_mt_y.fa";
+my $majorpathfemales = "/work/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/females/";
+my $majorpathmales = "/work/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/males/";
+my $majorpatheither="/work/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/*/";
+my $majorpathboth="/work/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/females_and_males/";
+my @chromosomes=("chrM");
+my @samples=("bru_PF707","hecki_PF505","hecki_PF643","hecki_PF644","hecki_PF647","hecki_PF648","maura_PF615","maura_PF713","maura_PM613","maura_PM614","maura_PM616","nem_
+GumGum_female","nem_Ngsang_sumatra_female","nem_PM1206","nem_PM664","nem_PM665","nem_Sukai_male","nigra_PF660","tog_PF549","tonk_PF511","tonk_PF559","tonk_PF563","tonk_PF
+597","tonk_PF626","tonk_PM592");
+#my @chromosomes =("chr01","chr02a","chr02b","chr03","chr04","chr05","chr06","chr07","chr08","chr09","chr10","chr11","chr12","chr13","chr14","chr15","chr16","chr17","chr1
+8","chr19","chrX","chrM","chrY");
+# glob all the input files
+@files = glob($majorpatheither."*mtDNAonly_haploid_BSQR.g.vcf.gz");
+
+foreach my $file (@files){
+    foreach my $chromosome (@chromosomes){
+	    my $commandline = "sqsub -r 2d --mpp 16G -o selectsample_".$sample."_".$chromosome."\.log ";
+	    $commandline = $commandline."/usr/lib/jvm/java-1.8.0-openjdk.x86_64/bin/java -Xmx8G -jar ".$gatkpath."GenomeAnalysisTK.jar -T SelectVariants -R ".$referencege
+nome;
+	    $commandline = $commandline." -env -trimAlternates -V ".$file." ";
+	    $commandline = $commandline."-o ".substr($file,1,-9)."_SNPsonly.vcf.gz";
+	    print $commandline,"\n";
+#	    $status = system($commandline);
+    }
+}
+```
+Now use GATK to make a fasta file for each sample:
+```
+#!/usr/bin/perl
+# This script will run quake on trimmed fq files
+
+my $gatkpath = "/work/ben/2017_SEAsian_macaques/bin/GenomeAnalysisTK-nightly-2017-10-07-g1994025/";
+#my $referencegenome="/scratch/ben/MacaM/MacaM_mt_y.fa";
+my $referencegenome="/work/ben/2017_SEAsian_macaques/MacaM/MacaM_mt_y.fa";
+my $majorpathfemales = "/work/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/females/";
+my $majorpathmales = "/work/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/males/";
+my $majorpatheither="/work/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/*/";
+my $majorpathboth="/work/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/females_and_males/";
+my @chromosomes=("chrM");
+my @samples=("bru_PF707","hecki_PF505","hecki_PF643","hecki_PF644","hecki_PF647","hecki_PF648","maura_PF615","maura_PF713","maura_PM613","maura_PM614","maura_PM616","nem_
+GumGum_female","nem_Ngsang_sumatra_female","nem_PM1206","nem_PM664","nem_PM665","nem_Sukai_male","nigra_PF660","tog_PF549","tonk_PF511","tonk_PF559","tonk_PF563","tonk_PF
+597","tonk_PF626","tonk_PM592");
+#my @chromosomes =("chr01","chr02a","chr02b","chr03","chr04","chr05","chr06","chr07","chr08","chr09","chr10","chr11","chr12","chr13","chr14","chr15","chr16","chr17","chr1
+8","chr19","chrX","chrM","chrY");
+
+@files = glob($majorpatheither."*mtDNAonly_haploid_BSQR_SNPsonly.vcf.gz");
+
+print $majorpatheither."*mtDNAonly_haploid_BSQR_SNPsonly.vcf.gz";
+
+foreach my $file (@files){
+#    foreach my $chromosome (@chromosomes){
+	    my $commandline = "sqsub -r 2d --mpp 16G -o ".$file."makefasta.log ";
+	    $commandline = $commandline."/usr/lib/jvm/java-1.8.0-openjdk.x86_64/bin/java -Xmx8G -jar ".$gatkpath."GenomeAnalysisTK.jar -T FastaAlternateReferenceMaker -R 
+".$referencegenome;
+	    $commandline = $commandline." -L chrM ";
+            $commandline = $commandline." -V ".$file." ";
+            $commandline = $commandline." -o ".substr($file,1,-7).".fasta";
+	    print $commandline,"\n";
+#	    $status = system($commandline);
+#    }
+}
+```

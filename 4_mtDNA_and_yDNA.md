@@ -654,5 +654,49 @@ my $status;
 $status = system("perl -p -i -e 's/XXXX/$count/g' $outputfile");
 ```
 
+Trying another strategy.
 
+First I generated a multisample vcf file using a low quality score and ploidy equal to one:
+```
+sqsub -r 4d --mpp 16G -o catvar_chrM.log /usr/lib/jvm/java-1.8.0-openjdk.x86_64/bin/java -Xmx8G -jar /work/ben/2017_SEAsian_macaques/bin/GenomeAnalysisTK-nightly-2017-10-07-g1994025/GenomeAnalysisTK.jar -T GenotypeGVCFs -R /work/ben/2017_SEAsian_macaques/MacaM/MacaM_mt_y.fa -V /work/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/females_and_males/FandM_chrM_BSQR.g.vcf.gz --includeNonVariantSites --sample_ploidy 1 -stand_call_conf 1 -o /work/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/females_and_males/FandM_chrM_BSQR_jointgeno_allsites_haploid.vcf.gz
+```
+Then I generated a SNP only vcf vcf file for each smaple (40_make_individual_chrM_SNP_files.pl):
+
+```
+#!/usr/bin/perl
+# This script will run quake on trimmed fq files
+
+my $gatkpath = "/work/ben/2017_SEAsian_macaques/bin/GenomeAnalysisTK-nightly-2017-10-07-g1994025/";
+#my $referencegenome="/scratch/ben/MacaM/MacaM_mt_y.fa";
+my $referencegenome="/work/ben/2017_SEAsian_macaques/MacaM/MacaM_mt_y.fa";
+my $majorpathfemales = "/work/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/females/";
+my $majorpathmales = "/work/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/males/";
+my $majorpathboth="/work/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/females_and_males/";
+my @chromosomes=("chrM");
+my @samples=("bru_PF707","hecki_PF505","hecki_PF643","hecki_PF644","hecki_PF647","hecki_PF648","maura_PF615","maura_PF713","maura_PM613","maura_PM614","m
+aura_PM616","nem_GumGum_female","nem_Ngsang_sumatra_female","nem_PM1206","nem_PM664","nem_PM665","nem_Sukai_male","nigra_PF660","tog_PF549","tonk_PF511",
+"tonk_PF559","tonk_PF563","tonk_PF597","tonk_PF626","tonk_PM592");
+#my @chromosomes =("chr01","chr02a","chr02b","chr03","chr04","chr05","chr06","chr07","chr08","chr09","chr10","chr11","chr12","chr13","chr14","chr15","chr
+16","chr17","chr18","chr19","chrX","chrM","chrY");
+
+foreach my $sample (@samples){
+    foreach my $chromosome (@chromosomes){
+	    my $commandline = "sqsub -r 2d --mpp 16G -o selectsample_".$sample."_".$chromosome."\.log ";
+	    $commandline = $commandline."/usr/lib/jvm/java-1.8.0-openjdk.x86_64/bin/java -Xmx8G -jar ".$gatkpath."GenomeAnalysisTK.jar -T SelectVariants 
+-R ".$referencegenome;
+	    $commandline = $commandline." -env -trimAlternates -sn ".$sample." -V ".$majorpathboth."FandM_".$chromosome."_BSQR_jointgeno_allsites_haploid
+.vcf.gz "; 
+	    $commandline = $commandline."-o ".$majorpathboth.$sample."_mtDNASNPsonly_BSQR_jointgeno_allsites_haploid.vcf.gz";
+            # the variant input file was called with -sample_ploidy 1 -stand_call_conf 1
+	    # using this command:
+	    # sqsub -r 4d --mpp 16G -o catvar_chrM.log /usr/lib/jvm/java-1.8.0-openjdk.x86_64/bin/java -Xmx8G -jar /work/ben/2017_SEAsian_macaques/bin/Ge
+nomeAnalysisTK-nightly-2017-10-07-g1994025/GenomeAnalysisTK.jar -T GenotypeGVCFs -R /work/ben/2017_SEAsian_macaques/MacaM/MacaM_mt_y.fa -V /work/ben/2017
+_SEAsian_macaques/SEAsian_macaques_bam/females_and_males/FandM_chrM_BSQR.g.vcf.gz --includeNonVariantSites --sample_ploidy 1 -stand_call_conf 1 -o /work/
+ben/2017_SEAsian_macaques/SEAsian_macaques_bam/females_and_males/FandM_chrM_BSQR_jointgeno_allsites_haploid.vcf.gz
+	    # which gave calls for all ref sites
+	    print $commandline,"\n";
+#	    $status = system($commandline);
+    }
+}
+```
 

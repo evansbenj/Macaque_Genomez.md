@@ -1,3 +1,8 @@
+# Calling a section of a chr:
+```
+qsub -l h_vmem=16g -cwd -b y -N Papio bash -c "java -Xmx8g -jar /mnt/expressions/ben_evans/bin/GenomeAnalysisTK-nightly-2017-10-07-g1994025/GenomeAnalysisTK.jar -T HaplotypeCaller -R /mnt/expressions/ben_evans/MacaM/MacaM_mt_female.fa -I /mnt/scratch/ben_evans/SEAsian_scy_trim_quake/females/Papio/Papio_rg_realigned_dedup.bamBSQR.bam -L chr01:132303886-225002135 --emitRefConfidence GVCF -o /mnt/scratch/ben_evans/SEAsian_scy_trim_quake/females/Papio/Papio_rg_realigned_dedup.bamBSQR.bam_chr01_BSQR.g.vcf.pos_132303886_to_225002135.g.vcf.gz"
+```
+
 # Combining VCF files
 
 Sometimes the genotyper does not complete an entire chr in the allotted time.  So we can do the rest in an interval and then combine the sections we need.

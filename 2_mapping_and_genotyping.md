@@ -318,4 +318,9 @@ After lots of effort, I am going to try to divide and conquor.  I need to do the
 
 When I try to filter `MQRankSum < -10` or `--filterName "lowqual" --filterExpression "ExcessHet > 15 --filterName "ExcessHet" --filterExpression "InbreedingCoeff < 0" --filterName "NegInbreedingCoef" ` I get an error.  Maybe have to use bcftools or vcftools for that.
 
+Instead I can use vctools like this:
+```
+/work/ben/2017_SEAsian_macaques/bin/vcftools/bin/vcftools --gzvcf /work/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/females_and_males/FandM_chr01_BSQR_jointgeno_allsites_withpapio.vcf.gz --max-alleles 2 --max-missing 0.5 --hwe 1e-7 --remove-filtered-all --recode --stdout | /work/ben/2017_SEAsian_macaques/bin/htslib-1.6/bin/bgzip > /work/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/females_and_males/FandM_chr01_BSQR_jointgeno_allsites_withpapio_PASS_only.vcf.gz
+```
+
 

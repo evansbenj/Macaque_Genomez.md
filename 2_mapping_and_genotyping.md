@@ -308,5 +308,14 @@ $java -jar $gatk \
  
  I think I should filter all sites based on some of the recommendations and also possibly filter individual genotypes using genotype filters.  VariantFiltration has a `--setFilteredGtToNocall` option that should replace flagged genotypes with missing. This tool also allows one to flag individual genotypes using `--genotypeFilterExpression`
  
+# Hard Filtering (2019)
+
+After lots of effort, I am going to try to divide and conquor.  I need to do the filtration on iqaluk because I cannot figure out how to escape single quotes in the command line using sbatch.
+
+```
+/usr/lib/jvm/java-1.8.0-openjdk.x86_64/bin/java -Djava.io.tmpdir=/scratch/ben/TMP/ -Xmx8g -jar /work/ben/2017_SEAsian_macaques/bin/GenomeAnalysisTK-nightly-2017-10-07-g1994025/GenomeAnalysisTK.jar -T VariantFiltration -R /work/ben/2017_SEAsian_macaques/MacaM/MacaM_mt_y.fa -V /work/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/females_and_males/FandM_chr05_BSQR_jointgeno_allsites_withpapio.vcf.gz --filterExpression "QD < 2.0 || FS > 30.0 || MQ < 40.0 || ReadPosRankSum < -8.0" --filterName "lowqual" -mask /work/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/females_and_males/FandM_chr05_BSQR_jointgeno_allsites_indels_withpapio.vcf.gz --maskExtension 5 --maskName "indel" --genotypeFilterExpression "DP < 10 || DP > 100" --genotypeFilterName "genotypefilter" --setFilteredGtToNocall -o /work/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/females_and_males/FandM_chr05_BSQR_jointgeno_allsites_withpapio_flagged1.vcf.gz
+```
+
+When I try to filter `MQRankSum < -10` or `--filterName "lowqual" --filterExpression "ExcessHet > 15 --filterName "ExcessHet" --filterExpression "InbreedingCoeff < 0" --filterName "NegInbreedingCoef" ` I get an error.  Maybe have to use bcftools or vcftools for that.
 
 

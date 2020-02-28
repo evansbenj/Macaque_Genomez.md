@@ -1,6 +1,11 @@
 # Admixfrog
 
-On graham I installed it here `/home/ben/.local/bin/admixfrog` as follows:
+Vcf files are here on graham:
+```
+/home/ben/projects/rrg-ben/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/females_and_males/F_and_M*vcf.gz
+```
+
+On graham I installed admixfrog here `/home/ben/.local/bin/admixfrog` as follows:
 ```
 module load scipy-stack/2019b
 pip install cython scipy --upgrade --user

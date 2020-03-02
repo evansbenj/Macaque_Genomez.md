@@ -104,4 +104,7 @@ Now filter these loci:
 vcftools --vcf FandM_chr01_mm_0.5_minQ_30.recode.vcf --exclude-positions bad_chr01_loci --recode --recode-INFO-all --out FandM_chr01_mm_0.5_minQ_30_exclude_missingness
 ```
 
-
+After filtering, this reeduced SNPs by about half for chr01:
+```
+After filtering, kept 3178562 out of a possible 7229006 Sites
+```

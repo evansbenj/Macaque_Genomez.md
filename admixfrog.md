@@ -107,3 +107,7 @@ After filtering, this reeduced SNPs by about half for chr01:
 ```
 After filtering, kept 3178562 out of a possible 7229006 Sites
 ```
+Now filter these loci (this level reduces the number of SNPs to 10% of the original):
+```
+vcftools --vcf FandM_chr01_mm_0.5_minQ_30_exclude_missingness.recode.vcf --thin 500 --recode --recode-INFO-all --out FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned
+```

@@ -32,16 +32,10 @@ Keep variants that have been successfully genotyped in 50% of individuals and a 
 The --recode flag tells the program to write a new vcf file with the filters, 
 The --recode-INFO-all keeps all the INFO flags from the old vcf file in the new one. 
 ```
-vcftools --gzvcf ../FandM_chr01_BSQR_jointgeno_allsites_filtered_SNPsonly.vcf.gz --max-missing 0.5 --minQ 30 --recode --recode-INFO-all --out ./FandM_chr01_mm_0.5_minQ_30.vcf.gz
+vcftools --gzvcf ../FandM_chr01_BSQR_jointgeno_allsites_filtered_SNPsonly.vcf.gz --max-missing 0.5 --minQ 30 --recode --recode-INFO-all --out ./FandM_chr01_mm_0.5_minQ_30
 ```
 
-The next filter we will apply is a minimum depth for a genotype call 
-This command will recode genotypes that have less than 3 reads.
-```
-vcftools --vcf FandM_chr01_mm_0.5_minQ_30.vcf.gz --minDP 3 --recode --recode-INFO-all --out FandM_chr01_mm_0.5_minQ_30_minDP_3.vcf.gz 
-```
-
-The next step is to get rid of individuals that did not sequence well. We can do this by assessing individual levels of missing data.
+The next step is to assess individual levels of missing data.
 ```
 vcftools --vcf FandM_chr01_mm_0.5_minQ_30_minDP_3.vcf.gz --missing-indv
 ```
@@ -52,17 +46,10 @@ Examine the output file
 cat out.imiss
 ```
 
-Make a list of individuals with <50% missing data
-```
-mawk '$5 > 0.5' out.imiss | cut -f1 > lowDP.indv
-```
+This shows that, for chr01, nigrescens_PM654, hecki_PF644, hecki_PF647, tonk_PF597 have a proportion of missing sites respectively of 0.369508, 0.389771, 0.435798, 0.548834). All others have 10% (tonk_PF559) or <6%.
 
-If needed, we can remove individuals with lots of missing data like this:
 ```
-vcftools --vcf raw.g5mac3dp3.recode.vcf --remove lowDP.indv --recode --recode-INFO-all --out raw.g5mac3dplm
-```
-
-Now restrict the data to variants called in a high percentage of individuals from each species.
+Now restrict the data to variants called in a high percentage of non-missing genotypes across individuals from every species.
 Make a tab delimited file calleed 'species.txt' with the species assignment of each sample.
 ```
 bru_PF707	brunnescens
@@ -99,22 +86,22 @@ tonk_PM592	tonkeana
 mawk '$2 == "brunnescens"' species.txt > 1.keep && mawk '$2 == "hecki"' species.txt > 2.keep && mawk '$2 == "maura"' species.txt > 3.keep && mawk '$2 == "nemestrina"' species.txt > 4.keep && mawk '$2 == "nigra"' species.txt > 5.keep && mawk '$2 == "nigrescens"' species.txt > 6.keep && mawk '$2 == "togeanus"' species.txt > 7.keep && mawk '$2 == "tonkeana"' species.txt > 8.keep 
 ```
 ```
-vcftools --vcf DP3g95maf05.recode.vcf --keep 1.keep --missing-site --out 1
-vcftools --vcf DP3g95maf05.recode.vcf --keep 2.keep --missing-site --out 2 
-vcftools --vcf DP3g95maf05.recode.vcf --keep 3.keep --missing-site --out 3
-vcftools --vcf DP3g95maf05.recode.vcf --keep 4.keep --missing-site --out 4 
-vcftools --vcf DP3g95maf05.recode.vcf --keep 5.keep --missing-site --out 5
-vcftools --vcf DP3g95maf05.recode.vcf --keep 6.keep --missing-site --out 6 
-vcftools --vcf DP3g95maf05.recode.vcf --keep 7.keep --missing-site --out 7
-vcftools --vcf DP3g95maf05.recode.vcf --keep 8.keep --missing-site --out 8 
+vcftools --vcf FandM_chr01_mm_0.5_minQ_30.recode.vcf --keep 1.keep --missing-site --out 1_chr01
+vcftools --vcf FandM_chr01_mm_0.5_minQ_30.recode.vcf --keep 2.keep --missing-site --out 2_chr01 
+vcftools --vcf FandM_chr01_mm_0.5_minQ_30.recode.vcf --keep 3.keep --missing-site --out 3_chr01
+vcftools --vcf FandM_chr01_mm_0.5_minQ_30.recode.vcf --keep 4.keep --missing-site --out 4_chr01 
+vcftools --vcf FandM_chr01_mm_0.5_minQ_30.recode.vcf --keep 5.keep --missing-site --out 5_chr01
+vcftools --vcf FandM_chr01_mm_0.5_minQ_30.recode.vcf --keep 6.keep --missing-site --out 6_chr01 
+vcftools --vcf FandM_chr01_mm_0.5_minQ_30.recode.vcf --keep 7.keep --missing-site --out 7_chr01
+vcftools --vcf FandM_chr01_mm_0.5_minQ_30.recode.vcf --keep 8.keep --missing-site --out 8_chr01 
 ```
 Now make a list of the bad loci we want to filter:
 ```
-cat 1.lmiss 2.lmiss 3.lmiss 4.lmiss 5.lmiss 6.lmiss 7.lmiss 8.lmiss | mawk '!/CHR/' | mawk '$6 > 0.1' | cut -f1,2 >> badloci
+cat 1_chr01.lmiss 2_chr01.lmiss 3_chr01.lmiss 4_chr01.lmiss 5_chr01.lmiss 6_chr01.lmiss 7_chr01.lmiss 8_chr01.lmiss | mawk '!/CHR/' | mawk '$6 > 0.2' | cut -f1,2 >> bad_chr01_loci
 ```
 Now filter these loci:
 ```
-vcftools --vcf DP3g95maf05.recode.vcf --exclude-positions badloci --recode --recode-INFO-all --out DP3g95p5maf05
+vcftools --vcf FandM_chr01_mm_0.5_minQ_30.recode.vcf --exclude-positions bad_chr01_loci --recode --recode-INFO-all --out FandM_chr01_mm_0.5_minQ_30_exclude_missingness
 ```
 
 

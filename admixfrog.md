@@ -2,7 +2,7 @@
 
 Vcf files are here on graham:
 ```
-/home/ben/projects/rrg-ben/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/females_and_males/F_and_M*vcf.gz
+/home/ben/projects/rrg-ben/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/females_and_males/FandM*vcf.gz
 ```
 
 On graham I installed admixfrog here `/home/ben/.local/bin/admixfrog` as follows:

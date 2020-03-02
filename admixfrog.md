@@ -126,9 +126,25 @@ bcftools index FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned.vcf.gz
 tabix -p vcf FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned.vcf.gz
 ```
 
-Now create a reference file for each individual
+Now create a reference file for each individual.  Before running admixfrog, do this:
 ```
-/home/ben/.local/bin/admixfrog/admixfrog-ref --vcf FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned.vcf.gz --out FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned.ref.xz  \
+module load scipy-stack/2019b
+```
+then for each sample do this:
+```
+admixfrog-ref [-h] --outfile OUTFILE [--states [STATES [STATES ...]]]
+                     [--state-file STATE_FILE] [--cont-id CONT_ID]
+                     [--ancestral ANCESTRAL]
+                     [--random-read-samples [RANDOM_READ_SAMPLES [RANDOM_READ_SAMPLES ...]]]
+                     [--vcf-ref FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned.vcf.gz
+
+```
+
+```
+/home/ben/.local/bin/admixfrog-ref --outfile ref_BNEM1 --vcf FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned.vcf.gz --states NEM1=nem_GumGum_female --state-file pops.yaml 
+
+
+
         --states AFR BNEM=nem_GumGum_female,nem_Ngsang_sumatra_female,nem_PM1206,nem_PM664,nem_PM665,nem_Sukai_male DEN=Denisova \
         --pop-file data.yaml \
         (no need for this until we have separate files by chr):

@@ -126,6 +126,11 @@ bcftools index FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned.vcf.gz
 tabix -p vcf FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned.vcf.gz
 ```
 
+
+# Admixfrog seems to be working
+I am in this directory on graham:
+`/home/ben/projects/rrg-ben/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/females_and_males/filtered_for_admixfrog`
+
 Now create a reference file for each individual.  Before running admixfrog, do this:
 ```
 module load scipy-stack/2019b

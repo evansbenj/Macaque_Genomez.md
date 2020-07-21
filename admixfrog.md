@@ -203,6 +203,11 @@ TON:
 /home/ben/.local/bin/admixfrog-ref --outfile ref_TON6 --vcf FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned.vcf.gz --states TON6=tonk_PM592 --state-file pops.yaml 
 ```
 
+This works
+make the ref file
+```
+/home/ben/.local/bin/admixfrog-ref --vcf FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned.vcf.gz --out FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned.ref.xz --states TON HEC NEM --pop-file pops.yaml 
+```
 make the target (input) file
 ```
 admixfrog-bam --bam /home/ben/projects/rrg-ben/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/females/tonk_PF511sorted_ddedup_rg_realigned.bamBSQR.bam --ref FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned.ref.xz --out tonk_PF511.in.xz

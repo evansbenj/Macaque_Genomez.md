@@ -203,6 +203,19 @@ TON:
 /home/ben/.local/bin/admixfrog-ref --outfile ref_TON6 --vcf FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned.vcf.gz --states TON6=tonk_PM592 --state-file pops.yaml 
 ```
 
+make the target (input) file
+```
+admixfrog-bam --bam /home/ben/projects/rrg-ben/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/females/tonk_PF511sorted_ddedup_rg_realigned.bamBSQR.bam --ref FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned.ref.xz --out tonk_PF511.in.xz
+/home/ben/.local/bin/admixfrog-bam --bam /home/ben/projects/rrg-ben/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/females/tonk_PF559sorted_ddedup_rg_realigned.bamBSQR.bam --ref FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned.ref.xz --out tonk_PF559.in.xz
+/home/ben/.local/bin/admixfrog-bam --bam /home/ben/projects/rrg-ben/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/females/tonk_PF563sorted_ddedup_rg_realigned.bamBSQR.bam --ref FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned.ref.xz --out tonk_PF563.in.xz
+/home/ben/.local/bin/admixfrog-bam --bam /home/ben/projects/rrg-ben/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/females/tonk_PF597sorted_ddedup_rg_realigned.bamBSQR.bam --ref FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned.ref.xz --out tonk_PF597.in.xz
+/home/ben/.local/bin/admixfrog-bam --bam /home/ben/projects/rrg-ben/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/females/tonk_PF626sorted_ddedup_rg_realigned.bamBSQR.bam --ref FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned.ref.xz --out tonk_PF626.in.xz
+```
+run the analysis
+```
+admixfrog --infile tonk_PF511.in.xz --ref FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned.ref.xz --out tonk_PF511_ref_TONK_HEC_NEM -b 10000 --states TON HEC NEM --c0 0 --dont-est-contamination
+```
+
 
 randomstuff
 ```

@@ -170,7 +170,7 @@ NEM
 /home/ben/.local/bin/admixfrog-ref --outfile ref_BNEM1 --vcf FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned.vcf.gz --states NEM1=nem_GumGum_female --state-file pops.yaml 
 ```
 ```
-/home/ben/.local/bin/admixfrog-ref --outfile ref_BNEM2 --vcf FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned.vcf.gz --states NEM2=nem_PM1206 --state-file pops.yaml     
+/home/ben/.local/bin/admixfrog-ref --outfile ref_BNEM2 --vcf FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned.vcf.gz --states NEM2=nem_PM1206 --state-file pops.yaml  
 ```
 ``` 
 /home/ben/.local/bin/admixfrog-ref --outfile ref_BNEM3 --vcf FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned.vcf.gz --states NEM3=nem_PM664 --state-file pops.yaml  
@@ -181,6 +181,29 @@ NEM
 ```
 /home/ben/.local/bin/admixfrog-ref --outfile ref_BNEM5 --vcf FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned.vcf.gz --states NEM5=nem_Sukai_male --state-file pops.yaml 
 ```
+
+TON:
+
+```
+/home/ben/.local/bin/admixfrog-ref --outfile ref_TON1 --vcf FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned.vcf.gz --states TON1=tonk_PF511 --state-file pops.yaml 
+```  
+```
+/home/ben/.local/bin/admixfrog-ref --outfile ref_TON2 --vcf FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned.vcf.gz --states TON2=tonk_PF559 --state-file pops.yaml 
+``` 
+```
+/home/ben/.local/bin/admixfrog-ref --outfile ref_TON3 --vcf FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned.vcf.gz --states TON3=tonk_PF563 --state-file pops.yaml 
+``` 
+```
+/home/ben/.local/bin/admixfrog-ref --outfile ref_TON4 --vcf FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned.vcf.gz --states TON4=tonk_PF597 --state-file pops.yaml 
+```
+```
+/home/ben/.local/bin/admixfrog-ref --outfile ref_TON5 --vcf FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned.vcf.gz --states TON5=tonk_PF626 --state-file pops.yaml 
+```
+```
+/home/ben/.local/bin/admixfrog-ref --outfile ref_TON6 --vcf FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned.vcf.gz --states TON6=tonk_PM592 --state-file pops.yaml 
+```
+
+
 randomstuff
 ```
         --states AFR BNEM=nem_GumGum_female,nem_Ngsang_sumatra_female,nem_PM1206,nem_PM664,nem_PM665,nem_Sukai_male DEN=Denisova \

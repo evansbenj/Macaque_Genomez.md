@@ -145,11 +145,44 @@ admixfrog-ref [-h] --outfile OUTFILE [--states [STATES [STATES ...]]]
 
 ```
 
+BRU
+```
+/home/ben/.local/bin/admixfrog-ref --outfile ref_BRU --vcf FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned.vcf.gz --states BRU=bru_PF707 --state-file pops.yaml     
+```
+HEC
+```
+/home/ben/.local/bin/admixfrog-ref --outfile ref_HEC1 --vcf FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned.vcf.gz --states HEC1=hecki_PF505 --state-file pops.yaml
+```
+```
+/home/ben/.local/bin/admixfrog-ref --outfile ref_HEC2 --vcf FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned.vcf.gz --states HEC2=hecki_PF643 --state-file pops.yaml
+```
+```
+/home/ben/.local/bin/admixfrog-ref --outfile ref_HEC3 --vcf FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned.vcf.gz --states HEC3=hecki_PF644 --state-file pops.yaml
+```
+```
+/home/ben/.local/bin/admixfrog-ref --outfile ref_HEC4 --vcf FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned.vcf.gz --states HEC4=hecki_PF647 --state-file pops.yaml   
+```
+```
+/home/ben/.local/bin/admixfrog-ref --outfile ref_HEC5 --vcf FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned.vcf.gz --states HEC5=hecki_PF648 --state-file pops.yaml  
+```
+NEM
 ```
 /home/ben/.local/bin/admixfrog-ref --outfile ref_BNEM1 --vcf FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned.vcf.gz --states NEM1=nem_GumGum_female --state-file pops.yaml 
-
-
-
+```
+```
+/home/ben/.local/bin/admixfrog-ref --outfile ref_BNEM2 --vcf FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned.vcf.gz --states NEM2=nem_PM1206 --state-file pops.yaml     
+```
+``` 
+/home/ben/.local/bin/admixfrog-ref --outfile ref_BNEM3 --vcf FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned.vcf.gz --states NEM3=nem_PM664 --state-file pops.yaml  
+```
+```
+ /home/ben/.local/bin/admixfrog-ref --outfile ref_BNEM4 --vcf FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned.vcf.gz --states NEM4=nem_PM665 --state-file pops.yaml  
+```
+```
+/home/ben/.local/bin/admixfrog-ref --outfile ref_BNEM5 --vcf FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned.vcf.gz --states NEM5=nem_Sukai_male --state-file pops.yaml 
+```
+randomstuff
+```
         --states AFR BNEM=nem_GumGum_female,nem_Ngsang_sumatra_female,nem_PM1206,nem_PM664,nem_PM665,nem_Sukai_male DEN=Denisova \
         --pop-file data.yaml \
         (no need for this until we have separate files by chr):

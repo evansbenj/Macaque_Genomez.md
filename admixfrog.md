@@ -146,69 +146,13 @@ admixfrog-ref [-h] --outfile OUTFILE [--states [STATES [STATES ...]]]
 
 ```
 
-BRU
-```
-/home/ben/.local/bin/admixfrog-ref --outfile ref_BRU --vcf FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned.vcf.gz --states BRU=bru_PF707 --state-file pops.yaml     
-```
-HEC
-```
-/home/ben/.local/bin/admixfrog-ref --outfile ref_HEC1 --vcf FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned.vcf.gz --states HEC1=hecki_PF505 --state-file pops.yaml
-```
-```
-/home/ben/.local/bin/admixfrog-ref --outfile ref_HEC2 --vcf FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned.vcf.gz --states HEC2=hecki_PF643 --state-file pops.yaml
-```
-```
-/home/ben/.local/bin/admixfrog-ref --outfile ref_HEC3 --vcf FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned.vcf.gz --states HEC3=hecki_PF644 --state-file pops.yaml
-```
-```
-/home/ben/.local/bin/admixfrog-ref --outfile ref_HEC4 --vcf FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned.vcf.gz --states HEC4=hecki_PF647 --state-file pops.yaml   
-```
-```
-/home/ben/.local/bin/admixfrog-ref --outfile ref_HEC5 --vcf FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned.vcf.gz --states HEC5=hecki_PF648 --state-file pops.yaml  
-```
-NEM
-```
-/home/ben/.local/bin/admixfrog-ref --outfile ref_BNEM1 --vcf FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned.vcf.gz --states NEM1=nem_GumGum_female --state-file pops.yaml 
-```
-```
-/home/ben/.local/bin/admixfrog-ref --outfile ref_BNEM2 --vcf FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned.vcf.gz --states NEM2=nem_PM1206 --state-file pops.yaml  
-```
-``` 
-/home/ben/.local/bin/admixfrog-ref --outfile ref_BNEM3 --vcf FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned.vcf.gz --states NEM3=nem_PM664 --state-file pops.yaml  
-```
-```
- /home/ben/.local/bin/admixfrog-ref --outfile ref_BNEM4 --vcf FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned.vcf.gz --states NEM4=nem_PM665 --state-file pops.yaml  
-```
-```
-/home/ben/.local/bin/admixfrog-ref --outfile ref_BNEM5 --vcf FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned.vcf.gz --states NEM5=nem_Sukai_male --state-file pops.yaml 
-```
-
-TON:
-
-```
-/home/ben/.local/bin/admixfrog-ref --outfile ref_TON1 --vcf FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned.vcf.gz --states TON1=tonk_PF511 --state-file pops.yaml 
-```  
-```
-/home/ben/.local/bin/admixfrog-ref --outfile ref_TON2 --vcf FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned.vcf.gz --states TON2=tonk_PF559 --state-file pops.yaml 
-``` 
-```
-/home/ben/.local/bin/admixfrog-ref --outfile ref_TON3 --vcf FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned.vcf.gz --states TON3=tonk_PF563 --state-file pops.yaml 
-``` 
-```
-/home/ben/.local/bin/admixfrog-ref --outfile ref_TON4 --vcf FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned.vcf.gz --states TON4=tonk_PF597 --state-file pops.yaml 
-```
-```
-/home/ben/.local/bin/admixfrog-ref --outfile ref_TON5 --vcf FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned.vcf.gz --states TON5=tonk_PF626 --state-file pops.yaml 
-```
-```
-/home/ben/.local/bin/admixfrog-ref --outfile ref_TON6 --vcf FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned.vcf.gz --states TON6=tonk_PM592 --state-file pops.yaml 
-```
-
 This works
 make the ref file
 ```
 /home/ben/.local/bin/admixfrog-ref --vcf FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned.vcf.gz --out FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned.ref.xz --states TON HEC NEM --pop-file pops.yaml 
 ```
+or just do this with `sbatch admixfrog_make_refs.sh chrX` (and modify the chr)
+
 make the target (input) file
 ```
 admixfrog-bam --bam /home/ben/projects/rrg-ben/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/females/tonk_PF511sorted_ddedup_rg_realigned.bamBSQR.bam --ref FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned.ref.xz --out tonk_PF511.in.xz
@@ -218,6 +162,8 @@ admixfrog-bam --bam /home/ben/projects/rrg-ben/ben/2017_SEAsian_macaques/SEAsian
 /home/ben/.local/bin/admixfrog-bam --bam /home/ben/projects/rrg-ben/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/females/tonk_PF626sorted_ddedup_rg_realigned.bamBSQR.bam --ref FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned.ref.xz --out tonk_PF626.in.xz
 /home/ben/.local/bin/admixfrog-bam --bam /home/ben/projects/rrg-ben/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/males/tonk_PM592sorted_ddedup_rg_realigned.bamBSQR.bam --ref FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned.ref.xz --out tonk_PM592.in.xz
 ```
+or just do this with `sbatch admixfrog_make_target.sh chrX` (and modify the chr)
+
 run the analysis
 ```
 admixfrog --infile tonk_PF511.in.xz --ref FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned.ref.xz --out tonk_PF511_ref_TONK_HEC_NEM -b 10000 --states TON HEC NEM --c0 0 --dont-est-contamination

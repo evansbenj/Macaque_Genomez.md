@@ -115,6 +115,7 @@ now, for chr01:
 ```
 After filtering, kept 322613 out of a possible 3178562 Sites
 ```
+I now have these in sbatch scrips: `vcftools_1.sh` and `vcftools_2.sh`
 
 # Admixfrog
 

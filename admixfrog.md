@@ -177,7 +177,7 @@ admixfrog --infile tonk_PM592.in.xz --ref FandM_chr01_mm_0.5_minQ_30_exclude_mis
 
 # Strategy for admixfrog
 ** within Sulawesi:
-I think the best strategy is to focus on adjacent species when possible.  So for nigrescens - nigra and hecki; for hecki - tonk and nigresc; for tonk - hecki, maura; for maura - tonk and ? (hecki?).
+I think the best strategy is to focus on adjacent species when possible.  So for nigrescens - nigra and hecki; for hecki - tonk and nigresc; for tonk - hecki, maura; for maura - tonk and tog.
 
 ** betweeh Sulawesi and Borneo
 I think the best strategy is to compare Borneo and all of Sulawesi with Sumatra as another comparison. Maybe also do this with borno nem, tonk, and sumatra.

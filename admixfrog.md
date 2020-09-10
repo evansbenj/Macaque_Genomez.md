@@ -182,7 +182,11 @@ I think the best strategy is to focus on adjacent species when possible.  So for
 ** betweeh Sulawesi and Borneo
 I think the best strategy is to compare Borneo to Sumatra plus either hec, tonk, or mau.
 
-
+# Problems overcome
+Something was wrong with nem_PM1206 chr17 but I fixed it by changing the - 10000 flag to -b 20000 as follows:
+```
+admixfrog --infile nem_PM1206.chr17.in.xz --ref FandM_chr17_mm_0.5_minQ_30_exclude_missingness_thinned.recode.xz --out nem_PM1206_chr17_NEM_SUM_HEC.out -b 20000 --states NEM SUM HEC --c0 0 --dont-est-contamination
+```
 
 randomstuff
 ```

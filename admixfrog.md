@@ -188,6 +188,697 @@ Something was wrong with nem_PM1206 chr17 but I fixed it by changing the - 10000
 admixfrog --infile nem_PM1206.chr17.in.xz --ref FandM_chr17_mm_0.5_minQ_30_exclude_missingness_thinned.recode.xz --out nem_PM1206_chr17_NEM_SUM_HEC.out -b 20000 --states NEM SUM HEC --c0 0 --dont-est-contamination
 ```
 
+
+# Plotting circular plots
+
+```R
+## Working directory
+setwd("/Users/Shared/Previously\ Relocated\ Items/Security/projects/2017_SEAsian_macaque_genomz/admixfrog/TON_MAU_TOG")
+library(tidyverse)
+library(ggplot2)
+rm(list=ls()) # removes all variables
+sample <-"maura_PM616"
+analysis <-"_TON_MAU_TOG"
+chrs <- factor(c("chr01","chr02a","chr02b","chr03","chr04","chr05","chr06","chr07","chr08","chr09",
+         "chr10","chr11","chr12","chr13","chr14","chr15","chr16","chr17","chr18","chr19","chrX"))
+
+# loop through chrs
+for(i in levels(chrs)){
+  print(eval(i))
+  a <- read_csv(paste(eval(sample), "_",i,eval(analysis),".out.bin.xz", sep=""))
+  assign(i,a)
+}  
+
+#for(i in levels(chrs)){
+#  print(names(eval(as.name(i)))[1])
+#  print(i[[names(eval(as.name(i)))[1]]])
+ # assign(paste(i,"$",eval(names(eval(as.name(i)))[1],sep="")),444)
+#}  
+
+# rename chromosome column
+chr01$chrom <- "chr01"
+chr02a$chrom <- "chr02a"
+chr02b$chrom <- "chr02b"
+chr03$chrom <- "chr03"
+chr04$chrom <- "chr04"
+chr05$chrom <- "chr05"
+chr06$chrom <- "chr06"
+chr07$chrom <- "chr07"
+chr08$chrom <- "chr08"
+chr09$chrom <- "chr09"
+chr10$chrom <- "chr10"
+chr11$chrom <- "chr11"
+chr12$chrom <- "chr12"
+chr13$chrom <- "chr13"
+chr14$chrom <- "chr14"
+chr15$chrom <- "chr15"
+chr16$chrom <- "chr16"
+chr17$chrom <- "chr17"
+chr18$chrom <- "chr18"
+chr19$chrom <- "chr19"
+chrX$chrom <- "chrX"
+
+Allchrs <- rbind(chr01,chr02a,chr02b,chr03,chr04,chr05,chr06,chr07,chr08,chr09,chr10,
+                 chr11,chr12,chr13,chr14,chr15,chr16,chr17,chr18,chr19,chrX)
+
+# make the chr a factor so we can use it for faceting
+Allchrs$chrom <- as.factor(Allchrs$chrom)
+
+#View(Allchrs)
+
+Allchrs %>% gather(k, v, -chrom:-n_snps) %>% 
+ # filter(v>.1) %>%
+  ggplot(aes(x=map, y=v, fill=k)) + geom_col() + 
+  facet_wrap(~chrom, ncol=1, strip='l')
+
+ggsave(paste(eval(sample), "_",i,eval(analysis),".png", sep=""), width = 8, height = 8, dpi = 200)
+
+
+
+
+
+
+##################
+##################
+# circular plotting
+##################
+##################
+
+# make a dataframe for circular plotting
+Allchr_circular <- as.data.frame(Allchrs[,c(1,3,8,9,10,11,12,13)])
+# create end coordinates based on next start site and have NA for last start site
+Allchr_circular$end <- c(Allchr_circular$pos[-1]-1, NA)
+#View(Allchr_circular)
+# check for changes in chr at the last window
+temp <- ifelse(Allchr_circular$end != Allchr_circular$pos + 999999,
+                              Allchr_circular$pos+999999,
+                              Allchr_circular$end)
+# add this to the dataframe
+Allchr_circular$end <- temp
+# make an entry for last end positioin 
+Allchr_circular$end[nrow(Allchr_circular)]<-Allchr_circular$pos[nrow(Allchr_circular)]+999999
+#View(Allchr_circular)
+# Now fix the first entry of each chr
+Allchr_circular$end <- ifelse(Allchr_circular$pos < 999999,
+                              999999,
+                              Allchr_circular$end)
+
+# reorder the columns
+Allchr_circular <- Allchr_circular[, c(1,2,9,3,4,5,6,7,8)]
+names(Allchr_circular)[names(Allchr_circular) == "pos"] <- "start"
+# ok looks good
+
+# this is a list of chr lengths
+chr_length_list = list("1" = 225002135,
+                "2a" = 108967917,
+                "2b" = 131519175,
+                "3" = 198060209,
+                "4" = 190369981,
+                "5" = 179725205,
+                "6" = 171866349,
+                "7" = 185267708,
+                "8" = 144034664,
+                "9" = 111027318,
+                "10" = 129655328,
+                "11" = 127102482,
+                "12" = 133317794,
+                "13" = 95368959,
+                "14" = 169736342,
+                "15" = 92674614,
+                "16" = 74750809,
+                "17" = 76917410,
+                "18" = 70128972,
+                "19" = 53113586,
+                "X" = 148935249
+)
+
+# this is a vector of chr lenths
+begins <- rep(1,21)
+ends = c(225002135,
+                108967917,
+                131519175,
+                198060209,
+                190369981,
+                179725205,
+                171866349,
+                185267708,
+                144034664,
+                111027318,
+                129655328,
+                127102482,
+                133317794,
+                95368959,
+                169736342,
+                92674614,
+                74750809,
+                76917410,
+                70128972,
+                53113586,
+                148935249)
+
+# this is needed to initalize the graph below
+chr_lengths <- cbind(begins,ends)
+
+# chr names
+chr_names <- c("chr1","chr2a","chr2b","chr3","chr4","chr5","chr6","chr7","chr8","chr9","chr10",
+              "chr11","chr12","chr13","chr14","chr15","chr16","chr17","chr18","chr19",
+               "chrX")
+chr_names_ordered <- factor(chr_names, ordered = TRUE, 
+                                levels = c("chr1","chr2a","chr2b","chr3","chr4","chr5","chr6","chr7","chr8","chr9","chr10",
+                                           "chr11","chr12","chr13","chr14","chr15","chr16","chr17","chr18","chr19",
+                                           "chrX"))
+
+chr_names_ordered_simple <- factor(chr_names, ordered = TRUE, 
+                            levels = c("1","2a","2b","3","4","5","6","7","8","9","10",
+                                       "11","12","13","14","15","16","17","18","19",
+                                       "X"))
+
+# https://jokergoo.github.io/circlize_book/book/introduction.html
+# Initialize library
+library(circlize)
+library(dplyr)
+library(stringr)
+# https://jokergoo.github.io/circlize_book/book/initialize-genomic-plot.html
+# https://cran.r-project.org/web/packages/circlize/circlize.pdf
+# initilize
+circos.clear()
+
+# set track size
+circos.par("track.height" = 0.1)
+# initializes the plot by setting the chr as a factor and 
+# the position on each chr is defined as the x coord for each chr
+# this is for plotting a histogram
+circos.initialize(factors = chr_names_ordered, xlim = chr_lengths)
+
+# This generates colored sectors 
+circos.track(ylim = c(0, 1), bg.col = c(rep(c("light grey", "white"), 10),"grey40"))
+
+circos.track(ylim = c(0, 1), panel.fun = function(x, y) {
+  chr = CELL_META$sector.index
+  xlim = CELL_META$xlim
+  ylim = CELL_META$ylim
+  circos.rect(xlim[1], 0, xlim[2], 1, col = c(rep(c("light grey", "white"), 10),"grey40"))
+  circos.text(mean(xlim), mean(ylim), chr, cex = 0.7, col = "white",
+              facing = "inside", niceFacing = TRUE)
+}, track.height = 0.15, bg.border = NA)
+
+
+# this makes a nice scale
+brk <- c(0,5,10,15,20,25)*10^7
+col_text <- "grey40"
+circos.track(track.index = get.current.track.index(), panel.fun = function(x, y) {
+  circos.axis(h="top",
+              major.at=brk,
+              labels=round(brk/10^7,1),
+              sector.index = get.cell.meta.data("sector.index"),
+              labels.cex=0.4,
+              col=col_text,labels.col=col_text,lwd=0.7,labels.facing="clockwise")
+},bg.border=F)
+
+
+
+
+
+
+
+# trying ideogram (this works nicely!)
+# https://mran.microsoft.com/snapshot/2014-12-11/web/packages/circlize/vignettes/genomic_plot.pdf
+circos.clear()
+# start at the top
+# insert a space after chrX
+
+circos.par("gap.degree" = c(rep(3, 20),10), 
+            "cell.padding" = c(0, 0, 0, 0), 
+            "start.degree" = 90)
+
+
+circos.initializeWithIdeogram(Allchr_circular,sort.chr = FALSE,
+                              plotType = c("axis", "labels"),
+                              tickLabelsStartFromZero = FALSE,
+                              major.by = 50000000,
+                              axis.labels.cex = 0.3)
+
+
+circos.genomicTrackPlotRegion(data=Allchr_circular,panel.fun=function(region,value,...) {
+  circos.genomicLines(region,value,type="l",
+                      col=c("gray","blue","light blue","red","yellow","green"),
+                      area = TRUE,
+                      border = c("gray","blue",NA,"red","yellow","green"),
+                      lwd=2)
+                      }, track.height = 0.1)
+
+# circos.info(plot = TRUE) # this prints sector and track names
+set.current.cell(sector.index = "chr01", track.index = 1)
+# label the track
+circos.text(1, -1.5,
+            'PF660', 
+            facing = "clockwise",
+            cex = 0.7,
+            pos = 3,
+            offset = 4.5)
+
+# label the species in the center
+text(0, 0, "M. nigra", cex = 2.0)
+
+
+ggsave(paste("nigra.png", sep=""), width = 8, height = 8, dpi = 200)
+
+
+
+                                
+circos.track(track.index = get.current.track.index(), panel.fun = function(x, y) {
+  circos.genomicAxis(h = "top")
+})
+
+circos.genomicAxis( )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+highlight.sector(sector.index = c("chrX", "chr01"), track.index = 1, 
+                 text = "fooo", col = NA)
+
+
+
+
+
+
+
+
+circos.text(sector.index="chr1",track.index = 2,get.cell.meta.data("cell.xlim")-mean(get.cell.meta.data("cell.xlim"))/2,
+            get.cell.meta.data("cell.ylim")-max(get.cell.meta.data("cell.ylim"))/2, labels = "Sample_1",facing = "clockwise", 
+            niceFacing = TRUE, adj = c(0,0),cex = 0.5)
+
+
+
+
+circos.genomicTrackPlotRegion(Allchr_circular, numeric.column = 5,
+                              panel.fun = function(region, value, ...) {
+                                circos.genomicPoints(region, value, ...)
+                                circos.genomicPoints(region, value)
+                                # here `numeric.column` is measured in `value`
+                                circos.genomicPoints(region, value, numeric.column = 1)
+                              })
+
+  circos.track(Allchr_circular,
+               ylim = c(0, 1), 
+               panel.fun = function(x, y) {
+    value = matrix(Allchr_circular)
+    circos.barplot(value, 0:1, col = 1:10)
+  })
+
+  
+
+
+circos.track(track.index = get.current.track.index(), panel.fun = function(x, y) {
+  circos.axis(h="top",
+              major.at=brk,labels=round(brk/10^7,1),labels.cex=0.4,
+              col=col_text,labels.col=col_text,lwd=0.7,labels.facing="clockwise")
+},bg.border=F)
+
+
+
+# this labels chrs
+col_text <- "grey40"
+circos.track(track.index = get.current.track.index(),
+             panel.fun=function(x,y) {
+               chr=CELL_META$sector.index
+               xlim=CELL_META$xlim
+               ylim=CELL_META$ylim
+               circos.text(mean(xlim),mean(ylim),chr)
+             })
+
+
+
+
+
+circos.track(
+             track.index = get.current.track.index(), 
+             panel.fun = function(x, y) {
+  circos.axis(h="top",get.current.sector.index())
+},bg.border=F)
+
+circos.track(track.index = get.current.track.index(), panel.fun = function(x, y) {
+  circos.axis(h="top",chr_names_ordered)
+},bg.border=F)
+
+circos.axis(h, sector.index, track.index)
+
+
+
+col_text <- "grey40"
+
+
+circos.track(track.index = get.current.track.index(),panel.fun=function(x,y) {
+  chr=chr_names_ordered
+  xlim=chr_lengths
+  ylim=CELL_META$ylim
+  circos.text(mean(chr_lengths),mean(ylim),chr,cex=0.5,col=col_text,
+              facing="bending.inside",niceFacing=TRUE)
+},bg.col="grey90",bg.border=F,track.height=0.06)
+
+
+
+
+
+circos.track(factors = Allchr_circular$chrom, x = Allchr_circular$start, 
+             y = Allchr_circular$NGA,
+             panel.fun = function(x, y) {
+               circos.points(x = x, y = y, pch = "·")
+             })
+
+
+circos.track(ylim = (0,1.01), panel.fun = function(x, y) {
+  value = as.matrix(Allchr_circular[4:8], ncol = 5)
+  circos.barplot(value, Allchr_circular$start, 
+                 col = 1:5,
+                 lwd = 0.1)
+})
+
+
+
+circos.initialize(fa = letters[1:4], xlim = c(0, 10))
+circos.track(ylim = c(0, 1), panel.fun = function(x, y) {
+  value = runif(10)
+  circos.barplot(value, 1:10 - 0.5, col = 1:10)
+})
+circos.clear()
+
+factors = c("a", "a", "a", "b", "b")
+x = 1:5
+y = 5:1
+circos.track(factors = factors, x = x, y = y,
+             panel.fun = function(x, y) {
+               circos.points(x, y)
+             })
+
+
+
+circos.track(y = c(0, 1), panel.fun = function(x, y) {
+  #value = Allchr_circular[4:8], ncol = 5)
+  circos.barplot(as.matrix(Allchr_circular[4:8]), 0:1, col = 1:5)
+})
+
+
+
+# first set the color of the chrs to alternate (we need 21 colors for the 20 autosomes and the X chr)
+bgcol = c(rep(c("#FF0000", "#00FF00"), 10),"#FF0000")
+circos.barplot(Allchr_circular$NGA, Allchr_circular$start, bar_width = 0.6,
+               col = NA, border = "black", lwd = par("lwd"), lty = par("lty"))
+
+
+
+circos.initialize(fa = letters[1:4], xlim = c(0, 10))
+circos.track(ylim = c(0, 1), panel.fun = function(x, y) {
+  value = runif(10)
+  circos.barplot(value, 1:10 - 0.5, col = 1:10)
+})
+circos.track(ylim = c(-1, 1), panel.fun = function(x, y) {
+  value = runif(10, min = -1, max = 1)
+  circos.barplot(value, 1:10 - 0.5, col = ifelse(value > 0, 2, 3))
+})
+circos.clear()
+
+circos.initialize(factors = Allchr_circular$chrom, x = Allchr_circular$start)
+circos.track(ylim = c(0, 4), panel.fun = function(x, y) {
+  value = matrix(as.matrix(Allchr_circular[4:8]), ncol = 5)
+  circos.barplot(value, Allchr_circular$start, col = 1:5)
+})
+circos.clear()
+# }
+
+
+
+circos.trackHist(Allchr_circular$chrom, Allchr_circular$NGA, 
+                 bin.size = 0.02, bg.col = bgcol, col = NA)
+
+
+
+circos.trackHist(Allchr_circular$chrom, Allchr_circular$NGA, bg.col = "blue", col = "#69b3a2")
+
+circos.trackHist(Allchr_circular$chrom, Allchr_circular$pos, 
+                 bin.size = 0.2,
+                 bg.col = "white", 
+                 col = "#69b3a2")
+
+#set.seed(999)
+#n = 1000
+#df = data.frame(factors = sample(letters[1:8], n, replace = TRUE),
+#                x = rnorm(n), y = runif(n)) # this is some random data
+
+
+
+
+circos.trackHist(Allchr_circular$chrom, Allchr_circular$NGA, bg.col = "white", col = "#69b3a2")
+
+circos.trackHist(factors = Allchr_circular$chrom, x = Allchr_circular$NGA, 
+                 bin.size = 0.2,
+                 col = "#FF0000",
+                 border = "#00FF00")
+
+# this is for plotting dots
+
+circos.track(factors = Allchr_circular$chrom, y = Allchr_circular$NGA,
+             panel.fun = function(x, y) {
+               circos.text(CELL_META$xcenter, CELL_META$cell.ylim[2] + mm_y(5), 
+                           CELL_META$sector.index)
+               circos.axis(labels.cex = 0.6)
+             })
+col = rep(c("#FF0000", "#00FF00"), 4)
+circos.trackPoints(df$factors, df$x, df$y, col = col, pch = 16, cex = 0.5)
+circos.text(-1, 0.5, "text", sector.index = "a", track.index = 1)
+# add histogram
+bgcol = rep(c("#EFEFEF", "#CCCCCC"), 4)
+circos.trackHist(df$factors, df$x, bin.size = 0.2, bg.col = bgcol, col = NA)
+
+# add heatmap
+circos.track(ylim = c(0, 1), panel.fun = function(x, y) {
+  xlim = CELL_META$xlim
+  ylim = CELL_META$ylim
+  breaks = seq(xlim[1], xlim[2], by = 0.1)
+  n_breaks = length(breaks)
+  circos.rect(breaks[-n_breaks], rep(ylim[1], n_breaks - 1),
+              breaks[-1], rep(ylim[2], n_breaks - 1),
+              col = rand_color(n_breaks), border = NA)
+})
+
+circos.barplot(Allchr_circular, pos, bar_width = 0.6,
+               col = NA, border = "black", lwd = par("lwd"), lty = par("lty"))
+
+circos.track(ylim = c(0, 4), panel.fun = function(x, y) {
+  circos.barplot(value = Allchr_circular, 1:10 - 0.5, col = 2:6)
+})
+
+
+library(BioCircos)
+myGenome = list("1" = 225002135,
+                "2a" = 108967917,
+                "2b" = 131519175,
+                "3" = 198060209,
+                "4" = 190369981,
+                "5" = 179725205,
+                "6" = 171866349,
+                "7" = 185267708,
+                "8" = 144034664,
+                "9" = 111027318,
+                "10" = 129655328,
+                "11" = 127102482,
+                "12" = 133317794,
+                "13" = 95368959,
+                "14" = 169736342,
+                "15" = 92674614,
+                "16" = 74750809,
+                "17" = 76917410,
+                "18" = 70128972,
+                "19" = 53113586,
+                "X" = 148935249
+                )
+
+m <- myGenome[c("1","2a","2b","3","4","5","6","7","8","9","10","11","13","14","15","16","17","18","19","X")]
+
+BioCircos(genome = m, yChr = FALSE, genomeFillColor = "Reds", chrPad = 0, 
+          displayGenomeBorder = FALSE, genomeTicksDisplay = FALSE, genomeLabelDy = 0)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---
+  title: "Circular stacked barplot"
+descriptionMeta: "This post explains how to build a circular stacked barchart with R and ggplot2. Reproducible code is provided and commented."
+descriptionTop: "A [circular barplot](circular-barplot.html) is a [barplot](barplot.html) where bars are displayed along a circle instead of a line. This page aims to teach you how to make a grouped and stacked circular barplot with `R` and `ggplot2`."
+sectionText: "Circular bar section"
+sectionLink: "circular-barplot.html"
+DataToVizText: "Warning"
+DataToVizLink: "data-to-viz.com/graph/circularbarplot.html"
+url: "299-circular-stacked-barplot"
+output:
+  html_document:
+  self_contained: false    
+mathjax: default
+lib_dir: libs
+template: template_rgg.html
+css: style.css
+toc: TRUE
+toc_float: TRUE
+toc_depth: 2
+df_print: "paged"
+---
+  
+  
+  ```{r global options, include = FALSE}
+knitr::opts_chunk$set( warning=FALSE, message=FALSE)
+```
+
+<div class="container">
+  
+  
+  
+  
+  
+  
+  <center><img src="img/graph/299-circular-stacked-barplotBig.png" width="80%"></img></center>
+  
+  
+  
+  A [circular barplot](circular-barplot.html) is a [barplot](barplot.html) where bars are displayed along a circle instead of a line. This page aims to teach you how to make a grouped and stacked circular barplot. I highly recommend to visit graph [#295](295-basic-circular-barplot.html), [#296](296-add-labels-to-circular-barplot.html) and [#297](297-circular-barplot-with-groups.html) Before diving into this code, which is a bit rough.
+    
+    I tried to add as many comments as possible in the code, and thus hope that the method is understandable. If it is not, please comment and ask supplementary explanations.
+    
+    You first need to understand how to make a [stacked barplot](stacked-barplot.html) with ggplot2. Then understand how to properly add labels, calculating the good angles, flipping them if necessary, and adjusting their position. The trickiest part is probably the one allowing to add space between each group. All these steps are described one by one in the circular barchart [section](circular-barplot.html).
+    
+    
+    
+    ```{r thecode, eval=FALSE}
+    # library
+    library(tidyverse)
+    library(viridis)
+    
+    # Create dataset
+    data <- data.frame(
+      individual=paste( "Mister ", seq(1,60), sep=""),
+      group=c( rep('A', 10), rep('B', 30), rep('C', 14), rep('D', 6)) ,
+      value1=sample( seq(10,100), 60, replace=T),
+      value2=sample( seq(10,100), 60, replace=T),
+      value3=sample( seq(10,100), 60, replace=T)
+    )
+    
+    # Transform data in a tidy format (long format)
+    data <- data %>% gather(key = "observation", value="value", -c(1,2)) 
+    
+    # Set a number of 'empty bar' to add at the end of each group
+    empty_bar <- 2
+    nObsType <- nlevels(as.factor(data$observation))
+    to_add <- data.frame( matrix(NA, empty_bar*nlevels(data$group)*nObsType, ncol(data)) )
+    colnames(to_add) <- colnames(data)
+    to_add$group <- rep(levels(data$group), each=empty_bar*nObsType )
+    data <- rbind(data, to_add)
+    data <- data %>% arrange(group, individual)
+    data$id <- rep( seq(1, nrow(data)/nObsType) , each=nObsType)
+    
+    # Get the name and the y position of each label
+    label_data <- data %>% group_by(id, individual) %>% summarize(tot=sum(value))
+    number_of_bar <- nrow(label_data)
+    angle <- 90 - 360 * (label_data$id-0.5) /number_of_bar     # I substract 0.5 because the letter must have the angle of the center of the bars. Not extreme right(1) or extreme left (0)
+    label_data$hjust <- ifelse( angle < -90, 1, 0)
+    label_data$angle <- ifelse(angle < -90, angle+180, angle)
+    
+    # prepare a data frame for base lines
+    base_data <- data %>% 
+      group_by(group) %>% 
+      summarize(start=min(id), end=max(id) - empty_bar) %>% 
+      rowwise() %>% 
+      mutate(title=mean(c(start, end)))
+    
+    # prepare a data frame for grid (scales)
+    grid_data <- base_data
+    grid_data$end <- grid_data$end[ c( nrow(grid_data), 1:nrow(grid_data)-1)] + 1
+    grid_data$start <- grid_data$start - 1
+    grid_data <- grid_data[-1,]
+    
+    # Make the plot
+    p <- ggplot(data) +      
+      
+      # Add the stacked bar
+      geom_bar(aes(x=as.factor(id), y=value, fill=observation), stat="identity", alpha=0.5) +
+      scale_fill_viridis(discrete=TRUE) +
+      
+      # Add a val=100/75/50/25 lines. I do it at the beginning to make sur barplots are OVER it.
+      geom_segment(data=grid_data, aes(x = end, y = 0, xend = start, yend = 0), colour = "grey", alpha=1, size=0.3 , inherit.aes = FALSE ) +
+      geom_segment(data=grid_data, aes(x = end, y = 50, xend = start, yend = 50), colour = "grey", alpha=1, size=0.3 , inherit.aes = FALSE ) +
+      geom_segment(data=grid_data, aes(x = end, y = 100, xend = start, yend = 100), colour = "grey", alpha=1, size=0.3 , inherit.aes = FALSE ) +
+      geom_segment(data=grid_data, aes(x = end, y = 150, xend = start, yend = 150), colour = "grey", alpha=1, size=0.3 , inherit.aes = FALSE ) +
+      geom_segment(data=grid_data, aes(x = end, y = 200, xend = start, yend = 200), colour = "grey", alpha=1, size=0.3 , inherit.aes = FALSE ) +
+      
+      # Add text showing the value of each 100/75/50/25 lines
+      ggplot2::annotate("text", x = rep(max(data$id),5), y = c(0, 50, 100, 150, 200), label = c("0", "50", "100", "150", "200") , color="grey", size=6 , angle=0, fontface="bold", hjust=1) +
+      
+      ylim(-150,max(label_data$tot, na.rm=T)) +
+      theme_minimal() +
+      theme(
+        legend.position = "none",
+        axis.text = element_blank(),
+        axis.title = element_blank(),
+        panel.grid = element_blank(),
+        plot.margin = unit(rep(-1,4), "cm") 
+      ) +
+      coord_polar() +
+      
+      # Add labels on top of each bar
+      geom_text(data=label_data, aes(x=id, y=tot+10, label=individual, hjust=hjust), color="black", fontface="bold",alpha=0.6, size=5, angle= label_data$angle, inherit.aes = FALSE ) +
+      
+      # Add base line information
+      geom_segment(data=base_data, aes(x = start, y = -5, xend = end, yend = -5), colour = "black", alpha=0.8, size=0.6 , inherit.aes = FALSE )  +
+      geom_text(data=base_data, aes(x = title, y = -18, label=group), hjust=c(1,1,0,0), colour = "black", alpha=0.8, size=4, fontface="bold", inherit.aes = FALSE)
+    # Save at png
+    ggsave(p, file="output.png", width=10, height=10)
+    ```
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <!-- Close container -->
+      </div>
+      
+      
+      
+      
+      ```{r, echo=FALSE}
+    htmltools::includeHTML("htmlChunkRelatedRanking.html")
+    ```
+    ```
+    
+
 randomstuff
 ```
         --states AFR BNEM=nem_GumGum_female,nem_Ngsang_sumatra_female,nem_PM1206,nem_PM664,nem_PM665,nem_Sukai_male DEN=Denisova \

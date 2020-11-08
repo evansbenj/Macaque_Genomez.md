@@ -83,9 +83,10 @@ tonk_PF563	tonkeana
 tonk_PF597	tonkeana
 tonk_PF626	tonkeana
 tonk_PM592	tonkeana
+download  papio
 ```
 ```
-mawk '$2 == "brunnescens"' species.txt > 1.keep && mawk '$2 == "hecki"' species.txt > 2.keep && mawk '$2 == "maura"' species.txt > 3.keep && mawk '$2 == "nemestrina"' species.txt > 4.keep && mawk '$2 == "nigra"' species.txt > 5.keep && mawk '$2 == "nigrescens"' species.txt > 6.keep && mawk '$2 == "togeanus"' species.txt > 7.keep && mawk '$2 == "tonkeana"' species.txt > 8.keep 
+mawk '$2 == "brunnescens"' species.txt > 1.keep && mawk '$2 == "hecki"' species.txt > 2.keep && mawk '$2 == "maura"' species.txt > 3.keep && mawk '$2 == "nemestrina"' species.txt > 4.keep && mawk '$2 == "nigra"' species.txt > 5.keep && mawk '$2 == "nigrescens"' species.txt > 6.keep && mawk '$2 == "togeanus"' species.txt > 7.keep && mawk '$2 == "tonkeana"' species.txt > 8.keep && mawk '$2 == "papio"' species.txt > 9.keep 
 ```
 ```
 vcftools --vcf FandM_chr01_mm_0.5_minQ_30.recode.vcf --keep 1.keep --missing-site --out 1_chr01

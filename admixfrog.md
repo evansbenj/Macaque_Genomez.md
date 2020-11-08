@@ -49,7 +49,7 @@ Examine the output file
 cat out.imiss
 ```
 
-This shows that, for chr01, nigrescens_PM654, hecki_PF644, hecki_PF647, tonk_PF597 have a proportion of missing sites respectively of 0.369508, 0.389771, 0.435798, 0.548834). All others have 10% (tonk_PF559) or <6%.
+This shows that, for chr01, papio, nigrescens_PM654, hecki_PF644, hecki_PF647, tonk_PF597 all have a proportion of missing sites respectively of 20.8%, 37.5%, 40.6%, 45.4%, 56.6%. All others have 10.6% (tonk_PF559) or <6.1%.
 
 Now restrict the data to variants called in a high percentage of non-missing genotypes across individuals from every species.
 Make a tab delimited file calleed 'species.txt' with the species assignment of each sample.

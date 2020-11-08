@@ -89,22 +89,23 @@ download  papio
 mawk '$2 == "brunnescens"' species.txt > 1.keep && mawk '$2 == "hecki"' species.txt > 2.keep && mawk '$2 == "maura"' species.txt > 3.keep && mawk '$2 == "nemestrina"' species.txt > 4.keep && mawk '$2 == "nigra"' species.txt > 5.keep && mawk '$2 == "nigrescens"' species.txt > 6.keep && mawk '$2 == "togeanus"' species.txt > 7.keep && mawk '$2 == "tonkeana"' species.txt > 8.keep && mawk '$2 == "papio"' species.txt > 9.keep 
 ```
 ```
-vcftools --vcf FandM_chr01_mm_0.5_minQ_30.recode.vcf --keep 1.keep --missing-site --out 1_chr01
-vcftools --vcf FandM_chr01_mm_0.5_minQ_30.recode.vcf --keep 2.keep --missing-site --out 2_chr01 
-vcftools --vcf FandM_chr01_mm_0.5_minQ_30.recode.vcf --keep 3.keep --missing-site --out 3_chr01
-vcftools --vcf FandM_chr01_mm_0.5_minQ_30.recode.vcf --keep 4.keep --missing-site --out 4_chr01 
-vcftools --vcf FandM_chr01_mm_0.5_minQ_30.recode.vcf --keep 5.keep --missing-site --out 5_chr01
-vcftools --vcf FandM_chr01_mm_0.5_minQ_30.recode.vcf --keep 6.keep --missing-site --out 6_chr01 
-vcftools --vcf FandM_chr01_mm_0.5_minQ_30.recode.vcf --keep 7.keep --missing-site --out 7_chr01
-vcftools --vcf FandM_chr01_mm_0.5_minQ_30.recode.vcf --keep 8.keep --missing-site --out 8_chr01 
+vcftools --gzvcf FandM_chr01_BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz --keep 1.keep --missing-site --out 1_chr01
+vcftools --gzvcf FandM_chr01_BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz --keep 2.keep --missing-site --out 2_chr01 
+vcftools --gzvcf FandM_chr01_BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz --keep 3.keep --missing-site --out 3_chr01
+vcftools --gzvcf FandM_chr01_BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz --keep 4.keep --missing-site --out 4_chr01 
+vcftools --gzvcf FandM_chr01_BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz --keep 5.keep --missing-site --out 5_chr01
+vcftools --gzvcf FandM_chr01_BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz --keep 6.keep --missing-site --out 6_chr01 
+vcftools --gzvcf FandM_chr01_BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz --keep 7.keep --missing-site --out 7_chr01
+vcftools --gzvcf FandM_chr01_BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz --keep 8.keep --missing-site --out 8_chr01
+vcftools --gzvcf FandM_chr01_BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz --keep 9.keep --missing-site --out 9_chr01
 ```
 Now make a list of the bad loci we want to filter:
 ```
-cat 1_chr01.lmiss 2_chr01.lmiss 3_chr01.lmiss 4_chr01.lmiss 5_chr01.lmiss 6_chr01.lmiss 7_chr01.lmiss 8_chr01.lmiss | mawk '!/CHR/' | mawk '$6 > 0.2' | cut -f1,2 >> bad_chr01_loci
+cat 1_chr01.lmiss 2_chr01.lmiss 3_chr01.lmiss 4_chr01.lmiss 5_chr01.lmiss 6_chr01.lmiss 7_chr01.lmiss 8_chr01.lmiss 9_chr01.lmiss | mawk '!/CHR/' | mawk '$6 > 0.2' | cut -f1,2 >> bad_chr01_loci
 ```
 Now filter these loci:
 ```
-vcftools --vcf FandM_chr01_mm_0.5_minQ_30.recode.vcf --exclude-positions bad_chr01_loci --recode --recode-INFO-all --out FandM_chr01_mm_0.5_minQ_30_exclude_missingness
+vcftools --gzvcf FandM_chr01_BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz --exclude-positions bad_chr01_loci --recode --recode-INFO-all --out FandM_chr01_exclude_missingness
 ```
 
 After filtering, this reeduced SNPs by about half for chr01:

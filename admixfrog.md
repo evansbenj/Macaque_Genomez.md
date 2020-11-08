@@ -2,8 +2,11 @@
 
 Vcf files are here on graham:
 ```
-/home/ben/projects/rrg-ben/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/females_and_males/FandM*vcf.gz
+/home/ben/projects/rrg-ben/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/with_papio/2020_Nov_filtered_by_depth_3sigmas
 ```
+These files should be used for ABBA_BABA, Fst, pi, etc for the genome.
+
+For admixfrog, I need to filter these files so they can be processed in a manageable way.
 
 On graham I installed admixfrog here `/home/ben/.local/bin/admixfrog` as follows:
 ```

@@ -23,7 +23,13 @@ Now I think it works based on this:
 
 # Filtering
 
-I'm going to agressively filter the data before analysis using admix frog as follows:
+I initially filtered by missingness per species and then thinned based on distance between SNPs as detailed below. Instead, I decided to filter only on the number of missing genotypes being less than or equal to 2 and setting the minimum genotype quality at 30 as follows:
+```
+vcftools --gzvcf FandM_chr03_BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz.recode.vcf.gz --max-missing-count 2 --minQ 30 --recode --recode-INFO-all --out ./FandM_chr03BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz.recode_maxmissingcount_2.vcf
+```
+
+
+This is what I did previously:
 
 on graham, load vcftools:
 ```

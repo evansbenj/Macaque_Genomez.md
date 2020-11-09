@@ -17,6 +17,7 @@ pip install git+https://github.com/benjaminpeter/admixfrog --user
 
 Now I think it works based on this:
 ```
+module load scipy-stack/2019b
 /home/ben/.local/bin/admixfrog --help
 ```
 

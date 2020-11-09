@@ -1,8 +1,8 @@
 # Admixfrog
 
-Vcf files are here on graham:
+Final Vcf files (before thinning for admixfrog) are here on graham:
 ```
-/home/ben/projects/rrg-ben/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/with_papio/2020_Nov_filtered_by_depth_3sigmas
+/home/ben/projects/rrg-ben/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/with_papio/2020_Nov_filtered_by_depth_3sigmas/final_data_including_sites_with_lots_of_missing_data
 ```
 These files should be used for ABBA_BABA, Fst, pi, etc for the genome.
 
@@ -51,6 +51,11 @@ FandM_chr17_BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz
 FandM_chr18_BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz.recode_maxmissingcount_2.vcf.recode.vcf.gz
 FandM_chr19_BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz.recode_maxmissingcount_2.vcf.recode.vcf.gz
 ```
+and they are in this directory:
+```
+/home/ben/projects/rrg-ben/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/with_papio/2020_Nov_filtered_by_depth_3sigmas/maxmissing_2_for_admixfrog
+```
+
 
 This is what I did previously:
 

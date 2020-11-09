@@ -193,7 +193,7 @@ make the ref file
 ```
 /home/ben/.local/bin/admixfrog-ref --vcf FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned.vcf.gz --out FandM_chr01_mm_0.5_minQ_30_exclude_missingness_thinned.ref.xz --states TON HEC NEM --pop-file pops.yaml 
 ```
-or just do this with `sbatch admixfrog_make_refs.sh chrX` (and modify the chr)
+or just do this with `sbatch admixfrog_make_refs.sh all_diploid_haploid_chrX_BSQR_filtered3_noPAR_SNPsonly.vcf.gz.recode.vcf.gz.recode_maxmissingcount_2.vcf.recode.vcf.gz` (and modify the vcf filename)
 
 make the target (input) file
 ```

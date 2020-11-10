@@ -233,6 +233,115 @@ sbatch admixfrog_do_analysis_allchrs.sh nem_Sukai_male NEM SUM MAU
 
 ```
 
+where the sbatch file `admixfrog_do_analysis_allchrs.sh` is this:
+```
+#!/bin/sh
+#SBATCH --job-name=AF_ref
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --time=4:00:00
+#SBATCH --mem=2gb
+#SBATCH --output=AF_ref.%J.out
+#SBATCH --error=AF_ref.%J.err
+#SBATCH --account=def-ben
+
+# BRU HEC MAU NEM SUM NGA NGE TOG TON
+
+# bru_PF707   hecki_PF505 hecki_PF643 hecki_PF644 hecki_PF647 hecki_PF648 maura_PF615 maura_PF713 maura_PM613 maura_PM614 maura
+_PM616 nem_GumGum_female   nem_Ngsang_sumatra_female   nem_PM1206  nem_PM664   nem_PM665   nem_Sukai_male  nigra_PF1001    nigr
+a_PF660 nigra_PM1003    nigrescens_PM1011   nigrescens_PM654    tog_PF549   tonk_PF511  tonk_PF559  tonk_PF563  tonk_PF597  ton
+k_PF626  tonk_PM592
+
+# execute like this:
+# sbatch admixfrog_do_analysis_allchrs.sh nigra_PF1001 HEC NGA NGE 
+
+module load scipy-stack/2019b
+# run the analyses for each chr
+admixfrog --infile ${1}.chr01.in.xz --ref FandM_chr01_BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz.reco
+de_maxmissingcount_2.vcf.recode.vcf.gz.xz --out ${1}_chr01_${2}_${3}_${4}.out -b 10000 --states ${2} ${3} ${4} --c0 0 --dont-es
+t-contamination
+
+admixfrog --infile ${1}.chr02a.in.xz --ref FandM_chr02a_BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz.re
+code_maxmissingcount_2.vcf.recode.vcf.gz.xz --out ${1}_chr02a_${2}_${3}_${4}.out -b 10000 --states ${2} ${3} ${4} --c0 0 --dont
+-est-contamination
+
+admixfrog --infile ${1}.chr02b.in.xz --ref FandM_chr02b_BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz.re
+code_maxmissingcount_2.vcf.recode.vcf.gz.xz --out ${1}_chr02b_${2}_${3}_${4}.out -b 10000 --states ${2} ${3} ${4} --c0 0 --dont
+-est-contamination
+
+admixfrog --infile ${1}.chr03.in.xz --ref FandM_chr03_BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz.reco
+de_maxmissingcount_2.vcf.recode.vcf.gz.xz --out ${1}_chr03_${2}_${3}_${4}.out -b 10000 --states ${2} ${3} ${4} --c0 0 --dont-es
+t-contamination
+
+admixfrog --infile ${1}.chr04.in.xz --ref FandM_chr04_BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz.reco
+de_maxmissingcount_2.vcf.recode.vcf.gz.xz --out ${1}_chr04_${2}_${3}_${4}.out -b 10000 --states ${2} ${3} ${4} --c0 0 --dont-es
+t-contamination
+
+admixfrog --infile ${1}.chr05.in.xz --ref FandM_chr05_BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz.reco
+de_maxmissingcount_2.vcf.recode.vcf.gz.xz --out ${1}_chr05_${2}_${3}_${4}.out -b 10000 --states ${2} ${3} ${4} --c0 0 --dont-es
+t-contamination
+
+admixfrog --infile ${1}.chr06.in.xz --ref FandM_chr06_BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz.reco
+de_maxmissingcount_2.vcf.recode.vcf.gz.xz --out ${1}_chr06_${2}_${3}_${4}.out -b 10000 --states ${2} ${3} ${4} --c0 0 --dont-es
+t-contamination
+
+admixfrog --infile ${1}.chr07.in.xz --ref FandM_chr07_BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz.reco
+de_maxmissingcount_2.vcf.recode.vcf.gz.xz --out ${1}_chr07_${2}_${3}_${4}.out -b 10000 --states ${2} ${3} ${4} --c0 0 --dont-es
+t-contamination
+
+admixfrog --infile ${1}.chr08.in.xz --ref FandM_chr08_BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz.reco
+de_maxmissingcount_2.vcf.recode.vcf.gz.xz --out ${1}_chr08_${2}_${3}_${4}.out -b 10000 --states ${2} ${3} ${4} --c0 0 --dont-es
+t-contamination
+
+admixfrog --infile ${1}.chr09.in.xz --ref FandM_chr09_BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz.reco
+de_maxmissingcount_2.vcf.recode.vcf.gz.xz --out ${1}_chr09_${2}_${3}_${4}.out -b 10000 --states ${2} ${3} ${4} --c0 0 --dont-es
+t-contamination
+
+admixfrog --infile ${1}.chr10.in.xz --ref FandM_chr10_BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz.reco
+de_maxmissingcount_2.vcf.recode.vcf.gz.xz --out ${1}_chr10_${2}_${3}_${4}.out -b 10000 --states ${2} ${3} ${4} --c0 0 --dont-es
+t-contamination
+
+admixfrog --infile ${1}.chr11.in.xz --ref FandM_chr11_BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz.reco
+de_maxmissingcount_2.vcf.recode.vcf.gz.xz --out ${1}_chr11_${2}_${3}_${4}.out -b 10000 --states ${2} ${3} ${4} --c0 0 --dont-es
+t-contamination
+
+admixfrog --infile ${1}.chr12.in.xz --ref FandM_chr12_BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz.reco
+de_maxmissingcount_2.vcf.recode.vcf.gz.xz --out ${1}_chr12_${2}_${3}_${4}.out -b 10000 --states ${2} ${3} ${4} --c0 0 --dont-es
+t-contamination
+
+admixfrog --infile ${1}.chr13.in.xz --ref FandM_chr13_BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz.reco
+de_maxmissingcount_2.vcf.recode.vcf.gz.xz --out ${1}_chr13_${2}_${3}_${4}.out -b 10000 --states ${2} ${3} ${4} --c0 0 --dont-es
+t-contamination
+
+admixfrog --infile ${1}.chr14.in.xz --ref FandM_chr14_BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz.reco
+de_maxmissingcount_2.vcf.recode.vcf.gz.xz --out ${1}_chr14_${2}_${3}_${4}.out -b 10000 --states ${2} ${3} ${4} --c0 0 --dont-es
+t-contamination
+
+admixfrog --infile ${1}.chr15.in.xz --ref FandM_chr15_BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz.reco
+de_maxmissingcount_2.vcf.recode.vcf.gz.xz --out ${1}_chr15_${2}_${3}_${4}.out -b 10000 --states ${2} ${3} ${4} --c0 0 --dont-es
+t-contamination
+
+admixfrog --infile ${1}.chr16.in.xz --ref FandM_chr16_BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz.reco
+de_maxmissingcount_2.vcf.recode.vcf.gz.xz --out ${1}_chr16_${2}_${3}_${4}.out -b 10000 --states ${2} ${3} ${4} --c0 0 --dont-es
+t-contamination
+
+admixfrog --infile ${1}.chr17.in.xz --ref FandM_chr17_BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz.reco
+de_maxmissingcount_2.vcf.recode.vcf.gz.xz --out ${1}_chr17_${2}_${3}_${4}.out -b 10000 --states ${2} ${3} ${4} --c0 0 --dont-es
+t-contamination
+
+admixfrog --infile ${1}.chr18.in.xz --ref FandM_chr18_BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz.reco
+de_maxmissingcount_2.vcf.recode.vcf.gz.xz --out ${1}_chr18_${2}_${3}_${4}.out -b 10000 --states ${2} ${3} ${4} --c0 0 --dont-es
+t-contamination
+
+admixfrog --infile ${1}.chr19.in.xz --ref FandM_chr19_BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz.reco
+de_maxmissingcount_2.vcf.recode.vcf.gz.xz --out ${1}_chr19_${2}_${3}_${4}.out -b 10000 --states ${2} ${3} ${4} --c0 0 --dont-es
+t-contamination
+
+admixfrog --infile ${1}.chrX.in.xz --ref all_diploid_haploid_chrX_BSQR_filtered3_noPAR_SNPsonly.vcf.gz.recode.vcf.gz.recode_max
+missingcount_2.vcf.recode.vcf.gz.xz --out ${1}_chrX_${2}_${3}_${4}.out -b 10000 --states ${2} ${3} ${4} --c0 0 --dont-est-conta
+mination
+```
+
 # Strategy for admixfrog
 ** within Sulawesi:
 I think the best strategy is to focus on adjacent species when possible.  So for nigrescens - nigra and hecki; for hecki - tonk and nigresc; for tonk - hecki, maura; for maura - tonk and tog.

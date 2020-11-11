@@ -20,7 +20,11 @@ Now I think it works based on this:
 module load scipy-stack/2019b
 /home/ben/.local/bin/admixfrog --help
 ```
-
+# Problems
+I got errors when I tried to run commands.  So I modified this file:
+/home/ben/.local/lib/python3.7/site-packages/admixfrog/interface.py
+to have this command `import numpy as np` instead of this one : `import numpy`
+but I am still getting another error.  Ugh.
 
 # Filtering
 

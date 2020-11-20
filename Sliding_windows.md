@@ -17,3 +17,69 @@ gunzip chr18.geno.gz
 sed -i 's/\*/N/g' chr18.geno 
 gzip -c chr18.geno > chr18.geno.gz
 ```
+
+for autosomes:
+```
+#!/bin/sh
+#SBATCH --job-name=abba
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --time=4:00:00
+#SBATCH --mem=8gb
+#SBATCH --output=abba.%J.out
+#SBATCH --error=abba.%J.err
+#SBATCH --account=def-ben
+
+# sbatch ABBABABA.sh chr H1 H2 H3 O
+# sbatch ABBABABA.sh chr01 nig nge hec papio
+
+# populations
+# bru papio hec mau nem sum nig nge tog ton
+
+
+module load StdEnv/2020
+module load scipy-stack/2020b
+module load python/3.8.2
+
+echo python3 ABBABABAwindows.py -g ./VCF_processing/${1}.geno.gz -f phased -o ./VCF_processing/${1}_${2}_${3}_${4}_${5
+}.csv -w 100000 -m 100 -s 100000 -P1 ${2} -P2 ${3} -P3 ${4} -O ${5} -T 10 --minData 0.5 --popsFile pops.txt --writeFai
+ledWindows --windType coordinate
+
+python3 ABBABABAwindows.py -g ./VCF_processing/${1}.geno.gz -f phased -o ./VCF_processing/${1}_${2}_${3}_${4}_${5}.csv
+ -w 100000 -m 100 -s 100000 -P1 ${2} -P2 ${3} -P3 ${4} -O ${5} -T 10 --minData 0.5 --popsFile pops.txt --writeFailedWi
+ndows --windType coordinate
+```
+
+for chrX:
+```
+#!/bin/sh
+#SBATCH --job-name=abba
+#SBATCH --nodes=10
+#SBATCH --ntasks-per-node=1
+#SBATCH --time=3:00:00
+#SBATCH --mem=128gb
+#SBATCH --output=abba.%J.out
+#SBATCH --error=abba.%J.err
+#SBATCH --account=def-ben
+
+# sbatch ABBABABA.sh chr H1 H2 H3 O
+# sbatch ABBABABA_chrX.sh chrX nga nge hec papio
+
+# populations
+# bru papio hec mau nem sum nig nge tog ton
+
+
+module load StdEnv/2020
+module load scipy-stack/2020b
+module load python/3.8.2
+
+echo python3 ABBABABAwindows.py -g ./VCF_processing/${1}.geno.gz -f phased -o ./VCF_processing/${1}_${2}_${3}_${4}_${5
+}.csv -w 100000 -m 100 -s 100000 -P1 ${2} -P2 ${3} -P3 ${4} -O ${5} -T 10 --minData 0.5 --popsFile pops.txt --writeFai
+ledWindows --windType coordinate --haploid maura_PM613,maura_PM614,maura_PM616,nem_PM1206,nem_PM664,nem_PM665,nem_Suka
+i_male,nigra_PM1003,nigrescens_PM1011,nigrescens_PM654,tonk_PM592
+
+python3 ABBABABAwindows.py -g ./VCF_processing/${1}.geno.gz -f phased -o ./VCF_processing/${1}_${2}_${3}_${4}_${5}.csv
+ -w 100000 -m 100 -s 100000 -P1 ${2} -P2 ${3} -P3 ${4} -O ${5} -T 10 --minData 0.5 --popsFile pops.txt --writeFailedWi
+ndows --windType coordinate --haploid maura_PM613,maura_PM614,maura_PM616,nem_PM1206,nem_PM664,nem_PM665,nem_Sukai_mal
+e,nigra_PM1003,nigrescens_PM1011,nigrescens_PM654,tonk_PM592
+```

@@ -10,3 +10,10 @@ Firsts step is to convert my filtered vcf files to geno format like this:
 ```
 python parseVCF.py -i ../../FandM_chr01_BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz.recode.vcf.gz -o chr1.geno.gz
 ```
+
+Then it is necessary to swap any astrisks with Ns:
+```
+gunzip chr18.geno.gz
+sed -i 's/\*/N/g' chr18.geno 
+gzip -c chr18.geno > chr18.geno.gz
+```

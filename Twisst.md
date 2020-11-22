@@ -25,7 +25,7 @@ rue
 
 Then I maked a phased geno file:
 ```
-python ./genomics_general/VCF_processing/parseVCF.py -i FandM_chr01_BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz.phased.vcf.gz.vcf.gz --skipIndels --minQual 30 --gtf flag=DP min=5 | gzip > phased_genos/chr01.geno.gz
+python ./genomics_general/VCF_processing/parseVCF.py -i FandM_chr01_BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz.phased.vcf.gz.vcf.gz | gzip > phased_genos/chr01.geno.gz
 ```
 
 I had to add a line to the 'phyml_sliding_windows.py' script to let it know where to look for the genomics.py file:

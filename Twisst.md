@@ -58,3 +58,8 @@ and then I made nj trees for each window like this:
 ```
 python3 genomics_general/phylo/phyml_sliding_windows.py -T 10 -g phased_genos/chr02a.geno.gz --prefix phased_genos/chr02a_treez_w50 -w 50 --windType sites --model GTR
 ```
+
+To get trisst to work I had to update the ete3 package first:
+```
+pip install --upgrade ete3
+```

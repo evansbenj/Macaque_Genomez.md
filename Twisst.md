@@ -27,6 +27,16 @@ Then I maked a phased geno file:
 ```
 python ./genomics_general/VCF_processing/parseVCF.py -i FandM_chr01_BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz.phased.vcf.gz.vcf.gz | gzip > phased_genos/chr01.geno.gz
 ```
+In this directory:
+```
+/home/ben/projects/rrg-ben/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/with_papio/2020_Nov_filtered_by_depth_3sigmas/final_data_including_sites_with_lots_of_missing_data/twisst
+```
+and only for chrX, I had to convert the male genotypes to diploid like this before phasing:
+```
+echo "chrX 1 148935249 M 2" > ploidy.txt
+bcftools +fixploidy ../all_diploid_haploid_chrX_BSQR_filtered3_noPAR_SNPsonly.vcf.gz.recode.vcf.gz.recode.vcf.gz -Ov -- -p ploidy.txt > chrX_diploid.vcf
+```
+
 
 I had to add a line to the 'phyml_sliding_windows.py' script to let it know where to look for the genomics.py file:
 

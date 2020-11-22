@@ -45,8 +45,16 @@ sys.path.append("/home/ben/projects/rrg-ben/ben/2017_SEAsian_macaques/SEAsian_ma
 h_3sigmas/final_data_including_sites_with_lots_of_missing_data/genomics_general")
 import genomics
 ```
+I also had to install phyml and add it to my path like this:
+```
+PATH=$PATH:/home/ben/projects/rrg-ben/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/with_papio/2020_Nov_filtered_by_depth_3sigmas/final_data_including_sites_with_lots_of_missing_data/twisst/phyml/src
+```
+and also load this module:
+```
+module load scipy-stack/2020b
+```
 
 and then I made nj trees for each window like this:
 ```
-python genomics_general/phylo/phyml_sliding_windows.py -T 10 -g phased_genos/chr01.geno.gz --prefix phased_genos/chr01.geno.phyml_bionj.w50 -w 50 --windType sites --model GTR --optimise n
+python3 genomics_general/phylo/phyml_sliding_windows.py -T 10 -g phased_genos/chr02a.geno.gz --prefix phased_genos/chr02a_treez_w50 -w 50 --windType sites --model GTR
 ```

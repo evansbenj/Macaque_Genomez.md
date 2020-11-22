@@ -48,5 +48,5 @@ import genomics
 
 and then I made nj trees for each window like this:
 ```
-python genomics_general/phylo/phyml_sliding_windows.py -T 10 -g phased_genos/chr01.geno.gz --prefix phased_genos/output.phyml_bionj.w50 -w 50 --windType sites --model GTR --optimise n
+python genomics_general/phylo/phyml_sliding_windows.py -T 10 -g phased_genos/chr01.geno.gz --prefix phased_genos/chr01.geno.phyml_bionj.w50 -w 50 --windType sites --model GTR --optimise n
 ```

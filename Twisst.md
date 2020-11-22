@@ -59,7 +59,12 @@ and then I made nj trees for each window like this:
 python3 genomics_general/phylo/phyml_sliding_windows.py -T 10 -g phased_genos/chr02a.geno.gz --prefix phased_genos/chr02a_treez_w50 -w 50 --windType sites --model GTR
 ```
 
-To get trisst to work I had to update the ete3 package first:
+To get twisst to work I had to update the ete3 package first:
 ```
 pip install --upgrade ete3
+```
+
+And now this seems to work (after changing the ../genomics_general/pops_twisst.txt file to not inlcude separate sum and tog populations):
+```
+python twisst.py -t ../phased_genos/chr01_treez_w50.trees.gz -w ../phased_genos/chr01_output.weights.csv.gz --outputTopos ../phased_genos/topologies_chr01.trees --outgroup papio -g nig -g nge -g hec -g ton -g mau -g bru -g nem -g papio --method complete --groupsFile ../genomics_general/pops_twisst.txt
 ```

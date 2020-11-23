@@ -68,3 +68,25 @@ And now this seems to work (after changing the ../genomics_general/pops_twisst.t
 ```
 python twisst.py -t ../phased_genos/chr01_treez_w50.trees.gz -w ../phased_genos/chr01_output.weights.csv.gz --outputTopos ../phased_genos/topologies_chr01.trees --outgroup papio -g nig -g nge -g hec -g ton -g mau -g bru -g nem -g papio --method complete --groupsFile ../genomics_general/pops_twisst.txt
 ```
+
+And I'm running twisst with this sbatch script for each chr:
+```
+#!/bin/sh
+#SBATCH --job-name=twisst
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --time=12:00:00
+#SBATCH --mem=128gb
+#SBATCH --output=twisst.%J.out
+#SBATCH --error=twisst.%J.err
+#SBATCH --account=def-ben
+
+# sbatch Twisst.sh chr
+module load StdEnv/2020
+module load scipy-stack/2020b
+# may have to type this before running: pip install --upgrade ete3
+
+python twisst.py -t ../phased_genos/${1}_treez_w50.trees.gz -w ../phased_genos/${1}_twisstoutput.weights.csv.gz --outputTopos 
+../phased_genos/${1}_twisst_topologies.trees --outgroup papio -g nig -g nge -g hec -g ton -g mau -g bru -g nem -g papio --meth
+od complete --groupsFile ../genomics_general/pops_twisst.txt --verbose
+```

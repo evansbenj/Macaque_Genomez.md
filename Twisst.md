@@ -53,8 +53,10 @@ I also had to install phyml and add it to my path like this:
 ```
 PATH=$PATH:/home/ben/projects/rrg-ben/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/with_papio/2020_Nov_filtered_by_depth_3sigmas/final_data_including_sites_with_lots_of_missing_data/twisst/phyml/src
 ```
-and also load this module:
+and also load several modules in some weird order...:
 ```
+module load python/3.8
+module load StdEnv/2020
 module load scipy-stack/2020b
 ```
 

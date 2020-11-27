@@ -23,7 +23,7 @@ z.recode.vcf.gz out=../FandM_${1}_BSQR_jointgeno_allsites_withpapio_filtered2_co
 rue 
 ```
 
-Then I maked a phased geno file:
+Then I made a phased geno file:
 ```
 python ./genomics_general/VCF_processing/parseVCF.py -i FandM_chr01_BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz.phased.vcf.gz.vcf.gz | gzip > phased_genos/chr01.geno.gz
 ```

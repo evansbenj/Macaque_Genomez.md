@@ -533,7 +533,8 @@ plot.twisst.summary <- function(twisst_object, order_by_weights=TRUE, only_best=
   
   #make the barplot
   x=barplot(twisst_object$weights_overall_mean[ord], col = cols[ord],
-            xaxt="n", las=1, ylab="Average weighting", space = 0.2, xlim = c(0.2, 1.2*N))
+            xaxt="n", las=1, ylab="Average weighting", space = 0.2, xlim = c(0.2, 1.2*N),
+	    cex.lab=1.5)
   
   #draw the trees
   #first make an empty plot for the trees. Ensure left and right marhins are the same
@@ -547,7 +548,7 @@ plot.twisst.summary <- function(twisst_object, order_by_weights=TRUE, only_best=
   }
   
   #add labels for each topology
-  text(x,.9,names(twisst_object$topos)[ord],col=cols[ord])
+  # text(x,.9,names(twisst_object$topos)[ord],col=cols[ord])
 }
 
 
@@ -731,7 +732,7 @@ ordered_topos_twisst <- subset.twisst.by.topos(twisst_data, ordered_twisst)
 # there are a functions available to plot both the weightings and the topologies
 #a summary plot shows all the topologies and a bar plot of their relative weightings
 png("chr_all_summary.png",width = 3000, height = 2000, res = 200, bg = "transparent")
-plot.twisst.summary(ordered_topos_twisst, order_by_weights=TRUE, lwd=3, cex=2,
+plot.twisst.summary(ordered_topos_twisst, order_by_weights=TRUE, lwd=3, cex=1.5,
                     x_scale=0.05, y_scale=0.10,)
 dev.off()
 

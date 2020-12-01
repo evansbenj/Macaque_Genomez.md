@@ -251,10 +251,7 @@ where the sbatch file `admixfrog_do_analysis_allchrs.sh` is this:
 
 # BRU HEC MAU NEM SUM NGA NGE TOG TON
 
-# bru_PF707   hecki_PF505 hecki_PF643 hecki_PF644 hecki_PF647 hecki_PF648 maura_PF615 maura_PF713 maura_PM613 maura_PM614 maura
-_PM616 nem_GumGum_female   nem_Ngsang_sumatra_female   nem_PM1206  nem_PM664   nem_PM665   nem_Sukai_male  nigra_PF1001    nigr
-a_PF660 nigra_PM1003    nigrescens_PM1011   nigrescens_PM654    tog_PF549   tonk_PF511  tonk_PF559  tonk_PF563  tonk_PF597  ton
-k_PF626  tonk_PM592
+bru_PF707   hecki_PF505 hecki_PF643 hecki_PF644 hecki_PF647 hecki_PF648 maura_PF615 maura_PF713 maura_PM613 maura_PM614 maura_PM616 nem_GumGum   nem_Ngsang   nem_PM1206  nem_PM664   nem_PM665   nem_Sukai  nigra_PF1001    nigra_PF660 nigra_PM1003    nigrescens_PM1011   nigrescens_PM654    tog_PF549   tonk_PF511  tonk_PF559  tonk_PF563  tonk_PF597  tonk_PF626  tonk_PM592
 
 # execute like this:
 # sbatch admixfrog_do_analysis_allchrs.sh nigra_PF1001 HEC NGA NGE 

@@ -318,3 +318,161 @@ sprintf("%.6f",($weighted_D_average-1.96*$sterr))," - ",sprintf("%.6f",($weighte
 close DATAINPUT;
 
 ```
+
+# 2020 plotting D and fDM across the Makassar Strait:
+```
+setwd('/Users/Shared/Previously\ Relocated\ Items/Security/projects/2017_SEAsian_macaque_genomz/abbababa_stats/fDM_means_and_CIs')
+library (ggplot2)
+library(gridExtra)
+
+nemsuladat<-read.table("./2020_Makassar_D_fDM.txt",header=TRUE)
+# make a color column
+nemsuladat$H3 <- factor(nemsuladat$H3, 
+                 levels = c("all","nga","nge","hec","ton","tog","mau","bru"),
+                 ordered = is.ordered(nemsuladat$H3))
+nemsuladat$color <- "black"
+nemsuladat$color[which(nemsuladat$XorA == 'X')]  <- 'red'
+
+# make the grouping variable a factor so that the dodge works
+nemsuladat$XorA <- factor(nemsuladat$XorA, 
+                                 levels = c("Autosomes","X"))
+
+
+# modify the facet labels
+nemsuladat$H1 <- factor(nemsuladat$H1, levels = c("Sum"), 
+                  labels = c("H1: Sumatra; H2: Borneo"))
+
+pd <- position_dodge(0.5) # move them .05 to the left and right
+nemsulaDstat_plot<- ggplot(nemsuladat, aes(x=H3, y=D, group=H3, colour=XorA)) +
+  facet_grid(~ H1, scales = "free_x", space = "free_x") + 
+  theme_bw() + theme(panel.grid.minor=element_blank(),panel.grid.major=element_blank()) +
+  geom_point(position = pd, size=4, alpha = 0.8, aes(group = XorA)) +
+  geom_errorbar(aes(ymin=Dlower, ymax=Dupper, group = XorA), alpha = 0.8, width=.1, position=pd) +
+  labs(x = expression(paste(italic(H3))), y=expression(paste(italic(D)))) +
+  theme(axis.text=element_text(size=5), axis.title=element_text(size=18)) +
+  geom_hline(yintercept=0) +
+  scale_color_manual(breaks = c("Autosomes", "X"),values=c("black", "red")) +
+  # get rid of legend title
+  theme(legend.title = element_blank()) +
+  theme(legend.position="none")+
+  # put labels on outside
+  theme(strip.placement = "outside")+
+  theme(strip.text.x = element_text(size = 14)) +
+  theme(axis.text=element_text(size=14), axis.title=element_text(size=18)) +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        strip.background = element_blank(),
+        panel.border = element_rect(colour = "black")) +
+  theme(aspect.ratio=8)
+nemsulaDstat_plot
+
+
+nemsulafDMstat_plot<- ggplot(nemsuladat, aes(x=H3, y=fDM, group=H3, colour=XorA)) +
+  facet_grid(~ H1, scales = "free_x", space = "free_x") + 
+  theme_bw() + theme(panel.grid.minor=element_blank(),panel.grid.major=element_blank()) +
+  geom_point(position = pd, size=4, alpha = 0.8, aes(group = XorA)) +
+  geom_errorbar(aes(ymin=fDMlower, ymax=fDMupper, group = XorA), alpha = 0.8, width=.1, position=pd) +
+  labs(x = expression(paste(italic(H3))), y=expression(paste(italic(f[DM])))) +
+  theme(axis.text=element_text(size=5), axis.title=element_text(size=18)) +
+  geom_hline(yintercept=0) +
+  scale_color_manual(breaks = c("Autosomes", "X"),values=c("black", "red")) +
+  # get rid of legend title
+  theme(legend.title = element_blank()) +
+  theme(legend.position="none")+
+  # put labels on outside
+  theme(strip.placement = "outside") +
+  theme(strip.text.x = element_text(size = 14)) +
+  theme(axis.text=element_text(size=14), axis.title=element_text(size=18)) +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        strip.background = element_blank(),
+        panel.border = element_rect(colour = "black"))+
+  theme(aspect.ratio=8)
+
+
+sulanemdat<-read.table("./2020_MakassarSula_D_fDM.txt",header=TRUE)
+# make a color column
+sulanemdat$H3 <- factor(sulanemdat$H3, 
+                        levels = c("all","nga","nge","hec","ton","tog","mau","bru"),
+                        ordered = is.ordered(sulanemdat$H3))
+sulanemdat$color <- "black"
+sulanemdat$color[which(sulanemdat$XorA == 'X')]  <- 'red'
+
+# modify the order of the H1 taxa
+sulanemdat$H1 <- factor(sulanemdat$H1, 
+                        levels = c("nga","nge","tog","bru"),
+                        ordered = is.ordered(nemsuladat$H1))
+
+
+# modify the facet labels
+sulanemdat$H2 <- factor(sulanemdat$H2, levels = c("hec","ton","mau"), 
+                        ordered = is.ordered(sulanemdat$H2),
+                        labels = c("H2: hec",
+                                   "H2: ton",
+                                   "H2: mau"))
+
+
+pd <- position_dodge(0.5) # move them .05 to the left and right
+sulanemDstat_plot<- ggplot(sulanemdat, aes(x=H1, y=D, group=H2, colour=XorA)) +
+  facet_grid(~ H2, scales = "free_x", space = "free_x") + 
+  theme_bw() + theme(panel.grid.minor=element_blank(),panel.grid.major=element_blank()) +
+  geom_point(position = pd, size=4, alpha = 0.8, aes(group = XorA)) +
+  geom_errorbar(aes(ymin=Dlower, ymax=Dupper, group = XorA), 
+                alpha = 0.8, 
+                width=.1, 
+                position=pd) +
+  labs(x = expression(paste(italic(H1))), y=element_blank()) +
+  theme(axis.text=element_text(size=5), axis.title=element_text(size=18)) +
+  geom_hline(yintercept=0) +
+  scale_color_manual(breaks = c("Autosomes", "X"),values=c("black", "red")) +
+  # get rid of legend title
+  theme(legend.title = element_blank()) +
+  theme(legend.position="none")+
+  # put labels on outside
+  theme(strip.placement = "outside")+
+  theme(strip.text.x = element_text(size = 14)) +
+  theme(axis.text=element_text(size=14), axis.title=element_text(size=18)) +
+  theme(axis.text.y=element_blank()) +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        strip.background = element_blank(),
+        panel.border = element_rect(colour = "black"))
+
+sulanemfDMstat_plot<- ggplot(sulanemdat, aes(x=H1, y=fDM, group=H3, colour=XorA)) +
+  facet_grid(~ H2, scales = "free_x", space = "free_x") + 
+  theme_bw() + theme(panel.grid.minor=element_blank(),panel.grid.major=element_blank()) +
+  geom_point(position=pd, size=4, alpha = 0.8, aes(group = XorA)) +
+  geom_errorbar(aes(ymin=fDMlower, ymax=fDMupper, group = XorA), alpha = 0.8, width=.1, position=pd) +
+  labs(x = expression(paste(italic(H1))), y=element_blank()) +
+  theme(axis.text=element_text(size=5), axis.title=element_text(size=18)) +
+  geom_hline(yintercept=0) +
+  scale_color_manual(breaks = c("Autosomes", "X"),values=c("black", "red")) +
+  # get rid of legend title
+  theme(legend.title = element_blank()) +
+  theme(legend.position="none")+
+  # put labels on outside
+  theme(strip.placement = "outside")+
+  theme(strip.text.x = element_text(size = 14)) +
+  theme(axis.text=element_text(size=14), axis.title=element_text(size=18)) +
+  theme(axis.text.y=element_blank()) +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        strip.background = element_blank(),
+        panel.border = element_rect(colour = "black")) 
+
+# make the y axes the same
+nemsulaDstat_plot <- nemsulaDstat_plot + scale_y_continuous(limits=c(-0.06,0.16))
+sulanemDstat_plot <- sulanemDstat_plot + scale_y_continuous(limits=c(-0.06,0.16))
+nemsulafDMstat_plot <- nemsulafDMstat_plot + scale_y_continuous(limits=c(-0.03,0.03))
+sulanemfDMstat_plot <- sulanemfDMstat_plot + scale_y_continuous(limits=c(-0.03,0.03))
+
+pdf("./D_means_and_CIs_Makassar.pdf",w=10, h=4, version="1.4", bg="transparent")
+grid.arrange(nemsulaDstat_plot, sulanemDstat_plot, ncol=2)
+dev.off()
+
+pdf("./fDM_means_and_CIs_Makassar.pdf",w=10, h=4, version="1.4", bg="transparent")
+grid.arrange(nemsulafDMstat_plot, sulanemfDMstat_plot, ncol=2)
+dev.off()
+
+```
+

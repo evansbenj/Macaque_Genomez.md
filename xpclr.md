@@ -49,3 +49,54 @@ pip install -r requirements.txt
 [~]$ source /home/$USER/xpclr_venv/bin/activate
 (xpclr_venv) [~]$ xpclr --help
 ```
+This seems to work for doing the analysis on all chrs (still haven't gotten an output yet though):
+```
+#!/bin/sh
+#SBATCH --job-name=xpclr
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --time=24:00:00
+#SBATCH --mem=16gb
+#SBATCH --output=xpclr.%J.out
+#SBATCH --error=xpclr.%J.err
+#SBATCH --account=def-ben
+
+# sbatch xpclr.sh pop1 pop2 
+module load nixpkgs/16.09 intel/2016.4 tabix/0.2.6
+module load python
+source /home/$USER/xpclr_venv/bin/activate
+
+
+# chr 01, 2a 2b
+xpclr --format vcf -Sa ${1} -Sb ${2} -I ../../FandM_chr01_BSQR_jointgeno_allsites_with
+papio_filtered2_coverage_SNPsonly.vcf.gz.phased.vcf.gz.vcf.gz --rrate 0.448e-8 -C chr0
+1 --size 100000 --step 100000 -O ${1}_vs_${2}_chr01_xpclr.out
+
+xpclr --format vcf -Sa ${1} -Sb ${2} -I ../../FandM_chr02a_BSQR_jointgeno_allsites_wit
+hpapio_filtered2_coverage_SNPsonly.vcf.gz.phased.vcf.gz.vcf.gz --rrate 0.448e-8 -C chr
+02a --size 100000 --step 100000 -O ${1}_vs_${2}_chr0$2a_xpclr.out
+
+xpclr --format vcf -Sa ${1} -Sb ${2} -I ../../FandM_chr02b_BSQR_jointgeno_allsites_wit
+hpapio_filtered2_coverage_SNPsonly.vcf.gz.phased.vcf.gz.vcf.gz --rrate 0.448e-8 -C chr
+02b --size 100000 --step 100000 -O ${1}_vs_${2}_chr02b_xpclr.out
+
+# # chr 03 to 09
+for i in {3..9}
+do
+ xpclr --format vcf -Sa ${1} -Sb ${2} -I ../../FandM_chr0${i}_BSQR_jointgeno_allsites_
+withpapio_filtered2_coverage_SNPsonly.vcf.gz.phased.vcf.gz.vcf.gz --rrate 0.448e-8 -C 
+chr0${i} --size 100000 --step 100000 -O ${1}_vs_${2}_chr0${i}_xpclr.out
+done
+
+for i in {10..19}
+do
+ xpclr --format vcf -Sa ${1} -Sb ${2} -I ../../FandM_chr${i}_BSQR_jointgeno_allsites_w
+ithpapio_filtered2_coverage_SNPsonly.vcf.gz.phased.vcf.gz.vcf.gz --rrate 0.448e-8 -C c
+hr${i} --size 100000 --step 100000 -O ${1}_vs_${2}_chr${i}_xpclr.out
+done
+
+
+xpclr --format vcf -Sa ${1} -Sb ${2} -I ../../all_diploid_haploid_chrX_phased.vcf.gz.v
+cf.gz --rrate 0.448e-8 -C chrX --size 100000 --step 100000 -O ${1}_vs_${2}_chrX_xpclr.
+out
+```

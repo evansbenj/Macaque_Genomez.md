@@ -21,40 +21,43 @@ bgzip -c autosomes.vcf > autosomes.vcf.gz
 tabix -p vcf autosomes.vcf.gz
 ``
 convert to geno format using plink
+first make a bed file and remove any SNP with no data for autosomes:
+
 ```
 module load nixpkgs/16.09  intel/2016.4 plink/1.9b_5.2-x86_64
 
-# make a bed file and remove any SNP with no data for autosomes:
 plink --vcf ./autosomes.vcf.gz --make-bed --geno 0.999 --out ./autosomes --allow-extra-chr --const-fid
-# and separate for chrX
+```
+and then separately for chrX
+```
 plink --vcf ../all_diploid_haploid_chrX_phased.vcf.gz.vcf.gz --make-bed --geno 0.999 --out ./chrX --allow-extra-chr --const-fid
 ```
-now run admixture
+now run admixture for k=2
 ```
 module load StdEnv/2020 nixpkgs/16.09 admixture/1.3.0
-
-# test for K=2
 admixture --cv chrX.bed 2 > chrXlog2.out
-
-# try K=2 to 9
+```
+or try K=2 to 9
+```
 for i in {2..9}
 do
  admixture --cv autsomes.bed $i > autosomeslog${i}.out
 done
 ```
-For plotting:
+For plotting, first make a file with individual and species names
 ```
-# make a file with individual and species names
 awk '{split($2,name,"_"); print name[2],name[1]}' chr01.nosex > chr01.list
-
-# edit to fix papio
 ```
+edit to fix papio
 
 
 
-# download plot admixture 
+download R script to plot admixture 
+```
 wget https://github.com/speciationgenomics/scripts/raw/master/plotADMIXTURE.r
 chmod +x plotADMIXTURE.r
-
-# plot it
-Rscript plotADMIXTURE.r -p chr01 -i chr01.list -k 2 -l papio,nem,nigra,nigrescens,hecki,tonk,tog,maura,bru   
+```
+plot it
+```
+Rscript plotADMIXTURE.r -p chr01 -i chr01.list -k 2 -l papio,nem,nigra,nigrescens,hecki,tonk,tog,maura,bru 
+```

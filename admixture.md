@@ -19,7 +19,7 @@ compress and index
 ```
 bgzip -c autosomes.vcf > autosomes.vcf.gz
 tabix -p vcf autosomes.vcf.gz
-``
+```
 convert to geno format using plink
 first make a bed file and remove any SNP with no data for autosomes:
 

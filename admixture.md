@@ -34,7 +34,7 @@ plink --vcf ../all_diploid_haploid_chrX_phased.vcf.gz.vcf.gz --make-bed --geno 0
 ```
 for autosomes only, we need to change the chr names in the .bim file because these cause problems for admixture:
 ```
-awk '{$1=0;print $0}' autosomes.bim > autosomes.bim.tmp
+awk -v OFS='\t' '{$1=0;print $0}' autosomes.bim > autosomes.bim.tmp
 mv autosomes.bim.tmp autosomes.bim
 ```
 

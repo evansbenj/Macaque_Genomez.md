@@ -59,5 +59,6 @@ chmod +x plotADMIXTURE.r
 ```
 plot it
 ```
+module load StdEnv/2020 r/4.0.2
 Rscript plotADMIXTURE.r -p chr01 -i chr01.list -k 2 -l papio,nem,nigra,nigrescens,hecki,tonk,tog,maura,bru 
 ```

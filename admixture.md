@@ -524,6 +524,7 @@ CV error (K=6): 0.48437
 CV error (K=7): 0.55287
 CV error (K=8): 0.35196
 CV error (K=9): 0.69166
+CV error (K=10): 0.57981
 CV error (K=11): 0.73068
 ```
 This suggests the best one is k=8 for chrX; this is substantially better than the others.

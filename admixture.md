@@ -511,3 +511,19 @@ ggarrange(k2, k3, k4, k5, k6,
           ncol = 1)
 dev.off()
 ```
+
+(From the admixture manual), we can also check the cross validation standard error like this:
+```
+grep -h CV chrXlog*.out
+
+CV error (K=2): 0.68009
+CV error (K=3): 0.56954
+CV error (K=4): 0.55752
+CV error (K=5): 0.50140
+CV error (K=6): 0.48437
+CV error (K=7): 0.55287
+CV error (K=8): 0.35196
+CV error (K=9): 0.69166
+CV error (K=11): 0.73068
+```
+This suggests the best one is k=8 for chrX; this is substantially better than the others.

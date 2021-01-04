@@ -69,3 +69,445 @@ plot it
 module load StdEnv/2020 r/4.0.2
 Rscript plotADMIXTURE.r -p chr01 -i chr01.list -k 2 -l papio,nem,nigra,nigrescens,hecki,tonk,tog,maura,bru 
 ```
+I made a custom plot that I like better:
+```
+setwd('/Users/Shared/Previously\ Relocated\ Items/Security/projects/2017_SEAsian_macaque_genomz/Admixture/chrX')
+library (ggplot2)
+library(reshape2) # used to make tall data for plotting stacked barplot
+library(egg) # used for making grid plots
+
+species <- factor(species, levels= c("nemestrina","nigra",
+                                         "nigrescens","hecki","tonkeana",
+                                         "togeanus","maura","brunnescens"), ordered = T)
+color <- factor(color, levels= c("blue","purple",
+                                     "pink","maroon","black",
+                                     "gray","orange","lime"), ordered = T)
+
+
+dat<-read.table("./chrX.2.Q",header=FALSE)
+colnames(dat) <- c("anc1","anc2")
+dat$Sample <- c(
+  "PF707",
+  "Papio",
+  "PF505","PF643","PF644","PF647","PF648",
+  "PF615","PF713","PM613","PM614","PM616",
+  "GumGum","Ngsang","PM1206","PM664","PM665","Sukai",
+  "PF1001","PF660","PM1003",
+  "PM1011","PM654",
+  "PF549",
+  "PF511","PF559","PF563","PF597","PF626","PM592"
+  )
+dat$Sample <- factor(dat$Sample, levels=c(
+  "Papio",
+  "Ngsang",
+  "Sukai","GumGum","PM1206","PM664","PM665",
+  "PF660","PF1001","PM1003",
+  "PM1011","PM654",
+  "PF647","PF648","PF505","PF643","PF644",
+  "PF511","PF563","PF559","PM592","PF597","PF626",
+  "PF549",
+  "PF615","PM616","PM614","PF713","PM613",
+  "PF707"), ordered = T)
+dat$Species <- c(
+  "Papio",
+  "nemstrina",
+  "nemstrina","nemstrina","nemstrina","nemstrina","nemstrina",
+  "nigra","nigra","nigra",
+  "nigrescens","nigrescens",
+  "hecki","hecki","hecki","hecki","hecki",
+  "tonkeana","tonkeana","tonkeana","tonkeana","tonkeana","tonkeana",
+  "togeanus",
+  "maura","maura","maura","maura","maura",
+  "brunnescens")
+tall_dat <- melt(dat, id.vars=c("Sample","Species"))
+
+k2<- ggplot(tall_dat, aes(fill=variable, y=value, x=Sample)) + 
+  geom_bar(position="stack", stat="identity")+
+  labs(y="2") +
+  theme_bw() + theme(panel.grid.minor=element_blank(),panel.grid.major=element_blank()) +
+  theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank()) +
+  theme(axis.title.y = element_text(angle = 0, vjust = 0.5)) +
+  # custom colors
+  scale_fill_manual(values=c("blue","purple"))+
+  # get rid of the legend
+  theme(legend.position = "none") 
+
+
+dat<-read.table("./chrX.3.Q",header=FALSE)
+colnames(dat) <- c("anc1","anc2","anc3")
+dat$Sample <- c(
+  "PF707",
+  "Papio",
+  "PF505","PF643","PF644","PF647","PF648",
+  "PF615","PF713","PM613","PM614","PM616",
+  "GumGum","Ngsang","PM1206","PM664","PM665","Sukai",
+  "PF1001","PF660","PM1003",
+  "PM1011","PM654",
+  "PF549",
+  "PF511","PF559","PF563","PF597","PF626","PM592"
+)
+dat$Sample <- factor(dat$Sample, levels=c(
+  "Papio",
+  "Ngsang",
+  "Sukai","GumGum","PM1206","PM664","PM665",
+  "PF660","PF1001","PM1003",
+  "PM1011","PM654",
+  "PF647","PF648","PF505","PF643","PF644",
+  "PF511","PF563","PF559","PM592","PF597","PF626",
+  "PF549",
+  "PF615","PM616","PM614","PF713","PM613",
+  "PF707"), ordered = T)
+tall_dat <- melt(dat, id.vars="Sample")
+
+k3<- ggplot(tall_dat, aes(fill=variable, y=value, x=Sample)) + 
+  geom_bar(position="stack", stat="identity")+
+  labs(y="3") +
+  theme_bw() + theme(panel.grid.minor=element_blank(),panel.grid.major=element_blank()) +
+  theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank()) +
+  theme(axis.title.y = element_text(angle = 0, vjust = 0.5)) +
+  # custom colors
+  scale_fill_manual(values=c("red","purple","blue")) +
+  # get rid of the legend
+  theme(legend.position = "none")
+
+
+dat<-read.table("./chrX.4.Q",header=FALSE)
+colnames(dat) <- c("anc1","anc2","anc3","anc4")
+dat$Sample <- c(
+  "PF707",
+  "Papio",
+  "PF505","PF643","PF644","PF647","PF648",
+  "PF615","PF713","PM613","PM614","PM616",
+  "GumGum","Ngsang","PM1206","PM664","PM665","Sukai",
+  "PF1001","PF660","PM1003",
+  "PM1011","PM654",
+  "PF549",
+  "PF511","PF559","PF563","PF597","PF626","PM592"
+)
+dat$Sample <- factor(dat$Sample, levels=c(
+  "Papio",
+  "Ngsang",
+  "Sukai","GumGum","PM1206","PM664","PM665",
+  "PF660","PF1001","PM1003",
+  "PM1011","PM654",
+  "PF647","PF648","PF505","PF643","PF644",
+  "PF511","PF563","PF559","PM592","PF597","PF626",
+  "PF549",
+  "PF615","PM616","PM614","PF713","PM613",
+  "PF707"), ordered = T)
+tall_dat <- melt(dat, id.vars="Sample")
+
+k4<- ggplot(tall_dat, aes(fill=variable, y=value, x=Sample)) + 
+  geom_bar(position="stack", stat="identity")+
+  labs(y="4") +
+  theme_bw() + theme(panel.grid.minor=element_blank(),panel.grid.major=element_blank()) +
+  theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank()) +
+  theme(axis.title.y = element_text(angle = 0, vjust = 0.5)) +
+  # custom colors
+  scale_fill_manual(values=c("purple","blue","red","orange")) +
+  # get rid of the legend
+  theme(legend.position = "none")
+
+
+dat<-read.table("./chrX.5.Q",header=FALSE)
+colnames(dat) <- c("anc1","anc2","anc3","anc4","anc5")
+dat$Sample <- c(
+  "PF707",
+  "Papio",
+  "PF505","PF643","PF644","PF647","PF648",
+  "PF615","PF713","PM613","PM614","PM616",
+  "GumGum","Ngsang","PM1206","PM664","PM665","Sukai",
+  "PF1001","PF660","PM1003",
+  "PM1011","PM654",
+  "PF549",
+  "PF511","PF559","PF563","PF597","PF626","PM592"
+)
+dat$Sample <- factor(dat$Sample, levels=c(
+  "Papio",
+  "Ngsang",
+  "Sukai","GumGum","PM1206","PM664","PM665",
+  "PF660","PF1001","PM1003",
+  "PM1011","PM654",
+  "PF647","PF648","PF505","PF643","PF644",
+  "PF511","PF563","PF559","PM592","PF597","PF626",
+  "PF549",
+  "PF615","PM616","PM614","PF713","PM613",
+  "PF707"), ordered = T)
+tall_dat <- melt(dat, id.vars="Sample")
+
+k5<- ggplot(tall_dat, aes(fill=variable, y=value, x=Sample)) + 
+  geom_bar(position="stack", stat="identity")+
+  labs(y="5") +
+  theme_bw() + theme(panel.grid.minor=element_blank(),panel.grid.major=element_blank()) +
+  theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank()) +
+  theme(axis.title.y = element_text(angle = 0, vjust = 0.5)) +
+  # custom colors
+  scale_fill_manual(values=c("blue","orange","red","purple","yellow")) +
+  # get rid of the legend
+  theme(legend.position = "none")
+
+
+dat<-read.table("./chrX.6.Q",header=FALSE)
+colnames(dat) <- c("anc1","anc2","anc3","anc4","anc5",
+                   "anc6")
+dat$Sample <- c(
+  "PF707",
+  "Papio",
+  "PF505","PF643","PF644","PF647","PF648",
+  "PF615","PF713","PM613","PM614","PM616",
+  "GumGum","Ngsang","PM1206","PM664","PM665","Sukai",
+  "PF1001","PF660","PM1003",
+  "PM1011","PM654",
+  "PF549",
+  "PF511","PF559","PF563","PF597","PF626","PM592"
+)
+dat$Sample <- factor(dat$Sample, levels=c(
+  "Papio",
+  "Ngsang",
+  "Sukai","GumGum","PM1206","PM664","PM665",
+  "PF660","PF1001","PM1003",
+  "PM1011","PM654",
+  "PF647","PF648","PF505","PF643","PF644",
+  "PF511","PF563","PF559","PM592","PF597","PF626",
+  "PF549",
+  "PF615","PM616","PM614","PF713","PM613",
+  "PF707"), ordered = T)
+tall_dat <- melt(dat, id.vars="Sample")
+
+k6<- ggplot(tall_dat, aes(fill=variable, y=value, x=Sample)) + 
+  geom_bar(position="stack", stat="identity")+
+  labs(y="6") +
+  theme_bw() + theme(panel.grid.minor=element_blank(),panel.grid.major=element_blank()) +
+  theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank()) +
+  theme(axis.title.y = element_text(angle = 0, vjust = 0.5)) +
+  # custom colors
+  scale_fill_manual(values=c("red","steel blue","yellow","orange","purple","blue")) +
+  # get rid of the legend
+  theme(legend.position = "none")
+
+
+dat<-read.table("./chrX.7.Q",header=FALSE)
+colnames(dat) <- c("anc1","anc2","anc3","anc4","anc5",
+                   "anc6","anc7")
+dat$Sample <- c(
+  "PF707",
+  "Papio",
+  "PF505","PF643","PF644","PF647","PF648",
+  "PF615","PF713","PM613","PM614","PM616",
+  "GumGum","Ngsang","PM1206","PM664","PM665","Sukai",
+  "PF1001","PF660","PM1003",
+  "PM1011","PM654",
+  "PF549",
+  "PF511","PF559","PF563","PF597","PF626","PM592"
+)
+dat$Sample <- factor(dat$Sample, levels=c(
+  "Papio",
+  "Ngsang",
+  "Sukai","GumGum","PM1206","PM664","PM665",
+  "PF660","PF1001","PM1003",
+  "PM1011","PM654",
+  "PF647","PF648","PF505","PF643","PF644",
+  "PF511","PF563","PF559","PM592","PF597","PF626",
+  "PF549",
+  "PF615","PM616","PM614","PF713","PM613",
+  "PF707"), ordered = T)
+tall_dat <- melt(dat, id.vars="Sample")
+
+k7<- ggplot(tall_dat, aes(fill=variable, y=value, x=Sample)) + 
+  geom_bar(position="stack", stat="identity")+
+  labs(y="7") +
+  theme_bw() + theme(panel.grid.minor=element_blank(),panel.grid.major=element_blank()) +
+  theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank()) +
+  theme(axis.title.y = element_text(angle = 0, vjust = 0.5)) +
+  # custom colors
+  scale_fill_manual(values=c("yellow","forest green","orange","purple","blue","steel blue","red")) +
+  # get rid of the legend
+  theme(legend.position = "none")
+
+
+dat<-read.table("./chrX.8.Q",header=FALSE)
+colnames(dat) <- c("anc1","anc2","anc3","anc4","anc5",
+                   "anc6","anc7","anc8")
+dat$Sample <- c(
+  "PF707",
+  "Papio",
+  "PF505","PF643","PF644","PF647","PF648",
+  "PF615","PF713","PM613","PM614","PM616",
+  "GumGum","Ngsang","PM1206","PM664","PM665","Sukai",
+  "PF1001","PF660","PM1003",
+  "PM1011","PM654",
+  "PF549",
+  "PF511","PF559","PF563","PF597","PF626","PM592"
+)
+dat$Sample <- factor(dat$Sample, levels=c(
+  "Papio",
+  "Ngsang",
+  "Sukai","GumGum","PM1206","PM664","PM665",
+  "PF660","PF1001","PM1003",
+  "PM1011","PM654",
+  "PF647","PF648","PF505","PF643","PF644",
+  "PF511","PF563","PF559","PM592","PF597","PF626",
+  "PF549",
+  "PF615","PM616","PM614","PF713","PM613",
+  "PF707"), ordered = T)
+tall_dat <- melt(dat, id.vars="Sample")
+
+k8<- ggplot(tall_dat, aes(fill=variable, y=value, x=Sample)) + 
+  geom_bar(position="stack", stat="identity")+
+  labs(y="8") +
+  theme_bw() + theme(panel.grid.minor=element_blank(),panel.grid.major=element_blank()) +
+  theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank()) +
+  theme(axis.title.y = element_text(angle = 0, vjust = 0.5)) +
+  # custom colors
+  scale_fill_manual(values=c("yellow","forest green","purple","red","blue","plum2","steel blue","orange")) +
+  # get rid of the legend
+  theme(legend.position = "none")
+
+dat<-read.table("./chrX.9.Q",header=FALSE)
+colnames(dat) <- c("anc1","anc2","anc3","anc4","anc5",
+                   "anc6","anc7","anc8","anc9")
+dat$Sample <- c(
+  "PF707",
+  "Papio",
+  "PF505","PF643","PF644","PF647","PF648",
+  "PF615","PF713","PM613","PM614","PM616",
+  "GumGum","Ngsang","PM1206","PM664","PM665","Sukai",
+  "PF1001","PF660","PM1003",
+  "PM1011","PM654",
+  "PF549",
+  "PF511","PF559","PF563","PF597","PF626","PM592"
+)
+dat$Sample <- factor(dat$Sample, levels=c(
+  "Papio",
+  "Ngsang",
+  "Sukai","GumGum","PM1206","PM664","PM665",
+  "PF660","PF1001","PM1003",
+  "PM1011","PM654",
+  "PF647","PF648","PF505","PF643","PF644",
+  "PF511","PF563","PF559","PM592","PF597","PF626",
+  "PF549",
+  "PF615","PM616","PM614","PF713","PM613",
+  "PF707"), ordered = T)
+tall_dat <- melt(dat, id.vars="Sample")
+
+k9<- ggplot(tall_dat, aes(fill=variable, y=value, x=Sample)) + 
+  geom_bar(position="stack", stat="identity")+
+  labs(y="9") +
+  theme_bw() + theme(panel.grid.minor=element_blank(),panel.grid.major=element_blank()) +
+  theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank()) +
+  theme(axis.title.y = element_text(angle = 0, vjust = 0.5)) +
+  # custom colors
+  scale_fill_manual(values=c("yellow","red","forest green","blue","steel blue","orange",
+                             "sienna","plum2","purple")) +
+  # get rid of the legend
+  theme(legend.position = "none")
+
+
+dat<-read.table("./chrX.10.Q",header=FALSE)
+colnames(dat) <- c("anc1","anc2","anc3","anc4","anc5",
+                   "anc6","anc7","anc8","anc9","anc10")
+dat$Sample <- c(
+  "PF707",
+  "Papio",
+  "PF505","PF643","PF644","PF647","PF648",
+  "PF615","PF713","PM613","PM614","PM616",
+  "GumGum","Ngsang","PM1206","PM664","PM665","Sukai",
+  "PF1001","PF660","PM1003",
+  "PM1011","PM654",
+  "PF549",
+  "PF511","PF559","PF563","PF597","PF626","PM592"
+)
+dat$Sample <- factor(dat$Sample, levels=c(
+  "Papio",
+  "Ngsang",
+  "Sukai","GumGum","PM1206","PM664","PM665",
+  "PF660","PF1001","PM1003",
+  "PM1011","PM654",
+  "PF647","PF648","PF505","PF643","PF644",
+  "PF511","PF563","PF559","PM592","PF597","PF626",
+  "PF549",
+  "PF615","PM616","PM614","PF713","PM613",
+  "PF707"), ordered = T)
+tall_dat <- melt(dat, id.vars="Sample")
+
+k10<- ggplot(tall_dat, aes(fill=variable, y=value, x=Sample)) + 
+  geom_bar(position="stack", stat="identity")+
+  labs(y="10") +
+  theme_bw() + theme(panel.grid.minor=element_blank(),panel.grid.major=element_blank()) +
+  theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank()) +
+  theme(axis.title.y = element_text(angle = 0, vjust = 0.5)) +
+  # custom colors
+  scale_fill_manual(values=c("plum2","yellow","blue","red","purple","hotpink",
+                             "steel blue","orange","sienna","forest green")) +
+  # get rid of the legend
+  theme(legend.position = "none")
+
+
+dat<-read.table("./chrX.11.Q",header=FALSE)
+colnames(dat) <- c("anc1","anc2","anc3","anc4",
+                   "anc5","anc6","anc7","anc8",
+                   "anc9","anc10","anc11")
+dat$Sample <- c(
+  "PF707",
+  "Papio",
+  "PF505","PF643","PF644","PF647","PF648",
+  "PF615","PF713","PM613","PM614","PM616",
+  "GumGum","Ngsang","PM1206","PM664","PM665","Sukai",
+  "PF1001","PF660","PM1003",
+  "PM1011","PM654",
+  "PF549",
+  "PF511","PF559","PF563","PF597","PF626","PM592"
+)
+dat$Sample <- factor(dat$Sample, levels=c(
+  "Papio",
+  "Ngsang",
+  "Sukai","GumGum","PM1206","PM664","PM665",
+  "PF660","PF1001","PM1003",
+  "PM1011","PM654",
+  "PF647","PF648","PF505","PF643","PF644",
+  "PF511","PF563","PF559","PM592","PF597","PF626",
+  "PF549",
+  "PF615","PM616","PM614","PF713","PM613",
+  "PF707"), ordered = T)
+tall_dat <- melt(dat, id.vars="Sample")
+
+k11<- ggplot(tall_dat, aes(fill=variable, y=value, x=Sample)) + 
+  geom_bar(position="stack", stat="identity")+
+  theme_bw() + theme(panel.grid.minor=element_blank(),panel.grid.major=element_blank()) +
+  labs(x = "Species or Population", y="11") +
+  theme(axis.text.x = element_text(angle = 45, vjust=0.95, hjust=1))+ 
+  theme(axis.title.y = element_text(angle = 0, vjust = 0.5))+
+  theme(axis.title.x = element_text(size=18)) +
+  #theme(axis.text.y=element_text(size=12)) +
+  scale_fill_manual(values=c("red","forest green","yellow","steel blue","plum2","sienna",
+                             "purple","lightseagreen","orange","blue","hotpink")) +
+  # get rid of the legend
+  theme(legend.position = "none")
+
+
+
+pdf("./2020_chrX_admixture.pdf",w=8, h=6, version="1.4", bg="transparent")
+ggarrange(k2, k3, k4, k5, k6,
+          k7, k8, k9, k10, k11, 
+          nrow = 10,
+          ncol = 1)
+dev.off()
+```

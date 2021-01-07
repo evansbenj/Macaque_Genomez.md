@@ -1,4 +1,8 @@
 I am going to use an approach called XPCLR to perform a genomewide scan for selection.
+working directory:
+```
+/home/ben/projects/rrg-ben/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/with_papio/2020_Nov_filtered_by_depth_3sigmas/final_data_including_sites_with_lots_of_missing_data/XPCLR/xpclr
+```
 
 1. Download the code:
 ```

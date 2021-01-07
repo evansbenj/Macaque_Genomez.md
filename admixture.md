@@ -123,14 +123,17 @@ tall_dat <- melt(dat, id.vars=c("Sample","Species"))
 
 k2<- ggplot(tall_dat, aes(fill=variable, y=value, x=Sample)) + 
   geom_bar(position="stack", stat="identity")+
+  labs(x = "Sample") +
   labs(y="2") +
+  scale_x_discrete(position = "top") +
   theme_bw() + theme(panel.grid.minor=element_blank(),panel.grid.major=element_blank()) +
-  theme(axis.title.x=element_blank(),
-        axis.text.x=element_blank(),
-        axis.ticks.x=element_blank()) +
-  theme(axis.title.y = element_text(angle = 0, vjust = 0.5)) +
+  theme(axis.text.x = element_text(angle = 45, vjust=-2, hjust=0))+ 
+  theme(axis.title.y = element_text(angle = 0, vjust = 0.5))+
+  theme(axis.title.x = element_text(size=18)) +
   # custom colors
-  scale_fill_manual(values=c("blue","purple"))+
+  scale_fill_manual(values=c("blue","purple")) +
+  # custom y axis tick labels
+  scale_y_continuous(breaks=seq(0,1,1)) +
   # get rid of the legend
   theme(legend.position = "none") 
 
@@ -171,6 +174,8 @@ k3<- ggplot(tall_dat, aes(fill=variable, y=value, x=Sample)) +
   theme(axis.title.y = element_text(angle = 0, vjust = 0.5)) +
   # custom colors
   scale_fill_manual(values=c("red","purple","blue")) +
+  # custom y axis tick labels
+  scale_y_continuous(breaks=seq(0,1,1)) +
   # get rid of the legend
   theme(legend.position = "none")
 
@@ -211,6 +216,8 @@ k4<- ggplot(tall_dat, aes(fill=variable, y=value, x=Sample)) +
   theme(axis.title.y = element_text(angle = 0, vjust = 0.5)) +
   # custom colors
   scale_fill_manual(values=c("purple","blue","red","orange")) +
+  # custom y axis tick labels
+  scale_y_continuous(breaks=seq(0,1,1)) +
   # get rid of the legend
   theme(legend.position = "none")
 
@@ -251,6 +258,8 @@ k5<- ggplot(tall_dat, aes(fill=variable, y=value, x=Sample)) +
   theme(axis.title.y = element_text(angle = 0, vjust = 0.5)) +
   # custom colors
   scale_fill_manual(values=c("blue","orange","red","purple","yellow")) +
+  # custom y axis tick labels
+  scale_y_continuous(breaks=seq(0,1,1)) +
   # get rid of the legend
   theme(legend.position = "none")
 
@@ -292,6 +301,8 @@ k6<- ggplot(tall_dat, aes(fill=variable, y=value, x=Sample)) +
   theme(axis.title.y = element_text(angle = 0, vjust = 0.5)) +
   # custom colors
   scale_fill_manual(values=c("red","steel blue","yellow","orange","purple","blue")) +
+  # custom y axis tick labels
+  scale_y_continuous(breaks=seq(0,1,1)) +
   # get rid of the legend
   theme(legend.position = "none")
 
@@ -332,7 +343,9 @@ k7<- ggplot(tall_dat, aes(fill=variable, y=value, x=Sample)) +
         axis.ticks.x=element_blank()) +
   theme(axis.title.y = element_text(angle = 0, vjust = 0.5)) +
   # custom colors
-  scale_fill_manual(values=c("yellow","forest green","orange","purple","blue","steel blue","red")) +
+  scale_fill_manual(values=c("yellow","lightgoldenrod4","orange","purple","blue","steel blue","red")) +
+  # custom y axis tick labels
+  scale_y_continuous(breaks=seq(0,1,1)) +
   # get rid of the legend
   theme(legend.position = "none")
 
@@ -373,7 +386,9 @@ k8<- ggplot(tall_dat, aes(fill=variable, y=value, x=Sample)) +
         axis.ticks.x=element_blank()) +
   theme(axis.title.y = element_text(angle = 0, vjust = 0.5)) +
   # custom colors
-  scale_fill_manual(values=c("yellow","forest green","purple","red","blue","plum2","steel blue","orange")) +
+  scale_fill_manual(values=c("yellow","lightgoldenrod4","purple","red","blue","plum2","steel blue","orange")) +
+  # custom y axis tick labels
+  scale_y_continuous(breaks=seq(0,1,1)) +
   # get rid of the legend
   theme(legend.position = "none")
 
@@ -413,8 +428,10 @@ k9<- ggplot(tall_dat, aes(fill=variable, y=value, x=Sample)) +
         axis.ticks.x=element_blank()) +
   theme(axis.title.y = element_text(angle = 0, vjust = 0.5)) +
   # custom colors
-  scale_fill_manual(values=c("yellow","red","forest green","blue","steel blue","orange",
+  scale_fill_manual(values=c("yellow","red","lightgoldenrod4","blue","steel blue","orange",
                              "sienna","plum2","purple")) +
+  # custom y axis tick labels
+  scale_y_continuous(breaks=seq(0,1,1)) +
   # get rid of the legend
   theme(legend.position = "none")
 
@@ -456,7 +473,9 @@ k10<- ggplot(tall_dat, aes(fill=variable, y=value, x=Sample)) +
   theme(axis.title.y = element_text(angle = 0, vjust = 0.5)) +
   # custom colors
   scale_fill_manual(values=c("plum2","yellow","blue","red","purple","hotpink",
-                             "steel blue","orange","sienna","forest green")) +
+                             "steel blue","orange","sienna","lightgoldenrod4")) +
+  # custom y axis tick labels
+  scale_y_continuous(breaks=seq(0,1,1)) +
   # get rid of the legend
   theme(legend.position = "none")
 
@@ -487,21 +506,36 @@ dat$Sample <- factor(dat$Sample, levels=c(
   "PF549",
   "PF615","PM616","PM614","PF713","PM613",
   "PF707"), ordered = T)
+
 tall_dat <- melt(dat, id.vars="Sample")
 
-k11<- ggplot(tall_dat, aes(fill=variable, y=value, x=Sample)) + 
+
+k11 <- ggplot(tall_dat, aes(fill=variable, y=value, x=Sample)) + 
   geom_bar(position="stack", stat="identity")+
   theme_bw() + theme(panel.grid.minor=element_blank(),panel.grid.major=element_blank()) +
-  labs(x = "Species or Population", y="11") +
-  theme(axis.text.x = element_text(angle = 45, vjust=0.95, hjust=1))+ 
+  labs(x = "Species") +
+  labs(y="11") +
+  theme(axis.text.x = element_text(size=12)) +  
   theme(axis.title.y = element_text(angle = 0, vjust = 0.5))+
   theme(axis.title.x = element_text(size=18)) +
   #theme(axis.text.y=element_text(size=12)) +
-  scale_fill_manual(values=c("red","forest green","yellow","steel blue","plum2","sienna",
+  scale_fill_manual(values=c("red","lightgoldenrod4","yellow","steel blue","plum2","sienna",
                              "purple","lightseagreen","orange","blue","hotpink")) +
   # get rid of the legend
-  theme(legend.position = "none")
-
+  theme(legend.position = "none") +
+  scale_x_discrete(labels=c("Papio" = expression(alpha),
+                            "GumGum" = expression(gamma),"Ngsang" = expression(beta),"PM1206" = expression(gamma),"PM664" = expression(gamma),
+                            "PM665" = expression(gamma), "Sukai" = expression(gamma),
+                            "PF1001" = expression(epsilon),"PF660" = expression(epsilon),"PM1003" = expression(epsilon),
+                            "PM1011" = expression(zeta),"PM654" = expression(zeta),
+                            "PF505" = expression(eta), "PF643" = expression(eta),"PF644" = expression(eta),"PF647" = expression(eta),"PF648" = expression(eta),
+                            "PF511" = expression(theta),"PF559" = expression(theta),"PF563" = expression(theta),"PF597" = expression(theta), "PF626" = expression(theta), "PM592" = expression(theta),
+                            "PF549" = expression(iota),
+                            "PF615" = expression(kappa),"PF713" = expression(kappa),"PM613" = expression(kappa),"PM614" = expression(kappa),"PM616" = expression(kappa),
+                            "PF707" = expression(lambda))) +
+  # custom y axis tick labels
+  scale_y_continuous(breaks=seq(0,1,1)) #+ 
+ # theme(plot.margin = unit(c(0.05,0.05,2,0.25), "cm"))
 
 
 pdf("./2020_chrX_admixture.pdf",w=8, h=6, version="1.4", bg="transparent")
@@ -510,6 +544,7 @@ ggarrange(k2, k3, k4, k5, k6,
           nrow = 10,
           ncol = 1)
 dev.off()
+
 ```
 
 (From the admixture manual), we can also check the cross validation standard error like this:

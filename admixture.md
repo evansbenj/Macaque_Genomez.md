@@ -563,3 +563,16 @@ CV error (K=10): 0.57981
 CV error (K=11): 0.73068
 ```
 This suggests the best one is k=8 for chrX; this is substantially better than the others.
+
+for autosomes it is k=9:
+```
+grep -h CV autosomeslog*.out
+CV error (K=2): 0.63166
+CV error (K=3): 0.63444
+CV error (K=4): 0.52661
+CV error (K=5): 0.49589
+CV error (K=6): 0.49198
+CV error (K=7): 0.59790
+CV error (K=8): 0.58931
+CV error (K=9): 0.43763
+```

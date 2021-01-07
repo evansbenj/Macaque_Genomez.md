@@ -575,4 +575,6 @@ CV error (K=6): 0.49198
 CV error (K=7): 0.59790
 CV error (K=8): 0.58931
 CV error (K=9): 0.43763
+CV error (K=10): 0.68583
+CV error (K=11): 0.63831
 ```

@@ -2,7 +2,7 @@
 
 Here's how I got the coordinates of all CDS in exons in the MacaM genome:
 ```
-grep 'mRNA' ~/projects/rrg-ben/ben/2017_SEAsian_macaques/MacaM/MacaM_Rhesus_Genome_Annotation_v7.6.8.gff | cut -f1,4,5 > coordinates_all_CDS.txt
+grep 'CDS' ~/projects/rrg-ben/ben/2017_SEAsian_macaques/MacaM/MacaM_Rhesus_Genome_Annotation_v7.6.8.gff | cut -f1,4,5 > coordinates_all_CDS.txt
 ```
 Here's how I got the coordinates of all CDS in OXPHOS genes:
 ```

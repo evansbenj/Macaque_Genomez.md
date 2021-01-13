@@ -1,4 +1,8 @@
 # It would be neat to look at the OXPHOS genes
+Working in this directory:
+```
+/home/ben/projects/rrg-ben/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/with_papio/2020_Nov_filtered_by_depth_3sigmas/final_data_including_sites_with_lots_of_missing_data/genomics_general
+```
 
 Here's how I got the coordinates of all CDS in exons in the MacaM genome:
 ```

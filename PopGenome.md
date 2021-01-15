@@ -11,7 +11,14 @@ awk '/chr19/,/chrM/' MacaM_mt_female.fa > MacaM_mt_female_chr19only.fa
 
 # Work with filtered vcf files with genotypes at all sites:
 
-
+directory:
+```
+/home/ben/projects/rrg-ben/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/with_papio/2020_Nov_filtered_by_depth_3sigmas/final_data_including_sites_with_lots_of_missing_data
+```
+example file (SNPs only):
+```
+FandM_chr19_BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz.recode.vcf.gz
+```
 
 # R code (in progress)
 

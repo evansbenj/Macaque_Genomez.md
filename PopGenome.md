@@ -9,7 +9,7 @@ awk '/chr19/,/chrM/' MacaM_mt_female.fa > MacaM_mt_female_chr19only.fa
 * still need to remove last line though...
 
 
-# Work with filtered vcf files with genotypes at all sites:
+# Work with filtered SNPs only vcf files:
 
 directory:
 ```

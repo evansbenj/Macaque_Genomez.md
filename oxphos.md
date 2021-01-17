@@ -140,3 +140,360 @@ chr19	sim4cc	mRNA	31551177	31552175	.	+	.	ID=SDHAF1_transcript_01;GID=644096
 chr01	sim4cc	mRNA	135601364	135647524	.	+	.	ID=SDHC_transcript_01;GID=6391
 chr11	sim4cc	mRNA	104210163	104219988	.	+	.	ID=SDHD_transcript_01;GID=6392
 ```
+
+For chrX PopGenome needed a "pseudodiploid" vcf file.  In this directory:
+```
+/home/ben/projects/rrg-ben/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/with_papio/2020_Nov_filtered_by_depth_3sigmas/final_data_including_sites_with_lots_of_missing_data
+```
+I made one like this:
+```
+zcat all_diploid_haploid_chrX_BSQR_filtered3_noPAR_SNPsonly.vcf.gz.recode.vcf.gz.recode.vcf.gz > temp.vcf
+cat temp.vcf | sed 's/   0:/     0\/0:/g' > temp2.vcf
+cat temp2.vcf | sed 's/  1:/     1\/1:/g' > temp3.vcf
+cat temp3.vcf | sed 's/  .:/     .\/.:/g' > temp4.vcf
+module load nixpkgs/16.09  intel/2016.4 tabix/0.2.6
+bgzip -c temp4.vcf > temp4.vcf.gz
+tabix -p vcf temp4.vcf.gz
+mv temp4.vcf.gz chrX_pseudo_diploid_forPopGenome.vcf.gz
+mv temp4.vcf.gz.tbi chrX_pseudo_diploid_forPopGenome.vcf.gz.tbi
+```
+And here is the R code that gives me S and NS polymorphism and divergence by population (!):
+```
+## Working directory
+# https://cran.r-project.org/web/packages/PopGenome/vignettes/Whole_genome_analyses_using_VCF_files.pdf
+setwd("/Users/Shared/Previously\ Relocated\ Items/Security/projects/2017_SEAsian_macaque_genomz/PopGenome_OXPHOS")
+library(ggplot2)
+library(PopGenome)
+
+#bru_PF707
+#hecki_PF505
+#hecki_PF643
+#hecki_PF644
+#hecki_PF647
+#hecki_PF648
+#maura_PF615
+#maura_PF713
+#maura_PM613
+#maura_PM614
+#maura_PM616
+#nem_GumGum_female
+#nem_Ngsang_sumatra_female
+#nem_PM1206
+#nem_PM664
+#nem_PM665
+#nem_Sukai_male
+#nigra_PF1001
+#nigra_PF660
+#nigra_PM1003
+#nigrescens_PM1011
+#nigrescens_PM654
+#tog_PF549
+#tonk_PF511
+#tonk_PF559
+#tonk_PF563
+#tonk_PF597
+#tonk_PF626
+#tonk_PM592
+
+#chr01	225002135
+#chr02a	108967917
+#chr02b	131519175
+#chr03	198060209
+#chr04	190369981
+#chr05	179725205
+#chr06	171866349
+#chr07	185267708
+#chr08	144034664
+#chr09	111027318
+#chr10	129655328
+#chr11	127102482
+#chr12	133317794
+#chr13	95368959
+#chr14	169736342
+#chr15	92674614
+#chr16	74750809
+#chr17	76917410
+#chr18	70128972
+#chr19	53113586
+#chrX	148935249
+
+#OXPHOS coordinates (all chr except chr13)
+#chr01	15628447	15662313
+#chr01	37992642	37997542
+#chr01	45636133	45647963
+#chr01	112030533	112043548
+#chr01	135484416	135497548
+#chr01	135601364	135647524
+#chr01	220779458	220788687
+#chr02a	37732212	37749061
+#chr02a	42997182	43010254
+#chr02a	92746891	92749017
+#chr02b	62111164	62116182
+#chr02b	88692897	88705887
+#chr02b	93979633	94015898
+#chr02b	128742129	128807570
+#chr03	84594254	84613076
+#chr03	104359835	104371673
+#chr03	104846075	104847927
+#chr03	114610662	114642316
+#chr03	156309713	156315708
+#chr03	156309713	156315708
+#chr03	157252481	157260548
+#chr04	634919	636858
+#chr04	8603394	8653763
+#chr04	46628495	46628917
+#chr04	61522247	61536172
+#chr04	97928438	97928963
+#chr04	139226852	139232639
+#chr05	191800	225299
+#chr05	1601204	1616216
+#chr05	54356765	54473046
+#chr05	56278755	56279160
+#chr05	58728795	58927343
+#chr05	130350642	130352620
+#chr05	138178553	138180781
+#chr06	73250180	73256003
+#chr06	95211059	95218436
+#chr07	3770437	3785385
+#chr07	12722004	12734438
+#chr07	21199179	21209971
+#chr07	34825571	34833611
+#chr07	97408775	97416979
+#chr07	124582469	124590730
+#chr07	166649885	166659561
+#chr08	93359100	93394552
+#chr08	94674995	94684605
+#chr08	94674995	94684605
+#chr08	98367530	98383414
+#chr08	123481402	123491824
+#chr08	143057509	143059999
+#chr09	59806087	59825964
+#chr09	59806087	59825964
+#chr09	94025131	94040826
+#chr10	7723482	7740495
+#chr10	95151638	95177391
+#chr10	95151638	95177391
+#chr10	95956681	95962600
+#chr11	6532924	6539484
+#chr11	6690185	6696071
+#chr11	8907900	8910660
+#chr11	12844602	12863522
+#chr11	18260513	18265960
+#chr11	69474342	69546903
+#chr11	69534557	69546903
+#chr11	69534557	69546903
+#chr11	69534557	69546903
+#chr11	104210163	104219988
+#chr11	110459798	110468428
+#chr12	4801409	4840545
+#chr12	48300943	48310011
+#chr12	51828101	51839397
+#chr12	54910245	54920096
+#chr12	55497421	55499859
+#chr12	94150466	94193941
+#chr12	94150482	94193941
+#chr12	120032059	120034809
+#chr14	17717208	17731422
+#chr14	52057142	52077913
+#chr14	112154408	112167663
+#chr14	132329422	132413355
+#chr14	132330617	132354632
+#chr15	5385192	5389178
+#chr15	32433903	32443159
+#chr15	46796983	46833911
+#chr15	71526832	71530391
+#chr15	71526832	71530391
+#chr15	84086730	84096073
+#chr16	1930096	1932930
+#chr16	20500148	20530512
+#chr16	22236971	22249112
+#chr16	29233433	29234114
+#chr16	70395661	70403728
+#chr17	14089633	14230045
+#chr17	38276744	38283435
+#chr17	44211923	44214912
+#chr17	68443001	68447706
+#chr17	69386150	69427976
+#chr18	35035298	35047335
+#chr19	1002804	1005971
+#chr19	1153942	1165810
+#chr19	1385443	1392486
+#chr19	5934304	5942627
+#chr19	8302280	8312129
+#chr19	9634493	9638249
+#chr19	14340049	14345977
+#chr19	19317399	19330902
+#chr19	31207304	31214924
+#chr19	31551177	31552175
+#chr19	31714988	31716937
+#chr19	36878373	36887017
+#chr19	36878373	36887017
+#chr19	36878373	36886666
+#chr19	50026620	50032055
+#chrX	47194137	47196604
+#chrX	71633448	71639804
+#chrX	113497709	113502918
+
+# read the vcf file
+# GENOME.class <- readVCF("FandM_chr07_BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz.recode.vcf.gz",
+GENOME.class <- readVCF("temp4.vcf.gz",
+                        numcols=10000,
+                        ##########
+                        tid="chrX",
+                        from=1, 
+                        ##########
+                        #to= 225002135, # for chr01
+                        #to= 108967917, # for chr02a
+                        #to= 131519175, # for chr02b
+                        #to= 198060209, # for chr03
+                        #to= 190369981, # for chr04
+                        #to= 179725205, # for chr05
+                        #to= 171866349, # for chr06
+                        #to= 185267708, # for chr07
+                        to= 148935249, # for chrX
+                        approx=FALSE, 
+                        out="", 
+                        parallel=FALSE, 
+                        gffpath="MacaM_Rhesus_Genome_Annotation_v7.6.8.gff")
+# define the populations
+GENOME.class <- set.populations(GENOME.class,
+                                list(
+                                  c("bru_PF707"),
+                                  c("hecki_PF505","hecki_PF643","hecki_PF644","hecki_PF647","hecki_PF648"),
+                                  c("maura_PF615","maura_PF713","maura_PM613","maura_PM614","maura_PM616"),
+                                  c("nem_Ngsang_sumatra_female"),
+                                  c("nem_GumGum_female","nem_PM1206","nem_PM664","nem_PM665","nem_Sukai_male"),
+                                  c("nigra_PF1001","nigra_PF660","nigra_PM1003"),
+                                  c("nigrescens_PM1011","nigrescens_PM654"),
+                                  c("tog_PF549"),
+                                  c("tonk_PF511","tonk_PF559","tonk_PF563","tonk_PF597","tonk_PF626","tonk_PM592")), 
+                                diploid=TRUE)
+
+# verify the SNPs (there is a typo on pg 8 of the manual about this command)
+# Set syn & nonsyn SNPs: The results are stored
+# in the slot GENOME.class@region.data@synonymous
+# The input of the set.synnonsyn function is an object of
+# class GENOME and a reference chromosome in FASTA format.
+GENOME.class <- set.synnonsyn(GENOME.class, ref.chr="MacaM_mt_female.fa",save.codons=T)
+
+# this is a list of whether each SNP is synonymous (1) or not (0)
+# GENOME.class@region.data@synonymous
+
+# this is the number of synonymous SNPs:
+sum(GENOME.class@region.data@synonymous[[1]]==1, na.rm=TRUE)
+# this is the number of nonsynonymous SNPs:
+sum(GENOME.class@region.data@synonymous[[1]]==0, na.rm=TRUE)
+# Here, we have to define the parameter na.rm=TRUE because NaN values in this slot
+# indicate that the observed SNP is in a non-coding region
+# We now could split the data into gene regions
+
+
+
+##########
+genePos <- get_gff_info(gff.file="MacaM_Rhesus_Genome_Annotation_v7.6.8.gff",chr="chr07", 
+                        feature="mRNA")
+genes <- splitting.data(GENOME.class, positions=genePos, type=2)
+
+# Now we perform The Tajima’s D statistic on the whole data set and
+# consider only nonsyn SNPs in each gene/region.
+#genes <- neutrality.stats(genes, subsites="nonsyn", FAST=TRUE)
+#nonsynTaj <- genes@Tajima.D
+
+# The same now for synonymous SNPs
+#genes <- neutrality.stats(genes, subsites="syn", FAST=TRUE)
+#synTaj <- genes@Tajima.D
+
+# To have a look at the differences of syn and nonsyn Tajima D values in each gene we
+# could do the following plot:
+# plot(nonsynTaj, synTaj, main="2L: Genes : Tajima’s D ")
+
+# McDonald Kreitman test
+# Verify the syn/non-syn SNPs
+# See # verify the SNPs (there is a typo on pg 8 of the manual about this command) ABOVE
+# Set the populations
+# See # define the populations ABOVE 
+# Splitting the data into genes
+# See # We now could split the data into gene regions ABOVE
+# Peform the MKT
+genes <- MKT(genes)
+# lengths(genes@MKT,use.names = T)
+# To look at gene 9 we can do the following:
+# genes@MKT[[9]]
+
+
+# OK let's figure out which genes are OXPHOS genes
+# gff_info <- get_gff_info(genes, position=3, chr="chr19", gff.file="MacaM_Rhesus_Genome_Annotation_v7.6.8_chr19.gff")[[1]]
+# using bash there are:
+# grep 'mRNA' MacaM_Rhesus_Genome_Annotation_v7.6.8_chr19.gff | wc -l
+# 1182 genes total, not all are polymorphic
+# I got the coordinates of the OXPHOS genes on chr19 like this:
+# grep 'mRNA' MacaM_Rhesus_Genome_Annotation_v7.6.8_chr19.gff | egrep 'COX|NDUF|UQCR|ATP5|CYC1|SDHB|SDHA|SDHC|SDHD' | cut -f1,4,5 > coordinates_OXPHOS_mRNAs.txt
+# there are 15 OXPHOS genes
+# grep 'CDS' MacaM_Rhesus_Genome_Annotation_v7.6.8_chr19.gff | egrep 'COX|NDUF|UQCR|ATP5|CYC1|SDHB|SDHA|SDHC|SDHD' | cut -f1,4,5 | wc -l
+# the 15 OXPHOS genes have a total of 59 exons
+
+
+
+# Extracts the information stored in the slot region.names
+# and converts the strings to numeric values (start position of the
+# region and end position)
+# this makes a vector with only the start position for all genes
+from.pos <- sapply(genes@region.names,function(x)
+{return(as.numeric(strsplit(x," ")[[1]][1]))})
+# this makes a vector with only the end position for all genes
+to.pos <- sapply(genes@region.names,function(x)
+{return(as.numeric(strsplit(x," ")[[1]][3]))})
+# Lets concatenate the values into a matrix
+DATA <- cbind(from.pos, to.pos, genes@MKT)
+# now check out the values for the 7 OXPHOS genes on chr01
+DATA[from.pos == '15628447']
+DATA[from.pos == '37992642'] # NULL
+DATA[from.pos == '45636133']
+DATA[from.pos == '112030533']
+DATA[from.pos == '135484416']
+DATA[from.pos == '135601364']
+DATA[from.pos == '220779458']
+# now check out the values for the 3 OXPHOS genes on chr02a
+DATA[from.pos == '37732212']
+DATA[from.pos == '42997182']
+DATA[from.pos == '92746891']
+# now check out the values for the 4 OXPHOS genes on chr02b
+DATA[from.pos == '62111164']
+DATA[from.pos == '88692897']
+DATA[from.pos == '93979633']
+DATA[from.pos == '128742129']
+# now check out the values for the 3 OXPHOS genes on chr03
+DATA[from.pos == '84594254']
+DATA[from.pos == '104359835']
+DATA[from.pos == '104846075']
+DATA[from.pos == '114610662']
+DATA[from.pos == '156309713']
+DATA[from.pos == '156309713']
+DATA[from.pos == '157252481']
+# now check out the values for the 6 OXPHOS genes on chr04
+DATA[from.pos == '634919']
+DATA[from.pos == '8603394']
+DATA[from.pos == '46628495']
+DATA[from.pos == '61522247']
+DATA[from.pos == '97928438']
+DATA[from.pos == '139226852']
+# now check out the values for the 7 OXPHOS genes on chr05
+DATA[from.pos == '191800']
+DATA[from.pos == '1601204']
+DATA[from.pos == '54356765']
+DATA[from.pos == '56278755']
+DATA[from.pos == '58728795']
+DATA[from.pos == '130350642']
+DATA[from.pos == '138178553']
+# now check out the values for the 2 OXPHOS genes on chr06
+DATA[from.pos == '73250180']
+DATA[from.pos == '95211059']
+# now check out the values for the 7 OXPHOS genes on chr07
+DATA[from.pos == '3770437']
+DATA[from.pos == '12722004']
+DATA[from.pos == '21199179']
+DATA[from.pos == '34825571']
+DATA[from.pos == '97408775']
+DATA[from.pos == '124582469']
+DATA[from.pos == '166649885']
+```

@@ -2,6 +2,63 @@
 
 I used Martin Simon's general genomics scripts to generate Fst values in 100,000 bp nonoverlapping sliding windows. I then used a per script below to read in a concatenated file of these values for all chromosomes (generated with Makes_inputfile_for_jackknife.pl), and also a gff file with coordinates for all mRNA (all_mRNA.gff) which was made from the original gff file using grep for 'mRNA'.  This file then prints out genes in the top 99.9th percentile for Fst.
 
+As with Twist, first I used Beagle to phase the data:
+```
+#!/bin/sh
+#SBATCH --job-name=beagle
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --time=3:00:00
+#SBATCH --mem=128gb
+#SBATCH --output=beagle.%J.out
+#SBATCH --error=beagle.%J.err
+#SBATCH --account=def-ben
+
+# sbatch Beagle.sh chr
+
+module load java
+
+java -Xmx12g -jar /home/ben/projects/rrg-ben/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/with_papio/2020_Nov_filtered_by_dept
+h_3sigmas/final_data_including_sites_with_lots_of_missing_data/twisst/beagle.18May20.d20.jar gt=${1} out=${1}_phased.vcf.gz impu
+te=true 
+```
+
+Then I made geno files:
+```
+python /home/ben/projects/rrg-ben/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/with_papio/2020_Nov_filtered_by_depth_3sigmas/final_data_including_sites_with_lots_of_missing_data/genomics_general/VCF_processing/parseVCF.py -i XXX.phased.vcf.gz.vcf.gz | gzip > phased_genos/XXX.geno.gz
+```
+then I used the popwindows script:
+```
+#!/bin/sh
+#SBATCH --job-name=popgenWindows
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --time=48:00:00
+#SBATCH --mem=2gb
+#SBATCH --output=popgenWindows.%J.out
+#SBATCH --error=popgenWindows.%J.err
+#SBATCH --account=def-ben
+
+# sbatch 2020_popgenWindows.sh  pathandname_of_geno_file name_of_pop_or_sample1 name_of_pop_or_sample2
+# sbatch 2020_popgenWindows.sh ../raw_data/XTgenomez_Chr7.vcf.gz_20mil.geno.gz XT10_WZ XT11_WW
+
+# XT10_WZ	XT11_WW	XT7_WY
+
+#module load StdEnv/2020
+#module load scipy-stack/2020b
+#module load python/3.8.2
+module --force purge
+module load StdEnv/2020 scipy-stack/2020b python/3.8.2
+
+echo python3 /home/ben/projects/rrg-ben/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/with_papio/2020_Nov_filtered_by_depth_3si
+gmas/final_data_including_sites_with_lots_of_missing_data/genomics_general/popgenWindows.py -g ${1} -o ${1}_${2}_${3}.csv -m 1 -
+p ${2} -p ${3} -f phased -T 10 --popsFile pops.txt --writeFailedWindows -w 100000 -s 100000 -m 10 --windType coordinate
+
+python3 /home/ben/projects/rrg-ben/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/with_papio/2020_Nov_filtered_by_depth_3sigmas/
+final_data_including_sites_with_lots_of_missing_data/genomics_general/popgenWindows.py -g ${1} -o ${1}_${2}_${3}.csv -m 1 -p ${2
+} -p ${3} -f diplo -T 10 --popsFile pops.txt --writeFailedWindows -w 100000 -s 100000 -m 10 --windType coordinate
+```
+this was used to parse the results
 ```
 #!/usr/bin/env perl
 use strict;

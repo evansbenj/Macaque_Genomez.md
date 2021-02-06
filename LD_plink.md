@@ -1,5 +1,10 @@
 # Testing for LD between nonsynonymous SNPs in the mtDNA and variation in the nuclear genome
 
+Working in this directory:
+```
+/home/ben/projects/rrg-ben/ben/2017_SEAsian_macaques/SEAsian_macaques_bam/with_papio/2020_Nov_filtered_by_depth_3sigmas/final_data_including_sites_with_lots_of_missing_data
+```
+
 First I added a Papio anubis mtDNA genome (GenBank accessionm NC 020006) to the alignment and separated the mtDNA genomes by the 13 protein coding genes.  I exported the protein coding sequences, opened them each in paup and excluded gapped, constant and uninf (parsimony non-informative) positions.  The last category are autapomorphic sites.
 
 Then I further filtered these positions as follows in order to remove variation that is solely attributable to geographic structure:

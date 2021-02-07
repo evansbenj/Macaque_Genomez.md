@@ -29,6 +29,10 @@ module load nixpkgs/16.09
 module load plink/1.9b_5.2-x86_64
 plink --vcf FandM_chr19_BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz.recode.vcf.gz --recode --const-fid 0 --out chr19_plink
 ```
+or, for chrX:
+```
+plink --vcf all_diploid_haploid_chrX_BSQR_filtered3_noPAR_SNPsonly.vcf.gz.recode.vcf.gz.recode.vcf.gz --recode --const-fid 0 --allow-extra-chr --out chrX_plink
+```
 Now test for associations for each SNP
 ```
 plink --file chr19_plink --pheno ATP8_1.txt --assoc --allow-no-sex

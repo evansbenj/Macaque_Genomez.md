@@ -23,23 +23,50 @@ In other words, only variation that was present in more than one macaque species
 
 Plink
 Associations between SNPs and a phenotype (such as phenotypic sex) are easily calculated using plink.
-
+First make plink files out of the vcf files:
 ```
 module load nixpkgs/16.09
 module load plink/1.9b_5.2-x86_64
-plink --vcf temp.vcf.gz --recode --const-fid 0 --chr-set 36 no-y no-xy no-mt --out myplink
-plink --file myplink --pheno sex_phenotype --assoc --allow-no-sex
+plink --vcf FandM_chr19_BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz.recode.vcf.gz --recode --const-fid 0 --out chr19_plink
 ```
-where the "sex_phenotype" file is a tab-delimited file that looks like this:
+Now test for associations for each SNP
 ```
-0	sample1	1
-0	sample2	2
-0	sample3	1
-0	sample4	2
-0	sample5	2
-0	sample6	1
+plink --file chr19_plink --pheno ATP8_1.txt --assoc --allow-no-sex
 ```
-The first column is the family ID (just zeros here). The second column is the sample name - this is the same as in the vcf file. The third column is the phenotype - should use 1 and 2, NOT 1 and 0, because 0 might be interpreted as a missing phenotye.
+where the "ATP8_1.txt" file is a tab-delimited file that looks like this:
+```
+0	bru_PF707	1
+0	download	2
+0	hecki_PF505	2
+0	hecki_PF643	1
+0	hecki_PF644	1
+0	hecki_PF647	2
+0	hecki_PF648	2
+0	maura_PF615	2
+0	maura_PF713	2
+0	maura_PM613	2
+0	maura_PM614	2
+0	maura_PM616	2
+0	nem_GumGum_female	1
+0	nem_Ngsang_sumatra_female	1
+0	nem_PM1206	1
+0	nem_PM664	1
+0	nem_PM665	1
+0	nem_Sukai_male	1
+0	nigra_PF1001	1
+0	nigra_PF660	1
+0	nigra_PM1003	1
+0	nigrescens_PM1011	1
+0	nigrescens_PM654	1
+0	tog_PF549	1
+0	tonk_PF511	1
+0	tonk_PF559	1
+0	tonk_PF563	1
+0	tonk_PF597	1
+0	tonk_PF626	1
+0	tonk_PM592	1
+```
+The first column is the family ID (just zeros here). The second column is the sample name - this is the same as in the vcf file. The third column is the phenotype - should use 1 and 2, NOT 1 and 0, because 0 might be interpreted as a missing phenotye.  In positions where I have three amino acids, I encoded the 3rd one with a zero if it was population specific.  In some cases I had to split the variation up when three amino acids were present but none seemed to be based on population structure (e.g. ATP8 amino acid 9).
 
 Also this flag "--const-fid 0" sets the family id to zero and tells plink to use the vcf sample name as the sample ID irrespective of whether there is an underscore in the name.
 

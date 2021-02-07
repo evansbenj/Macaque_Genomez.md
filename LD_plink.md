@@ -33,9 +33,30 @@ or, for chrX:
 ```
 plink --vcf all_diploid_haploid_chrX_BSQR_filtered3_noPAR_SNPsonly.vcf.gz.recode.vcf.gz.recode.vcf.gz --recode --const-fid 0 --allow-extra-chr --out chrX_plink
 ```
-Now test for associations for each SNP
+Now test for associations for each SNP for each chromosome
 ```
-plink --file chr19_plink --pheno ATP8_1.txt --assoc --allow-no-sex
+plink --file chr01_plink --pheno ATP8_aa_phenotypes/ATP8_1.txt --assoc --allow-no-sex ; mv plink.assoc ATP8_aa_phenotypes/ATP8_1_chr01_plink.assoc
+plink --file chr02a_plink --pheno ATP8_aa_phenotypes/ATP8_1.txt --assoc --allow-no-sex ; mv plink.assoc ATP8_aa_phenotypes/ATP8_1_chr02a_plink.assoc
+plink --file chr02b_plink --pheno ATP8_aa_phenotypes/ATP8_1.txt --assoc --allow-no-sex ; mv plink.assoc ATP8_aa_phenotypes/ATP8_1_chr02b_plink.assoc
+plink --file chr03_plink --pheno ATP8_aa_phenotypes/ATP8_1.txt --assoc --allow-no-sex ; mv plink.assoc ATP8_aa_phenotypes/ATP8_1_chr03_plink.assoc
+plink --file chr04_plink --pheno ATP8_aa_phenotypes/ATP8_1.txt --assoc --allow-no-sex ; mv plink.assoc ATP8_aa_phenotypes/ATP8_1_chr04_plink.assoc
+plink --file chr05_plink --pheno ATP8_aa_phenotypes/ATP8_1.txt --assoc --allow-no-sex ; mv plink.assoc ATP8_aa_phenotypes/ATP8_1_chr05_plink.assoc
+plink --file chr06_plink --pheno ATP8_aa_phenotypes/ATP8_1.txt --assoc --allow-no-sex ; mv plink.assoc ATP8_aa_phenotypes/ATP8_1_chr06_plink.assoc
+plink --file chr07_plink --pheno ATP8_aa_phenotypes/ATP8_1.txt --assoc --allow-no-sex ; mv plink.assoc ATP8_aa_phenotypes/ATP8_1_chr07_plink.assoc
+plink --file chr08_plink --pheno ATP8_aa_phenotypes/ATP8_1.txt --assoc --allow-no-sex ; mv plink.assoc ATP8_aa_phenotypes/ATP8_1_chr08_plink.assoc
+plink --file chr09_plink --pheno ATP8_aa_phenotypes/ATP8_1.txt --assoc --allow-no-sex ; mv plink.assoc ATP8_aa_phenotypes/ATP8_1_chr09_plink.assoc
+plink --file chr10_plink --pheno ATP8_aa_phenotypes/ATP8_1.txt --assoc --allow-no-sex ; mv plink.assoc ATP8_aa_phenotypes/ATP8_1_chr10_plink.assoc
+plink --file chr11_plink --pheno ATP8_aa_phenotypes/ATP8_1.txt --assoc --allow-no-sex ; mv plink.assoc ATP8_aa_phenotypes/ATP8_1_chr11_plink.assoc
+plink --file chr12_plink --pheno ATP8_aa_phenotypes/ATP8_1.txt --assoc --allow-no-sex ; mv plink.assoc ATP8_aa_phenotypes/ATP8_1_chr12_plink.assoc
+plink --file chr13_plink --pheno ATP8_aa_phenotypes/ATP8_1.txt --assoc --allow-no-sex ; mv plink.assoc ATP8_aa_phenotypes/ATP8_1_chr13_plink.assoc
+plink --file chr14_plink --pheno ATP8_aa_phenotypes/ATP8_1.txt --assoc --allow-no-sex ; mv plink.assoc ATP8_aa_phenotypes/ATP8_1_chr14_plink.assoc
+plink --file chr15_plink --pheno ATP8_aa_phenotypes/ATP8_1.txt --assoc --allow-no-sex ; mv plink.assoc ATP8_aa_phenotypes/ATP8_1_chr15_plink.assoc
+plink --file chr16_plink --pheno ATP8_aa_phenotypes/ATP8_1.txt --assoc --allow-no-sex ; mv plink.assoc ATP8_aa_phenotypes/ATP8_1_chr16_plink.assoc
+plink --file chr17_plink --pheno ATP8_aa_phenotypes/ATP8_1.txt --assoc --allow-no-sex ; mv plink.assoc ATP8_aa_phenotypes/ATP8_1_chr17_plink.assoc
+plink --file chr18_plink --pheno ATP8_aa_phenotypes/ATP8_1.txt --assoc --allow-no-sex ; mv plink.assoc ATP8_aa_phenotypes/ATP8_1_chr18_plink.assoc
+plink --file chr19_plink --pheno ATP8_aa_phenotypes/ATP8_1.txt --assoc --allow-no-sex ; mv plink.assoc ATP8_aa_phenotypes/ATP8_1_chr19_plink.assoc
+plink --file chrX_plink --pheno ATP8_aa_phenotypes/ATP8_1.txt --assoc --allow-no-sex ; mv plink.assoc ATP8_aa_phenotypes/ATP8_1_chrX_plink.assoc
+
 ```
 where the "ATP8_1.txt" file is a tab-delimited file that looks like this:
 ```

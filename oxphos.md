@@ -22,6 +22,35 @@ Or only CDS of OXPHOS genes on only chrX:
 grep 'CDS' ~/projects/rrg-ben/ben/2017_SEAsian_macaques/MacaM/MacaM_Rhesus_Genome_Annotation_v7.6.8.gff | egrep 'COX|NDUF|UQCR|ATP5|CYC1|SDHB|SDHA|SDHC|SDHD' | grep 'chrX'| cut -f1,4,5 > coordinates_chrX_OXPHOS_all_CDS.txt
 ```
 
+Here's how I got the final list of genes in complex 5 based on this paper Essays in Biochemistry (2018) 62 255–270:
+```
+grep 'mRNA' ~/projects/rrg-ben/ben/2017_SEAsian_macaques/MacaM/MacaM_Rhesus_Genome_Annotation_v7.6.8.gff | egrep 'ATPA|TMEM70|ATPIF1|USMG5|C14orf2_|ATP5O|ATP5F1|ATP5I|ATP5L|ATP5J2|ATP5C1|ATP5D|ATP5E|ATP5B|ATP5A1|ATP5G|ATP5J|ATP5H' | cut -f1,4,5 > coordinates_OXPHOS_complex5.txt
+```
+Here the coordinates are (with names):
+```
+ATPAF1	5	chr01 45953218 45987492	45953218	45987492
+TMEM70	5	chr08 72064967 72071542	72064967	72071542
+ATPAF2	5	chr17	18045894	18066877
+ATPIF1 (IF1)	5	chr01	26938483	26940445
+USMG5 (ATP5MD, DAPIT)	5	chr10	99032999	99036509
+C14orf2 (ATP5MPL, MP68, PLPM, MLQ,6,8PL)	5	chr14	166432920	166436127
+ATP5O (OSCP)	5	chr07	12722004	12734438
+ATP5C1	5	chr10	7723482	7740495
+ATP5D	5	chr19	1002804	1005971
+ATP5E	5	chr15	5385192	5389178
+ATP5B	5	chr12	54910245	54920096
+ATP5A1	5	chr18	35035298	35047335
+ATPG1	5	chr17	44211923	44214912
+ATPG2	5	chr12	51828101	51839397
+ATPG3	5	chr02b	62111164	62116182
+ATP5F1	5	chr01	112030533	112043548
+ATP5H (ATPH)	5	chr17	68443001	68447706
+ATP5J	5	chr07	21199179	21209971
+ATP5I	5	chr04	634919	636858
+ATP5L	5	chr11	110459798	110468428
+ATPJ2	5	chr07	124582469	124590730
+```
+
 Here's a preliminary list of all the autosomally encoded proteins in in the OXPHOS complex based on this paper: Genome Res. 2018. 28: 952-967:
 ```
 chr01	sim4cc	mRNA	220779458	220788687	.	+	.	ID=COX20_transcript_01;GID=116228

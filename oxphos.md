@@ -51,6 +51,8 @@ ATP5L	5	chr11	110459798	110468428
 ATPJ2	5	chr07	124582469	124590730
 ```
 
+The cool thing is that the two mt genes in complex 5 (ATP6, ATP8) interact with others in the peripheral stalk, which includes 3 genes (alternative acronyms are in parentheses): ATPIF1 (IF1), USMG5 (ATP5MD, DAPIT), C14orf2 (ATP5MPL, MP68, PLPM, MLQ,6,8PL) so we have a clear hypothesis here.
+
 Here's a preliminary list of all the autosomally encoded proteins in in the OXPHOS complex based on this paper: Genome Res. 2018. 28: 952-967:
 ```
 chr01	sim4cc	mRNA	220779458	220788687	.	+	.	ID=COX20_transcript_01;GID=116228

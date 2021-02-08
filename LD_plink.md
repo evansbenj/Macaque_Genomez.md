@@ -96,3 +96,7 @@ The first column is the family ID (just zeros here). The second column is the sa
 Also this flag "--const-fid 0" sets the family id to zero and tells plink to use the vcf sample name as the sample ID irrespective of whether there is an underscore in the name.
 
 This flag "--chr-set 36" allows extra chrs. They will be numbers in the order they are encountered in the vcf file (I think - this will need to be confirmed...)
+
+This --all-pheno tells plink to iterate over all phenotypes
+
+This flag --pfilter 1e-4 tells plink to only output SNPs with Pvals <= 0.0001 (otherwise the files are huge!)

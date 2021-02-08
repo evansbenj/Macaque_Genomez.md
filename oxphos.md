@@ -21,6 +21,74 @@ Or only CDS of OXPHOS genes on only chrX:
 ```
 grep 'CDS' ~/projects/rrg-ben/ben/2017_SEAsian_macaques/MacaM/MacaM_Rhesus_Genome_Annotation_v7.6.8.gff | egrep 'COX|NDUF|UQCR|ATP5|CYC1|SDHB|SDHA|SDHC|SDHD' | grep 'chrX'| cut -f1,4,5 > coordinates_chrX_OXPHOS_all_CDS.txt
 ```
+Heres how I got the final list of genes in complex 1 based on this paper in Essays in Biochemistry (2018) 62 255-270:
+```
+grep 'mRNA' ~/projects/rrg-ben/ben/2017_SEAsian_macaques/MacaM/MacaM_Rhesus_Genome_Annotation_v7.6.8.gff | egrep 'NDUFA2|NDUFAF6|NDUFS1|NDUFV1|NDUFV2|NUBPL' | cut -f1,4,5 > coordinates_OXPHOS_Nmodule_complex1.txt
+
+grep 'mRNA' ~/projects/rrg-ben/ben/2017_SEAsian_macaques/MacaM/MacaM_Rhesus_Genome_Annotation_v7.6.8.gff | egrep 'NDUFA3|NDUFA8|NDUFA13|NDUFAF5|NDUFAF7|NDUFS2|NDUFS3|NDUFS7|NDUFS8'| cut -f1,4,5 > coordinates_OXPHOS_Qmodule_complex1.txt
+
+grep 'mRNA' ~/projects/rrg-ben/ben/2017_SEAsian_macaques/MacaM/MacaM_Rhesus_Genome_Annotation_v7.6.8.gff | egrep 'NDUFAF3|NDUFAF4|TIMMDC1'| cut -f1,4,5 > coordinates_OXPHOS_QNmodule_complex1.txt
+
+grep 'mRNA' ~/projects/rrg-ben/ben/2017_SEAsian_macaques/MacaM/MacaM_Rhesus_Genome_Annotation_v7.6.8.gff | egrep 'ATP5SL|NDUFB6|FOXRED1|NDUFB10|NDUFB11|NDUFB4|NDUFB5|TMEM70' | cut -f1,4,5 > coordinates_OXPHOS_ND4module_complex1.txt
+
+grep 'mRNA' ~/projects/rrg-ben/ben/2017_SEAsian_macaques/MacaM/MacaM_Rhesus_Genome_Annotation_v7.6.8.gff | egrep 'ACAD9|=COA1|ECSIT|NDUFAF1|NDUFC1|NDUFC2|TMEM126B|TMEM186' | cut -f1,4,5 > coordinates_OXPHOS_ND2module_complex1.txt
+
+grep 'mRNA' ~/projects/rrg-ben/ben/2017_SEAsian_macaques/MacaM/MacaM_Rhesus_Genome_Annotation_v7.6.8.gff | egrep 'C9orf123|NDUFAB1|NDUFB2|NDUFB3|NDUFB7|NDUFB8|NDUFB9' | cut -f1,4,5 > coordinates_OXPHOS_ND5module_complex1.txt
+
+grep 'mRNA' ~/projects/rrg-ben/ben/2017_SEAsian_macaques/MacaM/MacaM_Rhesus_Genome_Annotation_v7.6.8.gff | egrep 'NDUFA6|NDUFA7|NDUFA12|NDUFS4|NDUFS6|NDUFV3' | cut -f1,4,5 > coordinates_OXPHOS_other_complex1.txt
+```
+And here are the coordinates of nuclear genes in complex 1 (with names; I could not find three of them in the gff file):
+```
+NDUFA2	1	chr05	138178553	138180781
+NDUFAF6	1	chr08	93359100	93394552
+NDUFS1	1	chr02b	93979633	94015898
+NDUFV1	1	chr11	6690185	6696071
+NDUFV2	1	* not in gff file		
+NUBPL	1	chr14	92789615	93049799
+NDUFA3	1	chr19	9634493	9638249
+NDUFA5	1	* not in gff file		
+NDUFA8	1	chr09	94025131	94040826
+NDUFA13	1	chr19	19317399	19330902
+NDUFAF5	1	chr15	46796983	46833911
+NDUFAF7	1	chr02a	37732212	37749061
+NDUFS2	1	chr01	135484416	135497548
+NDUFS3	1	chr11	18260513	18265960
+NDUFS7	1	chr19	1153942	1165810
+NDUFS8	1	chr11	6532924	6539484
+NDUFAF3	1	chr03	104846075	104847927
+NDUFAF4	1	chr06	95211059	95218436
+TIMMDC1	1	chr03	157411293	157436295
+ATP5SL	1	chr19	36878373	36887017
+NDUFB6	1	chr09	59806087	59825964
+FOXRED1	1	chr11	118312703	118322904
+NDUFB10	1	chr16	1930096	1932930
+NDUFB11	1	chrX	47194137	47196604
+NDUFB1	1	* not in gff file		
+NDUFB4	1	chr03	156309713	156315708
+NDUFB5	1	chr03	84594254	84613076
+TMEM70	1	chr08	72064967	72071542
+ACAD9	1	chr03	148084830	148114936
+COA1	1	chr07	64839692	64850427
+ECSIT	1	chr19	11316389	11345234
+NDUFAF1	1	chr14	17717208	17731422
+NDUFC1	1	chr04	139226852	139232639
+NDUFC2	1	chr11	69474342	69546903
+TMEM126B	1	chr11	77465139	77472013
+TMEM186	1	chr16	8788484	8790936
+C9orf123 (DMAC1)	1	chr09	34632092	34635355
+NDUFAB1	1	chr16	22236971	22249112
+NDUFB2	1	chr07	166649885	166659561
+NDUFB3	1	chr02b	88692897	88705887
+NDUFB7	1	chr19	14340049	14345977
+NDUFB8	1	chr10	95956681	95962600
+NDUFB9	1	chr08	123481402	123491824
+NDUFA6	1	chr15	84086730	84096073
+NDUFA7	1	chr19	8302280	8312129
+NDUFA12	1	chr12	94150466	94193941
+NDUFS4	1	chr05	54356765	54473046
+NDUFS6	1	chr05	1601204	1616216
+NDUFV3	1	chr07	3770437	3785385
+```
 
 Here's how I got the final list of genes in complex 5 based on this paper Essays in Biochemistry (2018) 62 255–270:
 ```

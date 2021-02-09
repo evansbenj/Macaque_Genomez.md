@@ -60,36 +60,36 @@ plink --file chrX_plink --pheno ND1_base.txt --assoc --allow-no-sex --allow-extr
 ```
 where the "ND1_base.txt" file is a tab-delimited file that looks like this:
 ```
-0	bru_PF707	111111111111111111
-0	download	212110011112221112
-0	hecki_PF505	112111111111010121
-0	hecki_PF643	111111221121212111
-0	hecki_PF644	111111221121212111
-0	hecki_PF647	112111111111010121
-0	hecki_PF648	112111111111010121
-0	maura_PF615	211111111112121111
-0	maura_PF713	211111111212121111
-0	maura_PM613	211111111112121111
-0	maura_PM614	211111111112121111
-0	maura_PM616	211111111112121111
-0	nem_GumGum_female	121212112111111111
-0	nem_Ngsang_sumatra_female	111021111212221221
-0	nem_PM1206	112112112111111111
-0	nem_PM664	111112112111111112
-0	nem_PM665	112112112111111111
-0	nem_Sukai_male	121212112111111111
-0	nigra_PF1001	111111111111201111
-0	nigra_PF660	111111111111201121
-0	nigra_PM1003	111111111111201111
-0	nigrescens_PM1011	111111111111101112
-0	nigrescens_PM654	111111111111101112
-0	tog_PF549	111222111111111211
-0	tonk_PF511	111111221121212111
-0	tonk_PF559	111111111111111111
-0	tonk_PF563	111121111111112111
-0	tonk_PF597	211111111111111111
-0	tonk_PF626	211111111111111111
-0	tonk_PM592	221111112111111111
+0	bru_PF707	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1
+0	download	2	1	2	1	1	0	0	1	1	1	1	2	2	2	1	1	1	2
+0	hecki_PF505	1	1	2	1	1	1	1	1	1	1	1	1	0	1	0	1	2	1
+0	hecki_PF643	1	1	1	1	1	1	2	2	1	1	2	1	2	1	2	1	1	1
+0	hecki_PF644	1	1	1	1	1	1	2	2	1	1	2	1	2	1	2	1	1	1
+0	hecki_PF647	1	1	2	1	1	1	1	1	1	1	1	1	0	1	0	1	2	1
+0	hecki_PF648	1	1	2	1	1	1	1	1	1	1	1	1	0	1	0	1	2	1
+0	maura_PF615	2	1	1	1	1	1	1	1	1	1	1	2	1	2	1	1	1	1
+0	maura_PF713	2	1	1	1	1	1	1	1	1	2	1	2	1	2	1	1	1	1
+0	maura_PM613	2	1	1	1	1	1	1	1	1	1	1	2	1	2	1	1	1	1
+0	maura_PM614	2	1	1	1	1	1	1	1	1	1	1	2	1	2	1	1	1	1
+0	maura_PM616	2	1	1	1	1	1	1	1	1	1	1	2	1	2	1	1	1	1
+0	nem_GumGum_female	1	2	1	2	1	2	1	1	2	1	1	1	1	1	1	1	1	1
+0	nem_Ngsang_sumatra_female	1	1	1	0	2	1	1	1	1	2	1	2	2	2	1	2	2	1
+0	nem_PM1206	1	1	2	1	1	2	1	1	2	1	1	1	1	1	1	1	1	1
+0	nem_PM664	1	1	1	1	1	2	1	1	2	1	1	1	1	1	1	1	1	2
+0	nem_PM665	1	1	2	1	1	2	1	1	2	1	1	1	1	1	1	1	1	1
+0	nem_Sukai_male	1	2	1	2	1	2	1	1	2	1	1	1	1	1	1	1	1	1
+0	nigra_PF1001	1	1	1	1	1	1	1	1	1	1	1	1	2	0	1	1	1	1
+0	nigra_PF660	1	1	1	1	1	1	1	1	1	1	1	1	2	0	1	1	2	1
+0	nigra_PM1003	1	1	1	1	1	1	1	1	1	1	1	1	2	0	1	1	1	1
+0	nigrescens_PM1011	1	1	1	1	1	1	1	1	1	1	1	1	1	0	1	1	1	2
+0	nigrescens_PM654	1	1	1	1	1	1	1	1	1	1	1	1	1	0	1	1	1	2
+0	tog_PF549	1	1	1	2	2	2	1	1	1	1	1	1	1	1	1	2	1	1
+0	tonk_PF511	1	1	1	1	1	1	2	2	1	1	2	1	2	1	2	1	1	1
+0	tonk_PF559	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1
+0	tonk_PF563	1	1	1	1	2	1	1	1	1	1	1	1	1	1	2	1	1	1
+0	tonk_PF597	2	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1
+0	tonk_PF626	2	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1
+0	tonk_PM592	2	2	1	1	1	1	1	1	2	1	1	1	1	1	1	1	1	1
 ```
 The first column is the family ID (just zeros here). The second column is the sample name - this is the same as in the vcf file. The third column is the phenotype - should use 1 and 2, NOT 1 and 0, because 0 might be interpreted as a missing phenotye.  In positions where I have three amino acids, I encoded the 3rd one with a zero if it was population specific.  In some cases I had to split the variation up when three amino acids were present but none seemed to be based on population structure (e.g. ATP8 amino acid 9).
 

@@ -33,7 +33,7 @@ where this flag `--set-missing-var-ids @:# ` tells plink to set the SNP ids as "
 
 or, for chrX:
 ```
-plink --vcf all_diploid_haploid_chrX_BSQR_filtered3_noPAR_SNPsonly.vcf.gz.recode.vcf.gz.recode.vcf.gz --recode --const-fid 0 --allow-extra-chr --out chrX_plink
+plink --vcf all_diploid_haploid_chrX_BSQR_filtered3_noPAR_SNPsonly.vcf.gz.recode.vcf.gz.recode.vcf.gz --recode --const-fid 0 --set-missing-var-ids @:# --allow-extra-chr --out chrX_plink
 ```
 Now test for associations for each SNP for each chromosome
 ```

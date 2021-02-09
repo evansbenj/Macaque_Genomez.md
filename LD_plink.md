@@ -27,9 +27,9 @@ First make plink files out of the vcf files:
 ```
 module load nixpkgs/16.09
 module load plink/1.9b_5.2-x86_64
-plink --vcf FandM_chr19_BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz.recode.vcf.gz --recode --const-fid 0 --set-missing-var-ids @:# --out chr19_plink
+plink --vcf FandM_chr19_BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz.recode.vcf.gz --recode --const-fid 0 --set-missing-var-ids @:# --allow-extra-chr --out chr19_plink
 ```
-where this flag `--set-missing-var-ids @:# ` tells plink to set the SNP ids as "chr:bp".  This was important because the permutation test reports significant SNPs based on SNPID, which was blank without this flag.
+where this flag `--set-missing-var-ids @:# ` tells plink to set the SNP ids as "chr:bp".  This was important because the permutation test reports significant SNPs based on SNPID, which was blank without this flag.  The '--allow-extra-chr' flag was needed for chr02a and chr02b.
 
 or, for chrX:
 ```

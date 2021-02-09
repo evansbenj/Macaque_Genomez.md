@@ -35,27 +35,27 @@ plink --vcf all_diploid_haploid_chrX_BSQR_filtered3_noPAR_SNPsonly.vcf.gz.recode
 ```
 Now test for associations for each SNP for each chromosome
 ```
-plink --file chr01_plink --pheno ND1_base.txt --assoc --allow-no-sex --allow-extra-chr --all-pheno --pfilter 1e-4 ; mv plink.assoc ATP8_aa_phenotypes/ATP8_1_chr01_plink.assoc
-plink --file chr02a_plink --pheno ND1_base.txt --assoc --allow-no-sex --allow-extra-chr --all-pheno --pfilter 1e-4; mv plink.assoc ATP8_aa_phenotypes/ATP8_1_chr02a_plink.assoc
-plink --file chr02b_plink --pheno ND1_base.txt --assoc --allow-no-sex --allow-extra-chr --all-pheno --pfilter 1e-4; mv plink.assoc ATP8_aa_phenotypes/ATP8_1_chr02b_plink.assoc
-plink --file chr03_plink --pheno ND1_base.txt --assoc --allow-no-sex --allow-extra-chr --all-pheno --pfilter 1e-4; mv plink.assoc ATP8_aa_phenotypes/ATP8_1_chr03_plink.assoc
-plink --file chr04_plink --pheno ND1_base.txt --assoc --allow-no-sex --allow-extra-chr --all-pheno --pfilter 1e-4; mv plink.assoc ATP8_aa_phenotypes/ATP8_1_chr04_plink.assoc
-plink --file chr05_plink --pheno ND1_base.txt --assoc --allow-no-sex --allow-extra-chr --all-pheno --pfilter 1e-4; mv plink.assoc ATP8_aa_phenotypes/ATP8_1_chr05_plink.assoc
-plink --file chr06_plink --pheno ND1_base.txt --assoc --allow-no-sex --allow-extra-chr --all-pheno --pfilter 1e-4; mv plink.assoc ATP8_aa_phenotypes/ATP8_1_chr06_plink.assoc
-plink --file chr07_plink --pheno ATP8_aa_phenotypes/ATP8_1.txt --assoc --allow-no-sex --allow-extra-chr --all-pheno --pfilter 1e-4; mv plink.assoc ATP8_aa_phenotypes/ATP8_1_chr07_plink.assoc
-plink --file chr08_plink --pheno ND1_base.txt --assoc --allow-no-sex --allow-extra-chr --all-pheno --pfilter 1e-4; mv plink.assoc ATP8_aa_phenotypes/ATP8_1_chr08_plink.assoc
-plink --file chr09_plink --pheno ND1_base.txt --assoc --allow-no-sex --allow-extra-chr --all-pheno --pfilter 1e-4; mv plink.assoc ATP8_aa_phenotypes/ATP8_1_chr09_plink.assoc
-plink --file chr10_plink --pheno ND1_base.txt --assoc --allow-no-sex --allow-extra-chr --all-pheno --pfilter 1e-4; mv plink.assoc ATP8_aa_phenotypes/ATP8_1_chr10_plink.assoc
-plink --file chr11_plink --pheno ND1_base.txt --assoc --allow-no-sex --allow-extra-chr --all-pheno --pfilter 1e-4; mv plink.assoc ATP8_aa_phenotypes/ATP8_1_chr11_plink.assoc
-plink --file chr12_plink --pheno ND1_base.txt --assoc --allow-no-sex --allow-extra-chr --all-pheno --pfilter 1e-4; mv plink.assoc ATP8_aa_phenotypes/ATP8_1_chr12_plink.assoc
-plink --file chr13_plink --pheno ND1_base.txt --assoc --allow-no-sex --allow-extra-chr --all-pheno --pfilter 1e-4; mv plink.assoc ATP8_aa_phenotypes/ATP8_1_chr13_plink.assoc
-plink --file chr14_plink --pheno ND1_base.txt --assoc --allow-no-sex --allow-extra-chr --all-pheno --pfilter 1e-4; mv plink.assoc ATP8_aa_phenotypes/ATP8_1_chr14_plink.assoc
-plink --file chr15_plink --pheno ND1_base.txt --assoc --allow-no-sex --allow-extra-chr --all-pheno --pfilter 1e-4; mv plink.assoc ATP8_aa_phenotypes/ATP8_1_chr15_plink.assoc
-plink --file chr16_plink --pheno ND1_base.txt --assoc --allow-no-sex --allow-extra-chr --all-pheno --pfilter 1e-4; mv plink.assoc ATP8_aa_phenotypes/ATP8_1_chr16_plink.assoc
-plink --file chr17_plink --pheno ND1_base.txt --assoc --allow-no-sex --allow-extra-chr --all-pheno --pfilter 1e-4; mv plink.assoc ATP8_aa_phenotypes/ATP8_1_chr17_plink.assoc
-plink --file chr18_plink --pheno ND1_base.txt --assoc --allow-no-sex --allow-extra-chr --all-pheno --pfilter 1e-4; mv plink.assoc ATP8_aa_phenotypes/ATP8_1_chr18_plink.assoc
-plink --file chr19_plink --pheno ND1_base.txt --assoc --allow-no-sex --allow-extra-chr --all-pheno --pfilter 1e-4; mv plink.assoc ATP8_aa_phenotypes/ATP8_1_chr19_plink.assoc
-plink --file chrX_plink --pheno ND1_base.txt --assoc --allow-no-sex --allow-extra-chr --all-pheno --pfilter 1e-4; mv plink.assoc ATP8_aa_phenotypes/ATP8_1_chrX_plink.assoc
+plink --file chr01_plink --pheno ./ND1/ND1_base.txt --assoc --allow-no-sex --allow-extra-chr --all-pheno --pfilter 1e-4 --out ./ND1/chr01_ND1_
+plink --file chr02a_plink --pheno ./ND1/ND1_base.txt --assoc --allow-no-sex --allow-extra-chr --all-pheno --pfilter 1e-4 --out ./ND1/chr02a_ND1_
+plink --file chr02b_plink --pheno ./ND1/ND1_base.txt --assoc --allow-no-sex --allow-extra-chr --all-pheno --pfilter 1e-4 --out ./ND1/chr02b_ND1_
+plink --file chr03_plink --pheno ./ND1/ND1_base.txt --assoc --allow-no-sex --allow-extra-chr --all-pheno --pfilter 1e-4 --out ./ND1/chr03_ND1_
+plink --file chr04_plink --pheno ./ND1/ND1_base.txt --assoc --allow-no-sex --allow-extra-chr --all-pheno --pfilter 1e-4 --out ./ND1/chr04_ND1_
+plink --file chr05_plink --pheno ./ND1/ND1_base.txt --assoc --allow-no-sex --allow-extra-chr --all-pheno --pfilter 1e-4 --out ./ND1/chr05_ND1_
+plink --file chr06_plink --pheno ./ND1/ND1_base.txt --assoc --allow-no-sex --allow-extra-chr --all-pheno --pfilter 1e-4 --out ./ND1/chr06_ND1_
+plink --file chr07_plink --pheno ./ND1/ND1_base.txt --assoc --allow-no-sex --allow-extra-chr --all-pheno --pfilter 1e-4 --out ./ND1/chr07_ND1_
+plink --file chr08_plink --pheno ./ND1/ND1_base.txt --assoc --allow-no-sex --allow-extra-chr --all-pheno --pfilter 1e-4 --out ./ND1/chr08_ND1_
+plink --file chr09_plink --pheno ./ND1/ND1_base.txt --assoc --allow-no-sex --allow-extra-chr --all-pheno --pfilter 1e-4 --out ./ND1/chr09_ND1_
+plink --file chr10_plink --pheno ./ND1/ND1_base.txt --assoc --allow-no-sex --allow-extra-chr --all-pheno --pfilter 1e-4 --out ./ND1/chr10_ND1_
+plink --file chr11_plink --pheno ./ND1/ND1_base.txt --assoc --allow-no-sex --allow-extra-chr --all-pheno --pfilter 1e-4 --out ./ND1/chr11_ND1_
+plink --file chr12_plink --pheno ./ND1/ND1_base.txt --assoc --allow-no-sex --allow-extra-chr --all-pheno --pfilter 1e-4 --out ./ND1/chr12_ND1_
+plink --file chr13_plink --pheno ./ND1/ND1_base.txt --assoc --allow-no-sex --allow-extra-chr --all-pheno --pfilter 1e-4 --out ./ND1/chr13_ND1_
+plink --file chr14_plink --pheno ./ND1/ND1_base.txt --assoc --allow-no-sex --allow-extra-chr --all-pheno --pfilter 1e-4 --out ./ND1/chr14_ND1_
+plink --file chr15_plink --pheno ./ND1/ND1_base.txt --assoc --allow-no-sex --allow-extra-chr --all-pheno --pfilter 1e-4 --out ./ND1/chr15_ND1_
+plink --file chr16_plink --pheno ./ND1/ND1_base.txt --assoc --allow-no-sex --allow-extra-chr --all-pheno --pfilter 1e-4 --out ./ND1/chr16_ND1_
+plink --file chr17_plink --pheno ./ND1/ND1_base.txt --assoc --allow-no-sex --allow-extra-chr --all-pheno --pfilter 1e-4 --out ./ND1/chr17_ND1_
+plink --file chr18_plink --pheno ./ND1/ND1_base.txt --assoc --allow-no-sex --allow-extra-chr --all-pheno --pfilter 1e-4 --out ./ND1/chr18_ND1_
+plink --file chr19_plink --pheno ./ND1/ND1_base.txt --assoc --allow-no-sex --allow-extra-chr --all-pheno --pfilter 1e-4 --out ./ND1/chr19_ND1_
+plink --file chrX_plink --pheno ./ND1/ND1_base.txt --assoc --allow-no-sex --allow-extra-chr --all-pheno --pfilter 1e-4 --out ./ND1/chrX_ND1_
 
 ```
 where the "ND1_base.txt" file is a tab-delimited file that looks like this:

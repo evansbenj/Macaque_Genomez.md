@@ -134,7 +134,7 @@ for (i in 1:18) {  # for ND1 there are 18 interesting SNPs
 #mydir = "/home/ben/scratch/ATP8_aa_phenotypes"
 mydir = "/home/ben/scratch/ND1_aa_phenotypes/ND1"
 # for computecandada, change the file name
-myfiles1 = list.files(path=mydir, pattern=paste("chr.+_ND1_.P",i,".assoc",sep=""), full.names=TRUE)
+myfiles1 = list.files(path=mydir, pattern=paste("chr.+_ND1_.P",i,".assoc$",sep=""), full.names=TRUE)
 #myfiles2 = list.files(path=mydir, pattern="popgenWindows_chr.+_nem_nig_windowstats", full.names=TRUE)
 #myfiles3 = list.files(path=mydir, pattern="popgenWindows_chr.+_nem_ton_windowstats", full.names=TRUE)
 #myfiles4 = list.files(path=mydir, pattern="popgenWindows_chr.+_nem_mau_windowstats", full.names=TRUE)

@@ -293,6 +293,20 @@ kpPlotMarkers(kp, chr="chr04", x=139226852, y=c(20), labels="", label.dist = 0.0
 kpPlotMarkers(kp, chr="chr11", x=69474342, y=c(20), labels="", label.dist = 0.01, line.color="blue", lwd=2)
 kpPlotMarkers(kp, chr="chr11", x=77465139, y=c(20), labels="", label.dist = 0.01, line.color="blue", lwd=2)
 kpPlotMarkers(kp, chr="chr16", x=8788484, y=c(20), labels="", label.dist = 0.01, line.color="blue", lwd=2)
+kpPlotMarkers(kp, chr="chr09", x=34632092, y=c(20), labels="", label.dist = 0.01, line.color="blue", lwd=2)
+kpPlotMarkers(kp, chr="chr16", x=22236971, y=c(20), labels="", label.dist = 0.01, line.color="blue", lwd=2)
+kpPlotMarkers(kp, chr="chr07", x=166649885, y=c(20), labels="", label.dist = 0.01, line.color="blue", lwd=2)
+kpPlotMarkers(kp, chr="chr02b", x=88692897, y=c(20), labels="", label.dist = 0.01, line.color="blue", lwd=2)
+kpPlotMarkers(kp, chr="chr19", x=14340049, y=c(20), labels="", label.dist = 0.01, line.color="blue", lwd=2)
+kpPlotMarkers(kp, chr="chr10", x=95956681, y=c(20), labels="", label.dist = 0.01, line.color="blue", lwd=2)
+kpPlotMarkers(kp, chr="chr08", x=123481402, y=c(20), labels="", label.dist = 0.01, line.color="blue", lwd=2)
+
+kpPlotMarkers(kp, chr="chr15", x=84086730, y=c(20), labels="", label.dist = 0.01, line.color="blue", lwd=2)
+kpPlotMarkers(kp, chr="chr19", x=8302280, y=c(20), labels="", label.dist = 0.01, line.color="blue", lwd=2)
+kpPlotMarkers(kp, chr="chr12", x=94150466, y=c(20), labels="", label.dist = 0.01, line.color="blue", lwd=2)
+kpPlotMarkers(kp, chr="chr05", x=54356765, y=c(20), labels="", label.dist = 0.01, line.color="blue", lwd=2)
+kpPlotMarkers(kp, chr="chr05", x=1601204, y=c(20), labels="", label.dist = 0.01, line.color="blue", lwd=2)
+kpPlotMarkers(kp, chr="chr07", x=3770437, y=c(20), labels="", label.dist = 0.01, line.color="blue", lwd=2)
 
 # COMPLEX 5 (final)
 # 3 genes interact directly with mt-ATP6 and mt-ATP8:

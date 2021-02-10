@@ -35,6 +35,7 @@ or, for chrX:
 ```
 plink --vcf all_diploid_haploid_chrX_BSQR_filtered3_noPAR_SNPsonly.vcf.gz.recode.vcf.gz.recode.vcf.gz --recode --const-fid 0 --set-missing-var-ids @:# --allow-extra-chr --out chrX_plink
 ```
+
 Now test for associations for each SNP for each chromosome
 ```
 plink --file chr01_plink --pheno ./ND1/ND1_base.txt --assoc --allow-no-sex --allow-extra-chr --all-pheno --pfilter 1e-4 --out ./ND1/chr01_ND1_
@@ -339,4 +340,12 @@ kpPlotMarkers(kp, chr="chr07", x=3770437, y=c(20), labels="", label.dist = 0.01,
 dev.off()
 
 } # end of loop
+```
+
+# Association with multiple phenotypes (mtDNA SNPs)
+
+Make bed/bim/fam files from map/bed files
+
+```
+plink --file chr19_plink --make-bed --out chr19_plink
 ```

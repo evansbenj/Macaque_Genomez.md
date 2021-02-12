@@ -93,6 +93,18 @@ Here's how I got the final list of genes in complex 2:
 ```
 grep 'mRNA' ~/projects/rrg-ben/ben/2017_SEAsian_macaques/MacaM/MacaM_Rhesus_Genome_Annotation_v7.6.8.gff | egrep 'SDHA|SDHAF1|SDHAF2|SDHB|SDHC|SDHD|ACN9|C6orf57' | cut -f1,4,5 > coordinates_OXPHOS_complex2.txt
 ```
+here are the coordinates for complex2:
+```
+	SDHA	2	chr05	191800	225299
+	SDHAF1	2	chr19	31551177	31552175
+	SDHAF2	2	chr11	12844602	12863522
+	ACN9 (SDHAF3)	2	chr07	122255513	122331494
+	C6orf57 (SDHAF4)	2	chr06	68582810	68605348
+	SDHB	2	chr01	15628447	15662313
+	SDHC	2	chr01	135601364	135647524
+	SDHD	2	chr11	104210163	104219988
+```
+
 Here's how I got the final list of genes in complex 3:
 ```
 grep 'mRNA' ~/projects/rrg-ben/ben/2017_SEAsian_macaques/MacaM/MacaM_Rhesus_Genome_Annotation_v7.6.8.gff | egrep 'UQCRB|UQCRQ|UQCRC1|UQCRC2|CYC1|UQCRH_|UQCR10|UQCR11|BCS1L|TTC19|UQCC|MNF1|C11orf83' | cut -f1,4,5 > coordinates_OXPHOS_complex3.txt

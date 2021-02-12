@@ -93,6 +93,10 @@ Here's how I got the final list of genes in complex 2:
 ```
 grep 'mRNA' ~/projects/rrg-ben/ben/2017_SEAsian_macaques/MacaM/MacaM_Rhesus_Genome_Annotation_v7.6.8.gff | egrep 'SDHA|SDHAF1|SDHAF2|SDHB|SDHC|SDHD|ACN9|C6orf57' | cut -f1,4,5 > coordinates_OXPHOS_complex2.txt
 ```
+Here's how I got the final list of genes in complex 3:
+```
+grep 'mRNA' ~/projects/rrg-ben/ben/2017_SEAsian_macaques/MacaM/MacaM_Rhesus_Genome_Annotation_v7.6.8.gff | egrep 'UQCRB|UQCRQ|UQCRC1|UQCRC2|CYC1|UQCRH_|UQCR10|UQCR11|BCS1L|TTC19|UQCC|MNF1|C11orf83' | cut -f1,4,5 > coordinates_OXPHOS_complex3.txt
+```
 
 Here's how I got the final list of genes in complex 5 based on this paper Essays in Biochemistry (2018) 62 255–270:
 ```

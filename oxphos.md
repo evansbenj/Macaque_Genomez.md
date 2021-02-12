@@ -89,6 +89,10 @@ NDUFS4	1	chr05	54356765	54473046
 NDUFS6	1	chr05	1601204	1616216
 NDUFV3	1	chr07	3770437	3785385
 ```
+Here's how I got the final list of genes in complex 2:
+```
+grep 'mRNA' ~/projects/rrg-ben/ben/2017_SEAsian_macaques/MacaM/MacaM_Rhesus_Genome_Annotation_v7.6.8.gff | egrep 'SDHA|SDHAF1|SDHAF2|SDHB|SDHC|SDHD|ACN9|C6orf57' | cut -f1,4,5 > coordinates_OXPHOS_complex2.txt
+```
 
 Here's how I got the final list of genes in complex 5 based on this paper Essays in Biochemistry (2018) 62 255–270:
 ```

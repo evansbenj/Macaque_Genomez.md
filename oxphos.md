@@ -97,6 +97,25 @@ Here's how I got the final list of genes in complex 3:
 ```
 grep 'mRNA' ~/projects/rrg-ben/ben/2017_SEAsian_macaques/MacaM/MacaM_Rhesus_Genome_Annotation_v7.6.8.gff | egrep 'UQCRB|UQCRQ|UQCRC1|UQCRC2|CYC1|UQCRH_|UQCR10|UQCR11|BCS1L|TTC19|UQCC|MNF1|C11orf83' | cut -f1,4,5 > coordinates_OXPHOS_complex3.txt
 ```
+genes in comlex3:
+```
+Complex3					
+CYB (32 aas)	UQCC (UQCC1, Cbp3)	3	chr15	28688308	28798664
+	MNF1 (UQCC2,Cbp6)	3	chr06	34463088	34477872
+	C11orf83 (UQCC3,Cbp4)	3	chr11	11484179	11486231
+	UQCRB	3	chr08	94674995	94684605
+	UQCRQ	3	chr05	130350642	130352620
+	UQCRC1	3	chr03	104359835	104371673
+	UQCRC2	3	chr16	20500148	20530512
+	CYC1	3	chr08	143057509	143059999
+	UQCRH	3	chr01	45636133	45647963
+	UQCR10	3	chr15	71526832	71530391
+	UQCR11	3	chr19	1385443	1392486
+	BCS1L	3	chr02b	106853441	106857546
+	MZM1L (LYRM7)	3	* not in gff file		
+	UQCRFS1	3	* not in gff file		
+	TTC19	3	chr17	16554117	16582008
+ ```
 
 Here's how I got the final list of genes in complex 5 based on this paper Essays in Biochemistry (2018) 62 255–270:
 ```

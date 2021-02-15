@@ -10,6 +10,223 @@ I got all non-MRP genes by adding a `-v` invert flag to egrep:
 ```
 grep 'mRNA' ~/projects/rrg-ben/ben/2017_SEAsian_macaques/MacaM/MacaM_Rhesus_Genome_Annotation_v7.6.8.gff | egrep -v '=MRP' | egrep 'transcript_01' > temp.txt
 ```
+Test for significance using permutations with this perl script (also the list of gene coordinates after the perl script:
+```
+#!/usr/bin/env perl
+use strict;
+use warnings;
+
+
+# This program will read in two files. The first contains the coordinates of
+# ARS2 genes, their acronyms, and all other genes
+
+# The other file is a file with Fst (or pi) in windows with coordinates.  First
+# the mean Fst of interacting (1) and non-interacting (0) ARS2 genes will be calculated
+# then permutations will be performed where the difference between these categories is 
+# recalculated after the interaction is permuted n times. This will allow a p value of the
+# Fst value to be estimated.
+
+my $inputfile1 = $ARGV[0];
+my $inputfile2 = $ARGV[1];
+
+my @windowsites;
+my @Fst_values;
+my $sumsites=0;
+my $counter=0;
+my @temp;
+my $y;
+my $x;
+my %ARS2;
+
+# first open up the ARS2 gene info (# ARS2_genez.txt)
+unless (open DATAINPUT, $inputfile1) {
+	print "Can not find the input file.\n";
+	exit;
+}
+
+while ( my $line = <DATAINPUT>) {
+	chomp($line);
+	@temp=split('\t',$line);
+	if(($temp[0] ne 'gene')&&($temp[2] ne 'chrX')){ # deliberately ignore genes on chrX
+		$ARS2{$temp[2]."_".$temp[3]."_".$temp[4]}{"gene"} = $temp[0];
+		$ARS2{$temp[2]."_".$temp[3]."_".$temp[4]}{"complex"} = $temp[1];
+		$ARS2{$temp[2]."_".$temp[3]."_".$temp[4]}{"mt_interact"} = $temp[5];
+	}	
+}		
+close DATAINPUT;
+
+# now open up the Fst data
+unless (open DATAINPUT2, $inputfile2) {
+	print "Can not find the input file.\n";
+	exit;
+}
+
+my @temp1;
+while ( my $line = <DATAINPUT2>) {
+	chomp($line);
+	@temp=split(',',$line);
+	# cycle through each ARS2 gene and other genes
+	foreach my $key (keys %ARS2){
+		@temp1=split('_',$key);
+		if($temp[8] ne "nan"){
+		# check if this window contains one or more ARS2 genes
+			if(($temp1[0] eq $temp[0])&&($temp1[1] >= $temp[1])&&($temp1[1] <= $temp[2])){
+				$ARS2{$key}{"start_fst"} = $temp[8];
+				$ARS2{$key}{"start_fst_sites"} = $temp[4];
+				#print $ARS2{$key}{"start_fst"}," ";
+			} # start is in block
+			if(($temp1[0] eq $temp[0])&&($temp1[2] >= $temp[1])&&($temp1[2] <= $temp[2])) {  # end is in block
+				$ARS2{$key}{"end_fst"} = $temp[8];
+				$ARS2{$key}{"end_fst_sites"} = $temp[4];
+				#print $ARS2{$key}{"end_fst"},"\n";
+			}
+		}
+	}
+}
+
+my @weighted_ave_fst_for_perms;
+# now calculate the weighted averages for each gene
+foreach my $key (keys %ARS2){
+	if((exists($ARS2{$key}{"start_fst"}))&&(exists($ARS2{$key}{"end_fst"}))){
+		#print $key,"\n";
+		$ARS2{$key}{"weighted_ave_fst"}=(($ARS2{$key}{"start_fst"}*$ARS2{$key}{"start_fst_sites"})+
+								($ARS2{$key}{"end_fst"}*$ARS2{$key}{"end_fst_sites"}))/
+								($ARS2{$key}{"start_fst_sites"}+$ARS2{$key}{"end_fst_sites"});
+		push(@weighted_ave_fst_for_perms,(($ARS2{$key}{"start_fst"}*$ARS2{$key}{"start_fst_sites"})+
+								($ARS2{$key}{"end_fst"}*$ARS2{$key}{"end_fst_sites"}))/
+								($ARS2{$key}{"start_fst_sites"}+$ARS2{$key}{"end_fst_sites"}));
+	}
+	elsif((exists($ARS2{$key}{"start_fst"}))&&(exists($ARS2{$key}{"end_fst"}) == 0)){
+		$ARS2{$key}{"weighted_ave_fst"}=$ARS2{$key}{"start_fst"};
+		push(@weighted_ave_fst_for_perms,$ARS2{$key}{"start_fst"});		
+	}
+	elsif((exists($ARS2{$key}{"end_fst"}))&&(exists($ARS2{$key}{"start_fst"}) == 0)){
+		$ARS2{$key}{"weighted_ave_fst"}=$ARS2{$key}{"end_fst"};
+		push(@weighted_ave_fst_for_perms,$ARS2{$key}{"end_fst"});		
+	}
+	else{
+		print "No fst value for ",$key,", skipping\n";
+		delete($ARS2{$key}); # this makes sure we don't have extra later
+	}							
+}	
+
+close DATAINPUT2;
+
+my $Fst_associated=0;
+my $Fst_non_associated=0;
+my $n_Fst_associated=0;
+my $n_Fst_non_associated=0;
+my $Fst_all_gene_windows=0;
+my $n_Fst_all_gene_windows=0;
+my @interacting_Fsts;
+
+# now calculated the average fst for associated and non-associated ARS2 genes
+# and also genomewise
+foreach my $key (keys %ARS2){
+	if($ARS2{$key}{"mt_interact"} == 1){
+		$Fst_associated += $ARS2{$key}{"weighted_ave_fst"};
+		$n_Fst_associated += 1;
+		push(@interacting_Fsts,$ARS2{$key}{"weighted_ave_fst"})
+	}
+	elsif($ARS2{$key}{"mt_interact"} == 0){
+		$Fst_non_associated += $ARS2{$key}{"weighted_ave_fst"};
+		$n_Fst_non_associated += 1;
+	}
+	$Fst_all_gene_windows += $ARS2{$key}{"weighted_ave_fst"};
+	$n_Fst_all_gene_windows += 1;
+
+}
+
+
+# now report values
+print "Mean Fst associated ",$Fst_associated/$n_Fst_associated,"\n";
+print "Mean Fst non associated ",$Fst_non_associated/$n_Fst_non_associated,"\n";
+print "Mean Fst genomewide ",$Fst_all_gene_windows/$n_Fst_all_gene_windows,"\n";
+
+# Print out individual values for interacting proteins
+my @sorted_interacting_Fsts = sort { $a <=> $b } @interacting_Fsts;
+print "@sorted_interacting_Fsts\n";
+
+foreach(@sorted_interacting_Fsts){
+	foreach my $key (keys %ARS2){
+		if(($ARS2{$key}{"weighted_ave_fst"} == $_)&&($ARS2{$key}{"mt_interact"} == 1)){
+			print $ARS2{$key}{"gene"}," ",$ARS2{$key}{"weighted_ave_fst"},"\n";
+		}
+	}
+}		
+
+#################
+# ALL COMPLEXES perms
+#################
+
+# calculate test statistic
+my $test_stat = ($Fst_associated/$n_Fst_associated) - ($Fst_non_associated/$n_Fst_non_associated);
+
+# do permutations for all_complex_mt_interact vs all_complex_no_mt_interact
+# first make an array that will be shuffled with the same number of 1s and 0s as the $ARS2{$key}{"complex"} variable
+my @associated_or_not_array = (('1') x $n_Fst_associated, ('0') x $n_Fst_non_associated);
+
+my $perms=1000;
+my $Fst_associated_perm=0;
+my $Fst_not_associated_perm=0;
+my $n_Fst_associated_perm=0;
+my $n_Fst_not_associated_perm=0;
+
+
+my @perm_diffs;
+@perm_diffs={};
+for ($y = 0 ; $y < $perms; $y++ ) {
+	fisher_yates_shuffle( \@associated_or_not_array );    # permutes @array in place
+	$Fst_associated_perm=0;
+	$Fst_not_associated_perm=0;
+	$n_Fst_associated_perm=0;
+	$n_Fst_not_associated_perm=0;
+	for ($x = 0 ; $x <= $#associated_or_not_array; $x++ ) {
+		if($associated_or_not_array[$x] == 1){
+			$Fst_associated_perm+= $weighted_ave_fst_for_perms[$x];
+			$n_Fst_associated_perm +=1;
+		}
+		elsif($associated_or_not_array[$x] == 0){	
+			$Fst_not_associated_perm+= $weighted_ave_fst_for_perms[$x];
+			$n_Fst_not_associated_perm +=1;
+		}
+	}
+	push(@perm_diffs,($Fst_associated_perm/$n_Fst_associated_perm) - ($Fst_not_associated_perm/$n_Fst_not_associated_perm));	
+}
+
+my @perm_diffs_sorted = sort { $a <=> $b } @perm_diffs;
+my $switch=0;
+my $pval=0;
+# now figure out where the test stat is
+for ($y = 0 ; $y <= $#perm_diffs_sorted; $y++ ) {
+	if(($test_stat <= $perm_diffs_sorted[$y])&&($switch==0)){
+		$pval=$counter;
+		$switch = 1;
+	}
+	$counter+=1;
+}	
+
+#print "@perm_diffs_sorted\n";
+print "Test stat(if negative, then not significant):",$test_stat,"\n";
+print "permdifs number ",$#perm_diffs_sorted," ",$#perm_diffs,"\n";
+print "P = ",1-($pval/$perms),"\n";
+
+
+
+# fisher_yates_shuffle( \@array ) : 
+    # generate a random permutation of @array in place
+    sub fisher_yates_shuffle {
+        my $array = shift;
+        my $i;
+        for ($i = @$array; --$i; ) {
+            my $j = int rand ($i+1);
+            next if $i == $j;
+            @$array[$i,$j] = @$array[$j,$i];
+        }
+    }
+```
+
+
 Here are the coordinates:
 ```
 gene	complex	chr	start	end	mt_interact

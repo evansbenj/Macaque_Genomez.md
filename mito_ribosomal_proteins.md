@@ -8,7 +8,7 @@ Note that we are not including URGCP-MRPS24 because this is a readthrough transc
 
 I got all non-MRP genes by adding a `-v` invert flag to egrep:
 ```
-grep 'mRNA' ~/projects/rrg-ben/ben/2017_SEAsian_macaques/MacaM/MacaM_Rhesus_Genome_Annotation_v7.6.8.gff | egrep -v '=MRP' > temp.txt
+grep 'mRNA' ~/projects/rrg-ben/ben/2017_SEAsian_macaques/MacaM/MacaM_Rhesus_Genome_Annotation_v7.6.8.gff | egrep -v '=MRP' | egrep 'transcript_01' > temp.txt
 ```
 Here are the coordinates:
 ```

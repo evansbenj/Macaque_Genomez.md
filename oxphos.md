@@ -677,3 +677,9 @@ DATA[from.pos == '97408775']
 DATA[from.pos == '124582469']
 DATA[from.pos == '166649885']
 ```
+
+# Permutations
+
+One expectation, particularly for PF511 and PM626 is that they should have mt-interacting nuclear genes from the species whose mtDNA they carry.  Most of the introgressed regions are heterozygous, but this is worth testing any how. This really should be compared among windows that carry genes, not across all genes. I will do this as follows: read in the coordinates of the interacting OXPHOS (or any) genes plus all the other genes. And then read in coordinates of heterozygous and homoz introgressed bits.  Then see how many interactors are in the introgressed bits, shuffle the interaction designation many times, and see if it is more (PF511) or less (PM626) than expected by chance.
+
+First step is to generate the introgression file from the admixfrog output.  This has to be done in a tedious way for each chr because the chr name needs to be substituted:

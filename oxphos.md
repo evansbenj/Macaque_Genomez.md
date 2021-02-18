@@ -685,28 +685,29 @@ One expectation, particularly for PF511 and PM626 is that they should have mt-in
 First step is to generate the introgression file from the admixfrog output.  This has to be done in a tedious way for each chr because the chr name needs to be substituted:
 
 ```
-xzcat tonk_PF626_chr01_TON_HEC_MAU.out.bin.xz | sed 's/ch,/chr01,/g' > tonk_PF626_chr01_admix.out
-xzcat tonk_PF626_chr02a_TON_HEC_MAU.out.bin.xz | sed 's/ch,/chr02a,/g' > tonk_PF626_chr02a_admix.out
-xzcat tonk_PF626_chr02b_TON_HEC_MAU.out.bin.xz | sed 's/ch,/chr02b,/g' > tonk_PF626_chr02b_admix.out
-xzcat tonk_PF626_chr03_TON_HEC_MAU.out.bin.xz | sed 's/ch,/chr03,/g' > tonk_PF626_chr03_admix.out
-xzcat tonk_PF626_chr04_TON_HEC_MAU.out.bin.xz | sed 's/ch,/chr04,/g' > tonk_PF626_chr04_admix.out
-xzcat tonk_PF626_chr05_TON_HEC_MAU.out.bin.xz | sed 's/ch,/chr05,/g' > tonk_PF626_chr05_admix.out
-xzcat tonk_PF626_chr06_TON_HEC_MAU.out.bin.xz | sed 's/ch,/chr06,/g' > tonk_PF626_chr06_admix.out
-xzcat tonk_PF626_chr07_TON_HEC_MAU.out.bin.xz | sed 's/ch,/chr07,/g' > tonk_PF626_chr07_admix.out
-xzcat tonk_PF626_chr08_TON_HEC_MAU.out.bin.xz | sed 's/ch,/chr08,/g' > tonk_PF626_chr08_admix.out
-xzcat tonk_PF626_chr09_TON_HEC_MAU.out.bin.xz | sed 's/ch,/chr09,/g' > tonk_PF626_chr09_admix.out
-xzcat tonk_PF626_chr10_TON_HEC_MAU.out.bin.xz | sed 's/ch,/chr10,/g' > tonk_PF626_chr10_admix.out
-xzcat tonk_PF626_chr11_TON_HEC_MAU.out.bin.xz | sed 's/ch,/chr11,/g' > tonk_PF626_chr11_admix.out
-xzcat tonk_PF626_chr12_TON_HEC_MAU.out.bin.xz | sed 's/ch,/chr12,/g' > tonk_PF626_chr12_admix.out
-xzcat tonk_PF626_chr13_TON_HEC_MAU.out.bin.xz | sed 's/ch,/chr13,/g' > tonk_PF626_chr13_admix.out
-xzcat tonk_PF626_chr14_TON_HEC_MAU.out.bin.xz | sed 's/ch,/chr14,/g' > tonk_PF626_chr14_admix.out
-xzcat tonk_PF626_chr15_TON_HEC_MAU.out.bin.xz | sed 's/ch,/chr15,/g' > tonk_PF626_chr15_admix.out
-xzcat tonk_PF626_chr16_TON_HEC_MAU.out.bin.xz | sed 's/ch,/chr16,/g' > tonk_PF626_chr16_admix.out
-xzcat tonk_PF626_chr17_TON_HEC_MAU.out.bin.xz | sed 's/ch,/chr17,/g' > tonk_PF626_chr17_admix.out
-xzcat tonk_PF626_chr18_TON_HEC_MAU.out.bin.xz | sed 's/ch,/chr18,/g' > tonk_PF626_chr18_admix.out
-xzcat tonk_PF626_chr19_TON_HEC_MAU.out.bin.xz | sed 's/ch,/chr19,/g' > tonk_PF626_chr19_admix.out
-xzcat tonk_PF626_chrX_TON_HEC_MAU.out.bin.xz | sed 's/ch,/chrX,/g' > tonk_PF626_chrX_admix.out
+xzcat tonk_PF511_chr01_TON_HEC_MAU.out.bin.xz | sed 's/ch,/chr01,/g' > tonk_PF511_for_perm_chr01_admix.out
+xzcat tonk_PF511_chr02a_TON_HEC_MAU.out.bin.xz | sed 's/ch,/chr02a,/g' > tonk_PF511_for_perm_chr02a_admix.out
+xzcat tonk_PF511_chr02b_TON_HEC_MAU.out.bin.xz | sed 's/ch,/chr02b,/g' > tonk_PF511_for_perm_chr02b_admix.out
+xzcat tonk_PF511_chr03_TON_HEC_MAU.out.bin.xz | sed 's/ch,/chr03,/g' > tonk_PF511_for_perm_chr03_admix.out
+xzcat tonk_PF511_chr04_TON_HEC_MAU.out.bin.xz | sed 's/ch,/chr04,/g' > tonk_PF511_for_perm_chr04_admix.out
+xzcat tonk_PF511_chr05_TON_HEC_MAU.out.bin.xz | sed 's/ch,/chr05,/g' > tonk_PF511_for_perm_chr05_admix.out
+xzcat tonk_PF511_chr06_TON_HEC_MAU.out.bin.xz | sed 's/ch,/chr06,/g' > tonk_PF511_for_perm_chr06_admix.out
+xzcat tonk_PF511_chr07_TON_HEC_MAU.out.bin.xz | sed 's/ch,/chr07,/g' > tonk_PF511_for_perm_chr07_admix.out
+xzcat tonk_PF511_chr08_TON_HEC_MAU.out.bin.xz | sed 's/ch,/chr08,/g' > tonk_PF511_for_perm_chr08_admix.out
+xzcat tonk_PF511_chr09_TON_HEC_MAU.out.bin.xz | sed 's/ch,/chr09,/g' > tonk_PF511_for_perm_chr09_admix.out
+xzcat tonk_PF511_chr10_TON_HEC_MAU.out.bin.xz | sed 's/ch,/chr10,/g' > tonk_PF511_for_perm_chr10_admix.out
+xzcat tonk_PF511_chr11_TON_HEC_MAU.out.bin.xz | sed 's/ch,/chr11,/g' > tonk_PF511_for_perm_chr11_admix.out
+xzcat tonk_PF511_chr12_TON_HEC_MAU.out.bin.xz | sed 's/ch,/chr12,/g' > tonk_PF511_for_perm_chr12_admix.out
+xzcat tonk_PF511_chr13_TON_HEC_MAU.out.bin.xz | sed 's/ch,/chr13,/g' > tonk_PF511_for_perm_chr13_admix.out
+xzcat tonk_PF511_chr14_TON_HEC_MAU.out.bin.xz | sed 's/ch,/chr14,/g' > tonk_PF511_for_perm_chr14_admix.out
+xzcat tonk_PF511_chr15_TON_HEC_MAU.out.bin.xz | sed 's/ch,/chr15,/g' > tonk_PF511_for_perm_chr15_admix.out
+xzcat tonk_PF511_chr16_TON_HEC_MAU.out.bin.xz | sed 's/ch,/chr16,/g' > tonk_PF511_for_perm_chr16_admix.out
+xzcat tonk_PF511_chr17_TON_HEC_MAU.out.bin.xz | sed 's/ch,/chr17,/g' > tonk_PF511_for_perm_chr17_admix.out
+xzcat tonk_PF511_chr18_TON_HEC_MAU.out.bin.xz | sed 's/ch,/chr18,/g' > tonk_PF511_for_perm_chr18_admix.out
+xzcat tonk_PF511_chr19_TON_HEC_MAU.out.bin.xz | sed 's/ch,/chr19,/g' > tonk_PF511_for_perm_chr19_admix.out
+xzcat tonk_PF511_chrX_TON_HEC_MAU.out.bin.xz | sed 's/ch,/chrX,/g' > tonk_PF511_for_perm_chrX_admix.out
+
 ```
 
-And the same for PF511. And then use the famous "Makes_inputfile_for_jackknife.pl" script to concatenate them.
+And the same for PF626. And then use the famous "Makes_inputfile_for_jackknife.pl" script to concatenate them.
 

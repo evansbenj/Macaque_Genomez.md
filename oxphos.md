@@ -683,3 +683,30 @@ DATA[from.pos == '166649885']
 One expectation, particularly for PF511 and PM626 is that they should have mt-interacting nuclear genes from the species whose mtDNA they carry.  Most of the introgressed regions are heterozygous, but this is worth testing any how. This really should be compared among windows that carry genes, not across all genes. I will do this as follows: read in the coordinates of the interacting OXPHOS (or any) genes plus all the other genes. And then read in coordinates of heterozygous and homoz introgressed bits.  Then see how many interactors are in the introgressed bits, shuffle the interaction designation many times, and see if it is more (PF511) or less (PM626) than expected by chance.
 
 First step is to generate the introgression file from the admixfrog output.  This has to be done in a tedious way for each chr because the chr name needs to be substituted:
+
+```
+xzcat tonk_PF626_chr01_TON_HEC_MAU.out.bin.xz | sed 's/ch,/chr01,/g' > tonk_PF626_chr01_admix.out
+xzcat tonk_PF626_chr02a_TON_HEC_MAU.out.bin.xz | sed 's/ch,/chr02a,/g' > tonk_PF626_chr02a_admix.out
+xzcat tonk_PF626_chr02b_TON_HEC_MAU.out.bin.xz | sed 's/ch,/chr02b,/g' > tonk_PF626_chr02b_admix.out
+xzcat tonk_PF626_chr03_TON_HEC_MAU.out.bin.xz | sed 's/ch,/chr03,/g' > tonk_PF626_chr03_admix.out
+xzcat tonk_PF626_chr04_TON_HEC_MAU.out.bin.xz | sed 's/ch,/chr04,/g' > tonk_PF626_chr04_admix.out
+xzcat tonk_PF626_chr05_TON_HEC_MAU.out.bin.xz | sed 's/ch,/chr05,/g' > tonk_PF626_chr05_admix.out
+xzcat tonk_PF626_chr06_TON_HEC_MAU.out.bin.xz | sed 's/ch,/chr06,/g' > tonk_PF626_chr06_admix.out
+xzcat tonk_PF626_chr07_TON_HEC_MAU.out.bin.xz | sed 's/ch,/chr07,/g' > tonk_PF626_chr07_admix.out
+xzcat tonk_PF626_chr08_TON_HEC_MAU.out.bin.xz | sed 's/ch,/chr08,/g' > tonk_PF626_chr08_admix.out
+xzcat tonk_PF626_chr09_TON_HEC_MAU.out.bin.xz | sed 's/ch,/chr09,/g' > tonk_PF626_chr09_admix.out
+xzcat tonk_PF626_chr10_TON_HEC_MAU.out.bin.xz | sed 's/ch,/chr10,/g' > tonk_PF626_chr10_admix.out
+xzcat tonk_PF626_chr11_TON_HEC_MAU.out.bin.xz | sed 's/ch,/chr11,/g' > tonk_PF626_chr11_admix.out
+xzcat tonk_PF626_chr12_TON_HEC_MAU.out.bin.xz | sed 's/ch,/chr12,/g' > tonk_PF626_chr12_admix.out
+xzcat tonk_PF626_chr13_TON_HEC_MAU.out.bin.xz | sed 's/ch,/chr13,/g' > tonk_PF626_chr13_admix.out
+xzcat tonk_PF626_chr14_TON_HEC_MAU.out.bin.xz | sed 's/ch,/chr14,/g' > tonk_PF626_chr14_admix.out
+xzcat tonk_PF626_chr15_TON_HEC_MAU.out.bin.xz | sed 's/ch,/chr15,/g' > tonk_PF626_chr15_admix.out
+xzcat tonk_PF626_chr16_TON_HEC_MAU.out.bin.xz | sed 's/ch,/chr16,/g' > tonk_PF626_chr16_admix.out
+xzcat tonk_PF626_chr17_TON_HEC_MAU.out.bin.xz | sed 's/ch,/chr17,/g' > tonk_PF626_chr17_admix.out
+xzcat tonk_PF626_chr18_TON_HEC_MAU.out.bin.xz | sed 's/ch,/chr18,/g' > tonk_PF626_chr18_admix.out
+xzcat tonk_PF626_chr19_TON_HEC_MAU.out.bin.xz | sed 's/ch,/chr19,/g' > tonk_PF626_chr19_admix.out
+xzcat tonk_PF626_chrX_TON_HEC_MAU.out.bin.xz | sed 's/ch,/chrX,/g' > tonk_PF626_chrX_admix.out
+```
+
+And the same for PF511. And then use the famous "Makes_inputfile_for_jackknife.pl" script to concatenate them.
+

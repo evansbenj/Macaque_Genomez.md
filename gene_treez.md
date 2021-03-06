@@ -29,11 +29,15 @@ Extract section of gene with vcftools:
 module load StdEnv/2020 vcftools/0.1.16
 vcftools --gzvcf FandM_chr01_BSQR_jointgeno_allsites_withpapio_filtered1.vcf.gz --chr chr01 --from-bp 124258900 --to-bp 124272013 --out MRPS21.vcf.gz --recode
 ```
-
-
-
-
-
-
-vcftools --gzvcf FandM_chr05_BSQR_jointgeno_allsites_withpapio_filtered1.vcf.gz --chr chr05 --from-bp 138224999 --to-bp 138233197 --out HARS2.vcf.gz --recode
-
+compress the vcf filez
+```
+module load nixpkgs/16.09  intel/2016.4 tabix/0.2.6
+bgzip -c TACO1.vcf.gz.recode.vcf > TACO1.vcf.gz.recode.vcf.gz
+```
+convert to tab
+```
+zcat MRPL47.vcf.gz.recode.vcf.gz | vcf-to-tab > MRPL47.tab
+```
+Convert to nexus
+```
+```

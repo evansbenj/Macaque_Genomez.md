@@ -45,6 +45,19 @@ colnames(v_line_info)[2] <- "start"
 v_line_info<-as.data.frame(v_line_info)
 v_line_info$start <- as.numeric(as.character(v_line_info$start))
 
+
+# additional lines (same beginning for singletons, different for pairs)
+gene_vector3 <- c("NDUFAF3, UQCRC1","NDUFA2,HARS2")
+chr_vector3 <- c("chr03","chr05")
+beginning_vector3 <- c(104359835,138224999)
+end_vector3 <- c(104371673,138233197)
+genez_df3 <- cbind(gene_vector3,chr_vector3,beginning_vector3,end_vector3)
+v_line_info3 <- cbind(paste(gene_vector3,chr_vector3,sep="; "),beginning_vector3,end_vector3)
+colnames(v_line_info3)[1] <- "gene"
+colnames(v_line_info3)[2] <- "start"
+v_line_info3<-as.data.frame(v_line_info3)
+v_line_info3$start <- as.numeric(as.character(v_line_info3$start))
+
 for(i in 1:nrow(genez_df)) {
     row <- as.vector(genez_df[i,])
     #  print(row[4]) # 1 is the gene name, 2 is the chr, 3 is the beginning, 4 is the end
@@ -112,6 +125,7 @@ p <- ggplot(big_df, aes(x=start/1000000, y=value, by=Species, color=Species)) +
 
 png(filename="pi_closeup.png",
     width = 500, height = 300, units='mm', res = 100)  
-    p + geom_vline(data = v_line_info, mapping = aes(xintercept = start/1000000),  color = "black", size=1)
+    p + geom_vline(data = v_line_info, mapping = aes(xintercept = start/1000000),  color = "black", size=1) +
+   geom_vline(data = v_line_info3, mapping = aes(xintercept = start/1000000),  color = "black", size=1)
 dev.off()
 ```

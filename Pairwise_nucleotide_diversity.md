@@ -112,10 +112,10 @@ v_line_info7$start <- as.numeric(as.character(v_line_info7$start))
 
 
 # and one more set for flanking N_interact genes near each gene
-gene_vector8 <- c("MRPS21","MRPS21","MRPS21","ATP5B")
-chr_vector8 <- c("chr01","chr01","chr01","chr12")
-beginning_vector8 <- c("124457341","125861377","130929064","55497421")
-end_vector8 <- c("124457341","125861377","130929064","55497421")
+gene_vector8 <- c("MRPS21","MRPS21","MRPS21","MRPS21","NDUFAF3, UQCRC1","NDUFAF3, UQCRC1","NDUFA2,HARS2","ATP5B","ATP5B","ATP5B")
+chr_vector8 <- c("chr01","chr01","chr01","chr01","chr03","chr03","chr05","chr12","chr12","chr12")
+beginning_vector8 <- c("119813117","124457341","125861377","130929064","98375417","101043313","130350642","48300943","51828101","55497421")
+end_vector8 <- c("119813117","124457341","125861377","130929064","98375417","101043313","130350642","48300943","51828101","55497421")
 genez_df8 <- cbind(gene_vector8,chr_vector8,beginning_vector8,end_vector8)
 v_line_info8 <- cbind(paste(gene_vector8,chr_vector8,sep="; "),beginning_vector8,end_vector8)
 colnames(v_line_info8)[1] <- "gene"

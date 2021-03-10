@@ -111,6 +111,22 @@ v_line_info7<-as.data.frame(v_line_info7)
 v_line_info7$start <- as.numeric(as.character(v_line_info7$start))
 
 
+# and one more set for flanking N_interact genes near each gene
+gene_vector8 <- c("MRPS21","MRPS21","MRPS21","ATP5B")
+chr_vector8 <- c("chr01","chr01","chr01","chr12")
+beginning_vector8 <- c("124457341","125861377","130929064","55497421")
+end_vector8 <- c("124457341","125861377","130929064","55497421")
+genez_df8 <- cbind(gene_vector8,chr_vector8,beginning_vector8,end_vector8)
+v_line_info8 <- cbind(paste(gene_vector8,chr_vector8,sep="; "),beginning_vector8,end_vector8)
+colnames(v_line_info8)[1] <- "gene"
+colnames(v_line_info8)[2] <- "start"
+v_line_info8<-as.data.frame(v_line_info8)
+v_line_info8$start <- as.numeric(as.character(v_line_info8$start))
+
+
+
+
+
 for(i in 1:nrow(genez_df)) {
     row <- as.vector(genez_df[i,])
     #  print(row[4]) # 1 is the gene name, 2 is the chr, 3 is the beginning, 4 is the end
@@ -182,6 +198,7 @@ png(filename="pi_closeup.png",
       geom_segment(aes(x = start/1000000, y = 0.11, xend = start/1000000, yend = 0.125),  color="blue", data = v_line_info5,inherit.aes = FALSE) +
       geom_segment(aes(x = start/1000000, y = 0.11, xend = start/1000000, yend = 0.125),  color="blue", data = v_line_info6,inherit.aes = FALSE) +
       geom_segment(aes(x = start/1000000, y = 0.11, xend = start/1000000, yend = 0.125),  color="blue", data = v_line_info7,inherit.aes = FALSE) +
+      geom_segment(aes(x = start/1000000, y = 0.11, xend = start/1000000, yend = 0.125),  color="red", size=1, data = v_line_info8,inherit.aes = FALSE) +
       geom_vline(data = v_line_info, mapping = aes(xintercept = start/1000000),  color = "black", size=1) +
       geom_vline(data = v_line_info3, mapping = aes(xintercept = start/1000000),  color = "black", size=1) 
 dev.off()

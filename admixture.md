@@ -20,6 +20,11 @@ compress and index
 bgzip -c autosomes.vcf > autosomes.vcf.gz
 tabix -p vcf autosomes.vcf.gz
 ```
+or, for only nemestrina,
+```
+bcftools view -Oz -o autosomes_nem_only.vcf.gz -s nem_GumGum_female,nem_Ngsang_sumatra_female,nem_PM1206,nem_PM664,nem_PM665,nem_Sukai_male autosomes.vcf.gz
+```
+
 convert to geno format using plink
 first make a bed file and remove any SNP with no data for autosomes:
 

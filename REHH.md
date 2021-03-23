@@ -21,3 +21,21 @@ Then extract the SNPs like this:
 module load tabix
 tabix FandM_chr03_BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz.phased.vcf.gz.vcf.gz -B Ninteract_chr03.bed > Ninteract_chr03_SNPs.vcf
 ```
+Here are the first SNPs in each gene
+```
+chr03	84594254	84613076	NDUFB5 84594255
+chr03	104846075	104847927	NDUFAF3  104846083
+chr03	148084830	148114936	ACAD9  148085019
+chr03	156309713	156315708	NDUFB4 156309746
+chr03	157411293	157436295	TIMMDC1 157411323
+```
+Some (all?) of these are not variable in each species and the first one isn't even variable in the taxa at all (it just differs from the ref).  But this should be ok.
+
+Now I am going to edit a version of the phased VCF file to add names to these SNPs (I'll call them each by the gene acronym).
+
+Then I compressed it:
+```
+bgzip -c chr03_phased_named_SNPs.vcf > chr03_phased_named_SNPs.vcf.gz
+```
+
+

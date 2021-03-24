@@ -4,6 +4,9 @@ FOr ROH, I am working in this directory:
 ```
 
 # bcftools
+```
+module load bcftools
+```
 
 ```
 bcftools roh -G30 --AF-dflt 0.4 -s nem_GumGum_female,nem_PM1206,nem_PM664,nem_PM665,nem_Sukai_male -M 100 chr03_phased_named_SNPs.vcf.gz > bor_chr03_roh.txt

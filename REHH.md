@@ -8,6 +8,30 @@ FOr ROH, I am working in this directory:
 module load bcftools
 ```
 
+Batch process all chrs for each population.  Here is bor:
+```
+bcftools roh -G30 --AF-dflt 0.4 -s nem_GumGum_female,nem_PM1206,nem_PM664,nem_PM665,nem_Sukai_male -M 100 ../FandM_chr01_BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz.phased.vcf.gz.vcf.gz | grep 'RG' > RG_bor_roh.txt
+bcftools roh -G30 --AF-dflt 0.4 -s nem_GumGum_female,nem_PM1206,nem_PM664,nem_PM665,nem_Sukai_male -M 100 ../FandM_chr02a_BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz.phased.vcf.gz.vcf.gz | grep 'RG' >> RG_bor_roh.txt
+bcftools roh -G30 --AF-dflt 0.4 -s nem_GumGum_female,nem_PM1206,nem_PM664,nem_PM665,nem_Sukai_male -M 100 ../FandM_chr02b_BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz.phased.vcf.gz.vcf.gz | grep 'RG' >> RG_bor_roh.txt
+bcftools roh -G30 --AF-dflt 0.4 -s nem_GumGum_female,nem_PM1206,nem_PM664,nem_PM665,nem_Sukai_male -M 100 ../FandM_chr03_BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz.phased.vcf.gz.vcf.gz | grep 'RG' >> RG_bor_roh.txt
+bcftools roh -G30 --AF-dflt 0.4 -s nem_GumGum_female,nem_PM1206,nem_PM664,nem_PM665,nem_Sukai_male -M 100 ../FandM_chr04_BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz.phased.vcf.gz.vcf.gz | grep 'RG' >> RG_bor_roh.txt
+bcftools roh -G30 --AF-dflt 0.4 -s nem_GumGum_female,nem_PM1206,nem_PM664,nem_PM665,nem_Sukai_male -M 100 ../FandM_chr05_BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz.phased.vcf.gz.vcf.gz | grep 'RG' >> RG_bor_roh.txt
+bcftools roh -G30 --AF-dflt 0.4 -s nem_GumGum_female,nem_PM1206,nem_PM664,nem_PM665,nem_Sukai_male -M 100 ../FandM_chr06_BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz.phased.vcf.gz.vcf.gz | grep 'RG' >> RG_bor_roh.txt
+bcftools roh -G30 --AF-dflt 0.4 -s nem_GumGum_female,nem_PM1206,nem_PM664,nem_PM665,nem_Sukai_male -M 100 ../FandM_chr07_BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz.phased.vcf.gz.vcf.gz | grep 'RG' >> RG_bor_roh.txt
+bcftools roh -G30 --AF-dflt 0.4 -s nem_GumGum_female,nem_PM1206,nem_PM664,nem_PM665,nem_Sukai_male -M 100 ../FandM_chr08_BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz.phased.vcf.gz.vcf.gz | grep 'RG' >> RG_bor_roh.txt
+bcftools roh -G30 --AF-dflt 0.4 -s nem_GumGum_female,nem_PM1206,nem_PM664,nem_PM665,nem_Sukai_male -M 100 ../FandM_chr09_BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz.phased.vcf.gz.vcf.gz | grep 'RG' >> RG_bor_roh.txt
+bcftools roh -G30 --AF-dflt 0.4 -s nem_GumGum_female,nem_PM1206,nem_PM664,nem_PM665,nem_Sukai_male -M 100 ../FandM_chr10_BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz.phased.vcf.gz.vcf.gz | grep 'RG' >> RG_bor_roh.txt
+bcftools roh -G30 --AF-dflt 0.4 -s nem_GumGum_female,nem_PM1206,nem_PM664,nem_PM665,nem_Sukai_male -M 100 ../FandM_chr11_BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz.phased.vcf.gz.vcf.gz | grep 'RG' >> RG_bor_roh.txt
+bcftools roh -G30 --AF-dflt 0.4 -s nem_GumGum_female,nem_PM1206,nem_PM664,nem_PM665,nem_Sukai_male -M 100 ../FandM_chr12_BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz.phased.vcf.gz.vcf.gz | grep 'RG' >> RG_bor_roh.txt
+bcftools roh -G30 --AF-dflt 0.4 -s nem_GumGum_female,nem_PM1206,nem_PM664,nem_PM665,nem_Sukai_male -M 100 ../FandM_chr13_BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz.phased.vcf.gz.vcf.gz | grep 'RG' >> RG_bor_roh.txt
+bcftools roh -G30 --AF-dflt 0.4 -s nem_GumGum_female,nem_PM1206,nem_PM664,nem_PM665,nem_Sukai_male -M 100 ../FandM_chr14_BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz.phased.vcf.gz.vcf.gz | grep 'RG' >> RG_bor_roh.txt
+bcftools roh -G30 --AF-dflt 0.4 -s nem_GumGum_female,nem_PM1206,nem_PM664,nem_PM665,nem_Sukai_male -M 100 ../FandM_chr15_BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz.phased.vcf.gz.vcf.gz | grep 'RG' >> RG_bor_roh.txt
+bcftools roh -G30 --AF-dflt 0.4 -s nem_GumGum_female,nem_PM1206,nem_PM664,nem_PM665,nem_Sukai_male -M 100 ../FandM_chr16_BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz.phased.vcf.gz.vcf.gz | grep 'RG' >> RG_bor_roh.txt
+bcftools roh -G30 --AF-dflt 0.4 -s nem_GumGum_female,nem_PM1206,nem_PM664,nem_PM665,nem_Sukai_male -M 100 ../FandM_chr17_BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz.phased.vcf.gz.vcf.gz | grep 'RG' >> RG_bor_roh.txt
+bcftools roh -G30 --AF-dflt 0.4 -s nem_GumGum_female,nem_PM1206,nem_PM664,nem_PM665,nem_Sukai_male -M 100 ../FandM_chr18_BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz.phased.vcf.gz.vcf.gz | grep 'RG' >> RG_bor_roh.txt
+bcftools roh -G30 --AF-dflt 0.4 -s nem_GumGum_female,nem_PM1206,nem_PM664,nem_PM665,nem_Sukai_male -M 100 ../FandM_chr19_BSQR_jointgeno_allsites_withpapio_filtered2_coverage_SNPsonly.vcf.gz.phased.vcf.gz.vcf.gz | grep 'RG' >> RG_bor_roh.txt
+```
+
 ```
 bcftools roh -G30 --AF-dflt 0.4 -s nem_GumGum_female,nem_PM1206,nem_PM664,nem_PM665,nem_Sukai_male -M 100 chr03_phased_named_SNPs.vcf.gz > bor_chr03_roh.txt
 

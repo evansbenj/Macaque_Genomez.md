@@ -21,7 +21,11 @@ bcftools roh -G30 --AF-dflt 0.4 -s nigra_PF1001,nigra_PF660,nigra_PM1003 -M 100 
 ```
 
 ```
-cat tonk_chr03_roh.txt | grep 'RG' > RG_tonk_chr03_roh.txt
+cat bor_chr03_roh.txt | grep 'RG' > RG_bor_chr03_roh.txt
+cat mau_chr03_roh.txt | grep 'RG' > RG_mau_chr03_roh.txt
+cat ton_chr03_roh.txt | grep 'RG' > RG_ton_chr03_roh.txt
+cat hec_chr03_roh.txt | grep 'RG' > RG_hec_chr03_roh.txt
+cat nig_chr03_roh.txt | grep 'RG' > RG_nig_chr03_roh.txt
 ```
 
 # Rehh  

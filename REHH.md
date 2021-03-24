@@ -1,3 +1,13 @@
+# bcftools
+
+```
+bcftools roh -G30 --AF-dflt 0.4 -s tonk_PF511,tonk_PF559,tonk_PF563,tonk_PF597,tonk_PF626,tonk_PM592 -M 100 chr03_phased_named_SNPs.vcf.gz > tonk_chr03_roh.txt
+```
+
+```
+cat tonk_chr03_roh.txt | grep 'RG' > RG_tonk_chr03_roh.txt
+```
+
 # Rehh  
 
 I am going to try to use the R package rehh to detect long runs of homozygosity.

@@ -1,4 +1,4 @@
-Perl script for making input files for plotting
+Perl script for making input files for plotting; permutations will not be used because they do not control for gene density
 ```perl
 #!/usr/bin/env perl
 use strict;

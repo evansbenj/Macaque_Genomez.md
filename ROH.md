@@ -407,4 +407,8 @@ Then I compressed it:
 bgzip -c chr03_phased_named_SNPs.vcf > chr03_phased_named_SNPs.vcf.gz
 ```
 
+Running on compute canada - issues with sh scrip were resolved with flags:
+```
+sbatch --account rrg-ben --time=72:00:00 ./ROH_permutation.pl FINAL_OXPHOS_ARP2_MRP_MTREPLICATION_allinteractexceptC2_andallother_genez_orientation.txt RG_ton_roh.txt ROH_ton_perms.out ROH_ton_density.out
+```
 

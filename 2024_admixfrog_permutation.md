@@ -63,6 +63,7 @@ unless (open DATAINPUT, $inputfile1) {
 
 while ( my $line = <DATAINPUT>) {
 	chomp($line);
+	$line =~ s/\r//g;
 	@temp=split('\t',$line);
 	if($temp[0] ne 'gene'){ 
 		$N_interact_hash{$temp[2]."_".$temp[3]."_".$temp[4]}{"gene"} = $temp[0]; # key is chr_start_stop; value is gene_acronym
@@ -172,7 +173,6 @@ while ( my $line = <DATAINPUT3>) {
 							push (@Ninteract_genez_on_one_or_more_admixture_block,$N_interact_hash{$key}{"gene"});
 							# getting unique values from this array will provide the total unique Ninteract genes in one or more admixture blocks
 							# Now check if the start of the Ninteract gene is within this block
-							# Now check if the start of the Ninteract gene is within this block
 							if(
 								(
 								($temp1[0] eq $temp[0])&&
@@ -213,11 +213,9 @@ foreach my $key (keys %introgression_blocks){
 	if($introgression_blocks{$key}{"genes"} == 1){ # there is a portion of a gene on this admixture block
 		if($introgression_blocks{$key}{"interacting"} == 1){ # there is a portion of an Ninteract gene on on this admixture block
 			$n_introgression_blocks_with_interacting_genez+=1;
-			# print "Introgression_with_interacting ",$key,"\n";
 		}
 		else{
 			$n_introgression_blocks_with_other_genez+=1;
-			# print "Introgression_with_NON_interacting ",$key,"\n";
 		}	
 	}
 	else{
@@ -225,9 +223,6 @@ foreach my $key (keys %introgression_blocks){
 	}	
 }
 
-# get the unique Ninteract genes that are in one or more admixture blocks
-print "This is the number of introgression blocks that overlap with at least a portion of an Ninteract genes ",$#Ninteract_genez_on_one_or_more_admixture_block+1,"\n"; 
-print OUTFILE "This is the number of introgression blocks that overlap with at least a portion of an Ninteract genes ",$#Ninteract_genez_on_one_or_more_admixture_block+1,"\n"; 
 my %seen;
 @Ninteract_genez_on_one_or_more_admixture_block = grep { ! $seen{ $_ }++ } @Ninteract_genez_on_one_or_more_admixture_block;
 print "This is the number of Ninteract genes that are on at least one admixture block ",$#Ninteract_genez_on_one_or_more_admixture_block+1,"\n"; 
@@ -243,7 +238,9 @@ print "Number of introgression blocks with one or more N_interact genes: ",$n_in
 print OUTFILE"Number of introgression blocks with one or more N_interact genes: ",$n_introgression_blocks_with_interacting_genez,"\n";
 
 print "Number of Ninteract genes on introgression blocks ",$n_Ninteract_genes_on_introgression_blockz,"\n";
+print "This can be more than the Number of introgression blocks with one or more N_interact genes because one introgression block could have more than one Ninteract gene\n";
 print OUTFILE "Number of Ninteract genes on introgression blocks ",$n_Ninteract_genes_on_introgression_blockz,"\n";
+print OUTFILE "This can be more than the Number of introgression blocks with one or more N_interact genes because one introgression block could have more than one Ninteract gene\n";
 
 print "Number of introgression blocks with other genes: ",$n_introgression_blocks_with_other_genez,"\n";
 print "Number of introgression blocks without genes: ",$n_introgression_blocks_without_genez,"\n";
@@ -365,9 +362,6 @@ else{
 
 
 close OUTFILE;
-
-
-
 ```
 
 
@@ -427,10 +421,11 @@ unless (open DATAINPUT, $inputfile1) {
 
 while ( my $line = <DATAINPUT>) {
 	chomp($line);
+	$line =~ s/\r//g;
 	@temp=split('\t',$line);
 	if($temp[0] ne 'gene'){ 
 		$N_interact_hash{$temp[2]."_".$temp[3]."_".$temp[4]}{"gene"} = $temp[0]; # key is chr_start_stop; value is gene_acronym
-		$N_interact_hash{$temp[2]."_".$temp[3]."_".$temp[4]}{"mt_interact"} = $temp[5]; # key is chr_start_stop; value is Ninteract_or_not
+		$N_interact_hash{$temp[2]."_".$temp[3]."_".$temp[4]}{"mt_interact"} = $temp[5]; # key is chr_start_stop; value is Ninteract_or_not (1/0)
 		$N_interact_hash{$temp[2]."_".$temp[3]."_".$temp[4]}{"orientation"} = $temp[6]; # key is chr_start_stop; value is orientation (+/-)
 		push(@interact_perm,$temp[5]); # this will be used for the permutations later
 	}	
@@ -504,6 +499,7 @@ while ( my $line = <DATAINPUT3>) {
 					){
 						# this block has the beginning or end or middle of a gene						
 						$introgression_blocks{$temp[0]."_".($temp[1]*1000000)}{"genes"} = 1;
+						# now check if the beginning is in the block
 						if(
 							(
 							($temp1[0] eq $temp[0])&&
@@ -522,6 +518,7 @@ while ( my $line = <DATAINPUT3>) {
 							# for permutations count only the admixture blocks that contain the beginning of a gene
 							$n_genes_beginning_on_introgression_blockz+=1;
 						}	# end if
+						
 						# check if it is an interacting gene
 						if($N_interact_hash{$key}{"mt_interact"} == 1){
 							$introgression_blocks{$temp[0]."_".($temp[1]*1000000)}{"interacting"} = 1; # this records overlap with any portion of an Ninteract genes 
@@ -585,9 +582,6 @@ foreach my $key (keys %introgression_blocks){
 	}	
 }
 
-# get the unique Ninteract genes that are in one or more admixture blocks
-print "This is the number of introgression blocks that overlap with at least a portion of an Ninteract genes ",$#Ninteract_genez_on_one_or_more_admixture_block+1,"\n"; 
-print OUTFILE "This is the number of introgression blocks that overlap with at least a portion of an Ninteract genes ",$#Ninteract_genez_on_one_or_more_admixture_block+1,"\n"; 
 my %seen;
 @Ninteract_genez_on_one_or_more_admixture_block = grep { ! $seen{ $_ }++ } @Ninteract_genez_on_one_or_more_admixture_block;
 print "This is the number of Ninteract genes that are on at least one admixture block ",$#Ninteract_genez_on_one_or_more_admixture_block+1,"\n"; 
@@ -603,7 +597,9 @@ print "Number of introgression blocks with one or more N_interact genes: ",$n_in
 print OUTFILE"Number of introgression blocks with one or more N_interact genes: ",$n_introgression_blocks_with_interacting_genez,"\n";
 
 print "Number of Ninteract genes on introgression blocks ",$n_Ninteract_genes_on_introgression_blockz,"\n";
+print "This can be more than the Number of introgression blocks with one or more N_interact genes because one introgression block could have more than one Ninteract gene\n";
 print OUTFILE "Number of Ninteract genes on introgression blocks ",$n_Ninteract_genes_on_introgression_blockz,"\n";
+print OUTFILE "This can be more than the Number of introgression blocks with one or more N_interact genes because one introgression block could have more than one Ninteract gene\n";
 
 print "Number of introgression blocks with other genes: ",$n_introgression_blocks_with_other_genez,"\n";
 print "Number of introgression blocks without genes: ",$n_introgression_blocks_without_genez,"\n";
@@ -728,6 +724,5 @@ else{
 
 
 close OUTFILE;
-
 
 ```
